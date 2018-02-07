@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/com.zibmi"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--200dp-->
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White"
+        android:padding="7dp">
+
+        <com.inventory.NewUi.RobotoTextView
+            android:id="@+id/titleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="Hasibul"
+            android:textColor="@color/main_color_grey_900"
+            android:textSize="@dimen/header"
+            app:typeface="robotoMedium" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

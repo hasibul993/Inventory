@@ -1,0 +1,150 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/Black</item>
+        <item name="android:editTextColor">@color/Black</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionBar">false</item>
+        <!--  It should be true otherwise action mode will not overlay toolbar -->
+        <item name="windowActionModeOverlay">true</item>
+        <!--  For Custom Action Mode Background Color/Drawable -->
+        <item name="actionModeBackground">@color/main_color_grey_600</item>
+
+    </style>
+
+    <style name="AppTheme.HomeNoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:editTextColor">@color/White</item>
+        <item name="android:textSize">@dimen/body</item>
+        <!--  It should be true otherwise action mode will not overlay toolbar -->
+        <item name="windowActionModeOverlay">true</item>
+
+        <!--  For Custom Action Mode Background Color/Drawable -->
+        <item name="actionModeBackground">@color/bg_action_mode</item>
+        <item name="autoCompleteTextViewStyle">@style/cursorColor</item>
+
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
+        <item name="dropDownListViewStyle">@style/PopupMenuListView</item>
+        <item name="android:textColorPrimary">@color/White</item>
+        <item name="android:editTextColor">@color/White</item>
+        <item name="android:actionModeBackground">@color/bg_action_mode</item>
+        <!-- Here you go. This changes overflow icon colour. -->
+        <item name="android:textColorSecondary">@color/White</item>
+        <item name="android:textSize">@dimen/body</item>
+        <item name="autoCompleteTextViewStyle">@style/cursorColor</item>
+    </style>
+
+
+    <!--Tabs-->
+    <style name="tabCustomStyle" parent="Widget.Design.TabLayout">
+        <item name="tabGravity">fill</item>
+        <item name="tabMaxWidth">0dp</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabBackground">@drawable/tablayout_background</item>
+        <item name="tabIndicatorColor">@color/White</item>
+        <item name="tabIndicatorHeight">2.5dp</item>
+        <item name="tabTextAppearance">@style/MyCustomTabLayout</item>
+        <item name="tabTextColor">@color/main_color_grey_400</item>
+        <item name="tabSelectedTextColor">@color/White</item>
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CardStyle">
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
+    <style name="CardMainheadingStyle">
+        <item name="android:textSize">@dimen/title</item>
+    </style>
+
+    <style name="CardbodyStyle">
+        <item name="android:textSize">@dimen/body</item>
+    </style>
+
+    <!-- The Invisible theme -->
+    <style name="Theme.CompleteTransparent" parent="@style/AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+    <!--AlertDialog-->
+    <style name="DialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <!--android:textColor will affect your title text color of dialog.-->
+        <item name="android:textColor">@color/colorPrimary</item>
+        <!--android:textColorPrimary will affect your message color of dialog.-->
+        <item name="android:textColorPrimary">@color/Black</item>
+        <!--android:colorAccent will affect your text colors of negative or positive buttons.-->
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- OverFlow menu Styles -->
+    <style name="PopupMenuListView" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:divider">#d7d7d7</item>
+        <item name="android:dividerHeight">0.5dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="cursorColor" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/cursor_color_white</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Gets rid of the search icon -->
+        <item name="searchIcon">@drawable/vector_search_white_icon</item>
+        <!-- Gets rid of the "underline" in the text -->
+        <item name="queryBackground">@null</item>
+        <item name="android:textColorHint">@color/White</item>
+        <!-- Gets rid of the search icon when the SearchView is expanded -->
+        <item name="searchHintIcon">@null</item>
+        <!-- The hint text that appears when the user has not typed anything -->
+        <item name="queryHint">"Search"</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/White</item>
+    </style>
+
+    <!--Listview-->
+    <style name="ListViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/main_color_grey_100</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:choiceMode">singleChoice</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">0dp</item>
+    </style>
+
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+    </style>
+
+</resources>
