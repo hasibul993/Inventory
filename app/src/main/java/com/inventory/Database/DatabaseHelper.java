@@ -55,6 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_DRUG_QUANTITY = "DrugQuantity";
     protected static final String COLUMN_DRUG_EXPIRY_DATE = "DrugExpiryDate";
     protected static final String COLUMN_DRUG_DISCOUNT = "DrugDiscount";
+    protected static final String COLUMN_DRUG_MANUFACTURER = "DrugManufacturer";
 
 
     public DatabaseHelper(Context context) {
@@ -177,6 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DRUG_MRP + " REAL,"
                 + COLUMN_DRUG_QUANTITY + " TEXT,"
                 + COLUMN_DRUG_DISCOUNT + " REAL,"
+                + COLUMN_DRUG_MANUFACTURER + " TEXT,"
                 + COLUMN_DRUG_TRANSACTION_DATE + " TEXT,"
                 + "PRIMARY KEY (" + COLUMN_DRUG_ID + "))";
         //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";

@@ -122,6 +122,8 @@ public class DatabaseAccess extends DatabaseHelper {
             if (drugModel.DrugCategory != null)
                 values.put(COLUMN_DRUG_CATEGORY, drugModel.DrugCategory);
 
+            if (drugModel.DrugManufacturer != null)
+                values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer);
 
             values.put(COLUMN_DRUG_MRP, drugModel.DrugMRP);
 
@@ -246,6 +248,7 @@ public class DatabaseAccess extends DatabaseHelper {
                 drugModel.DrugDiscountString = AppConstants.decimalFormatOnePlace.format(drugModel.DrugDiscount);
                 drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
                 drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
+                drugModel.DrugManufacturer = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_MANUFACTURER));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -281,6 +284,7 @@ public class DatabaseAccess extends DatabaseHelper {
                     drugModel.DrugDiscountString = AppConstants.decimalFormatOnePlace.format(drugModel.DrugDiscount);
                     drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
                     drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
+                    drugModel.DrugManufacturer = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_MANUFACTURER));
                     drugModelArrayList.add(drugModel);
                     cursor.moveToNext();
                 }

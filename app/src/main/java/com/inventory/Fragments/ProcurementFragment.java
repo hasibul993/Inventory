@@ -105,9 +105,9 @@ public class ProcurementFragment extends Fragment {
     }
 
     public void ShowDialogAddDrug(final DrugModel editModel, final int position) {
-        TextInputLayout drugNameET_Hint, mrpET_Hint, quantityET_Hint, discountET_Hint;
+        TextInputLayout drugNameET_Hint, mrpET_Hint, quantityET_Hint, discountET_Hint, manufacturerET_Hint;
         RelativeLayout cancelOkRelaLayout;
-        final EditText drugNameET, mrpET, quantityET, discountET;
+        final EditText drugNameET, mrpET, quantityET, discountET, manufacturerET;
         final RobotoTextView okTV, cancelTV, expiryDateTV, transactionDateTV;
         final Spinner spinnerCategory;
         String prevDrugCategory = null;
@@ -122,11 +122,13 @@ public class ProcurementFragment extends Fragment {
             mrpET_Hint = (TextInputLayout) dialog.findViewById(R.id.mrpET_Hint);
             quantityET_Hint = (TextInputLayout) dialog.findViewById(R.id.quantityET_Hint);
             discountET_Hint = (TextInputLayout) dialog.findViewById(R.id.discountET_Hint);
+            manufacturerET_Hint = (TextInputLayout) dialog.findViewById(R.id.manufacturerET_Hint);
 
             drugNameET_Hint.setHint(getString(R.string.drugName));
             mrpET_Hint.setHint(getString(R.string.drugMRP));
             quantityET_Hint.setHint(getString(R.string.drugQuantity));
             discountET_Hint.setHint(getString(R.string.drugDiscount));
+            manufacturerET_Hint.setHint(getString(R.string.drugManufacturer));
 
             spinnerCategory = (Spinner) dialog.findViewById(R.id.spinnerCategory);
 
@@ -134,6 +136,7 @@ public class ProcurementFragment extends Fragment {
             mrpET = (EditText) dialog.findViewById(R.id.mrpET);
             quantityET = (EditText) dialog.findViewById(R.id.quantityET);
             discountET = (EditText) dialog.findViewById(R.id.discountET);
+            manufacturerET = (EditText) dialog.findViewById(R.id.manufacturerET);
 
             expiryDateTV = (RobotoTextView) dialog.findViewById(R.id.expiryDateTV);
             transactionDateTV = (RobotoTextView) dialog.findViewById(R.id.transactionDateTV);
@@ -141,6 +144,14 @@ public class ProcurementFragment extends Fragment {
             cancelOkRelaLayout = (RelativeLayout) dialog.findViewById(R.id.cancelOkRelaLayout);
             GradientDrawable cancelOkRelaLayoutBackg = (GradientDrawable) cancelOkRelaLayout.getBackground();
             cancelOkRelaLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+
+            //cancel ok btn ids
+            okTV = (RobotoTextView) dialog.findViewById(R.id.okTV);
+            cancelTV = (RobotoTextView) dialog.findViewById(R.id.cancelTV);
+            okTV.setTextColor(getResources().getColor(R.color.White));
+            cancelTV.setTextColor(getResources().getColor(R.color.White));
+
+           // drugNameET_Hint.set(Color.parseColor(MainActivity.GetThemeColor()));
 
 
             transactionDateTV.setText(mainActivity.GetCurrentDate());
@@ -155,18 +166,13 @@ public class ProcurementFragment extends Fragment {
                 quantityET.setText(editModel.DrugQuantity + "");
                 discountET.setText(editModel.DrugDiscountString);
                 expiryDateTV.setText(editModel.DrugExpiryDate);
+                manufacturerET.setText(editModel.DrugManufacturer);
                 prevDrugCategory = editModel.DrugCategory;
             } else {
                 isModify = false;
             }
 
             SetSpinnerAdapter(spinnerCategory, prevDrugCategory);
-
-            //cancel ok btn ids
-            okTV = (RobotoTextView) dialog.findViewById(R.id.okTV);
-            cancelTV = (RobotoTextView) dialog.findViewById(R.id.cancelTV);
-            okTV.setTextColor(getResources().getColor(R.color.White));
-            cancelTV.setTextColor(getResources().getColor(R.color.White));
 
             expiryDateTV.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -183,7 +189,7 @@ public class ProcurementFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    String drugName, drugDiscount, drugQuantity, drugMRP, expiryDate, transactionDate;
+                    String drugName, drugDiscount, drugQuantity, drugMRP, expiryDate, transactionDate, drugManufacturer;
                     try {
                         drugName = drugNameET.getText().toString().trim();
                         drugMRP = mrpET.getText().toString().trim();
@@ -191,6 +197,7 @@ public class ProcurementFragment extends Fragment {
                         drugDiscount = discountET.getText().toString().trim();
                         expiryDate = expiryDateTV.getText().toString().trim();
                         transactionDate = transactionDateTV.getText().toString().trim();
+                        drugManufacturer = manufacturerET.getText().toString().trim();
 
                         if (StringUtils.isBlank(drugName)) {
                             MainActivity.ShowToast(getActivity(), getString(R.string.enterDrugName));
@@ -204,6 +211,9 @@ public class ProcurementFragment extends Fragment {
                         } else if (StringUtils.isBlank(drugDiscount)) {
                             MainActivity.ShowToast(getActivity(), getString(R.string.enterDrugDiscount));
                             return;
+                        } else if (StringUtils.isBlank(drugManufacturer)) {
+                            MainActivity.ShowToast(getActivity(), getString(R.string.enterDrugManufacturer));
+                            return;
                         } else if (StringUtils.isBlank(expiryDate)) {
                             MainActivity.ShowToast(getActivity(), getString(R.string.chooseExpiryDate));
                             return;
@@ -216,15 +226,25 @@ public class ProcurementFragment extends Fragment {
 
                             drugModel.DrugName = drugName;
                             drugModel.DrugMRP = Double.parseDouble(drugMRP);
-                            drugModel.DrugQuantity = Integer.valueOf(drugQuantity);
+
+                            try {
+                                drugModel.DrugQuantity = Integer.parseInt(drugQuantity);
+                            } catch (NumberFormatException ex) {
+                                ex.printStackTrace();
+                                MainActivity.ShowToast(getActivity(), getString(R.string.enterValidQuantity));
+                                return;
+                            }
+
                             drugModel.DrugDiscount = Float.valueOf(drugDiscount);
                             drugModel.DrugExpiryDate = expiryDate;
                             drugModel.DrugTransactionDate = transactionDate;
+                            drugModel.DrugManufacturer = drugManufacturer;
                             drugModel.DrugCategory = spinnerCategory.getSelectedItem().toString();
+
                             mainActivity.InsertUpdateDrugs(getActivity(), drugModel, isModify);
 
                             if (isModify)
-                                procurementAdapter.UpdateItem(drugModel,position);
+                                procurementAdapter.UpdateItem(drugModel, position);
                             else
                                 procurementAdapter.AddItem(drugModel);
 

@@ -33,6 +33,7 @@
     <string name="drugExpiryDate">Expiry Date</string>
     <string name="drugBatchNumber">Quantity</string>
     <string name="drugTransactionDate">Transaction Date</string>
+    <string name="drugManufacturer">Drug manufacturer</string>
     <string name="percentageSymbol">%</string>
 
     <!--product toast-->
@@ -40,7 +41,9 @@
     <string name="enterDrugMRP">Enter MRP</string>
     <string name="enterDrugQuantity">Enter quantity</string>
     <string name="enterDrugDiscount">Enter discount</string>
+    <string name="enterDrugManufacturer">Enter drug manufacturer</string>
     <string name="chooseExpiryDate">Choose expiry date</string>
+    <string name="enterValidQuantity">Enter a valid quantity</string>
 
     <!--Drug category-->
     <string name="injection">Injection</string>

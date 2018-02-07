@@ -14,6 +14,8 @@ public class DrugModel {
 
     public String DrugCategory;
 
+    public String DrugManufacturer;
+
     public double DrugMRP;
 
     public String DrugMRPString;
