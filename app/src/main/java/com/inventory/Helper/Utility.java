@@ -2,17 +2,22 @@ package com.inventory.Helper;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.inventory.R;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by BookMEds on 01-02-2018.
@@ -145,5 +150,56 @@ public class Utility {
         }
         // TODO Auto-generated method stub
     }
+
+    public static ArrayList GetThemeList(Context context) {
+        ArrayList hsColors = new ArrayList();
+        try {
+            hsColors.add(context.getString(R.string.popupcolor_1));
+            hsColors.add(context.getString(R.string.popupcolor_2));
+            hsColors.add(context.getString(R.string.popupcolor_3));
+            hsColors.add(context.getString(R.string.popupcolor_4));
+            hsColors.add(context.getString(R.string.popupcolor_5));
+            hsColors.add(context.getString(R.string.popupcolor_6));
+            hsColors.add(context.getString(R.string.popupcolor_7));
+            hsColors.add(context.getString(R.string.popupcolor_8));
+            hsColors.add(context.getString(R.string.popupcolor_9));
+            hsColors.add(context.getString(R.string.popupcolor_10));
+            hsColors.add(context.getString(R.string.popupcolor_11));
+            hsColors.add(context.getString(R.string.popupcolor_12));
+            hsColors.add(context.getString(R.string.popupcolor_13));
+            hsColors.add(context.getString(R.string.popupcolor_14));
+            hsColors.add(context.getString(R.string.popupcolor_15));
+            hsColors.add(context.getString(R.string.popupcolor_16));
+            hsColors.add(context.getString(R.string.popupcolor_17));
+            hsColors.add(context.getString(R.string.popupcolor_18));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return hsColors;
+    }
+
+
+    public static ArrayList GetDrugCategoryList(Context context) {
+        ArrayList<String> arrayList = new ArrayList();
+        try {
+            arrayList.add(context.getString(R.string.tablet));
+            arrayList.add(context.getString(R.string.injection));
+            arrayList.add(context.getString(R.string.capsules));
+            arrayList.add(context.getString(R.string.syrup));
+            arrayList.add(context.getString(R.string.cream));
+            arrayList.add(context.getString(R.string.miscellaneous));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return arrayList;
+    }
+
+
+    public String CreateID() throws Exception {
+        return UUID.randomUUID().toString();
+        //return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+    }
+
 
 }

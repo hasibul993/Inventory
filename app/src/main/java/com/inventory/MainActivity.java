@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Created by BookMEds on 02-02-2018.
@@ -93,10 +94,10 @@ public class MainActivity implements AppConstants {
 
     }
 
-    public void InsertUpdateDrugs(Context context, DrugModel drugModel) {
+    public void InsertUpdateDrugs(Context context, DrugModel drugModel, boolean isModify) {
         databaseAccess = new DatabaseAccess(context);
         try {
-            databaseAccess.InsertUpdateDrugs(drugModel);
+            databaseAccess.InsertUpdateDrugs(drugModel, isModify);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -203,33 +204,6 @@ public class MainActivity implements AppConstants {
         }
     }
 
-    public static ArrayList GetThemeList(Context context) {
-        ArrayList hsColors = new ArrayList();
-        try {
-            hsColors.add(context.getString(R.string.popupcolor_1));
-            hsColors.add(context.getString(R.string.popupcolor_2));
-            hsColors.add(context.getString(R.string.popupcolor_3));
-            hsColors.add(context.getString(R.string.popupcolor_4));
-            hsColors.add(context.getString(R.string.popupcolor_5));
-            hsColors.add(context.getString(R.string.popupcolor_6));
-            hsColors.add(context.getString(R.string.popupcolor_7));
-            hsColors.add(context.getString(R.string.popupcolor_8));
-            hsColors.add(context.getString(R.string.popupcolor_9));
-            hsColors.add(context.getString(R.string.popupcolor_10));
-            hsColors.add(context.getString(R.string.popupcolor_11));
-            hsColors.add(context.getString(R.string.popupcolor_12));
-            hsColors.add(context.getString(R.string.popupcolor_13));
-            hsColors.add(context.getString(R.string.popupcolor_14));
-            hsColors.add(context.getString(R.string.popupcolor_15));
-            hsColors.add(context.getString(R.string.popupcolor_16));
-            hsColors.add(context.getString(R.string.popupcolor_17));
-            hsColors.add(context.getString(R.string.popupcolor_18));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return hsColors;
-    }
 
     public int GetColorCodePosition(String colorcode, ArrayList colorslist) {
         int itemPosition = 1;
@@ -285,4 +259,6 @@ public class MainActivity implements AppConstants {
         }
         return strDate;
     }
+
+
 }

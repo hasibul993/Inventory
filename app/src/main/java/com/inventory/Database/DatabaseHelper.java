@@ -46,8 +46,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_PROFILE_PICTURE = "ProfilePicture";
 
     // Table Columns names - TABLE_PRODUCTS
+    protected static final String COLUMN_DRUG_ID = "DrugID";
     protected static final String COLUMN_BATCH_NUMBER = "BatchNumber";
     protected static final String COLUMN_DRUG_NAME = "DrugName";
+    protected static final String COLUMN_DRUG_CATEGORY = "DrugCategory";
     protected static final String COLUMN_DRUG_TRANSACTION_DATE = "DrugTransactionDate";
     protected static final String COLUMN_DRUG_MRP = "DrugMRP";
     protected static final String COLUMN_DRUG_QUANTITY = "DrugQuantity";
@@ -168,13 +170,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String QueryToCreateProductTable() {
         return "CREATE TABLE "
                 + TABLE_PRODUCTS + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
+                + COLUMN_DRUG_ID + " TEXT NOT NULL ,"
                 + COLUMN_BATCH_NUMBER + " TEXT ,"
+                + COLUMN_DRUG_CATEGORY + " TEXT ,"
                 + COLUMN_DRUG_EXPIRY_DATE + " TEXT,"
                 + COLUMN_DRUG_MRP + " REAL,"
                 + COLUMN_DRUG_QUANTITY + " TEXT,"
-                + COLUMN_DRUG_DISCOUNT + " TEXT,"
+                + COLUMN_DRUG_DISCOUNT + " REAL,"
                 + COLUMN_DRUG_TRANSACTION_DATE + " TEXT,"
-                + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "))";
+                + "PRIMARY KEY (" + COLUMN_DRUG_ID + "))";
         //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
     }
 

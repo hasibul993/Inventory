@@ -42,6 +42,14 @@
     <string name="enterDrugDiscount">Enter discount</string>
     <string name="chooseExpiryDate">Choose expiry date</string>
 
+    <!--Drug category-->
+    <string name="injection">Injection</string>
+    <string name="tablet">Tablets</string>
+    <string name="capsules">Capsules</string>
+    <string name="cream">Cream</string>
+    <string name="syrup">Syrup</string>
+    <string name="miscellaneous">Miscellaneous</string>
+
     <!--Theme color changes optional-->
     <string name="popupcolor_1">#ff6f00</string>
     <string name="popupcolor_2">#dd2c00</string>

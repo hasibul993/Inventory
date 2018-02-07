@@ -8,7 +8,11 @@ public class DrugModel {
 
     public String BatchNumber;
 
+    public String DrugID;
+
     public String DrugName;
+
+    public String DrugCategory;
 
     public double DrugMRP;
 
@@ -18,7 +22,9 @@ public class DrugModel {
 
     public String DrugExpiryDate;
 
-    public int DrugDiscount;
+    public float DrugDiscount;
+
+    public String DrugDiscountString;
 
     public String DrugTransactionDate;
 

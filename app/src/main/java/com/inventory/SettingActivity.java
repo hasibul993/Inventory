@@ -167,7 +167,7 @@ public class SettingActivity extends AppCompatActivity implements AppConstants {
 
         try {
 
-            ArrayList arrayList = MainActivity.GetThemeList(this);
+            ArrayList arrayList = Utility.GetThemeList(this);
 
             final Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.gridview_dialog);

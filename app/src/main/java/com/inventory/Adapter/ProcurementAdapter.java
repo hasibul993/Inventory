@@ -1,12 +1,17 @@
 package com.inventory.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.inventory.Fragments.ProcurementFragment;
+import com.inventory.MainActivity;
 import com.inventory.Model.DrugModel;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.NewUi.RobotoTextView;
@@ -28,10 +33,12 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
 
     Context context;
     ArrayList<DrugModel> modelArrayList;
+    MainActivity mainActivity;
 
     public ProcurementAdapter(Context context, ArrayList<DrugModel> modelArrayList) {
         this.context = context;
         this.modelArrayList = modelArrayList;
+        mainActivity = MainActivity.getInstance();
     }
 
     @Override
@@ -43,20 +50,49 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
 
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        RobotoTextView drugNameTV, drugQuantityTV;
+        RelativeLayout mainLayout, iconLayout;
+        GradientDrawable iconLayoutBackg;
+        ImageView iconImageV;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mainLayout = (RelativeLayout) itemView.findViewById(R.id.mainLayout);
+            iconLayout = (RelativeLayout) itemView.findViewById(R.id.iconLayout);
+            drugNameTV = (RobotoTextView) itemView.findViewById(R.id.drugNameTV);
+            drugQuantityTV = (RobotoTextView) itemView.findViewById(R.id.drugQuantityTV);
+            iconImageV = (ImageView) itemView.findViewById(R.id.iconImageV);
+            iconLayoutBackg = (GradientDrawable) iconLayout.getBackground();
+        }
+    }
+
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         try {
 
-            final DrugModel sliderMenuModel = modelArrayList.get(position);
-            holder.drugNameTV.setText(sliderMenuModel.DrugName);
-            holder.drugQuantityTV.setText(sliderMenuModel.DrugQuantity);
+            final DrugModel drugModel = modelArrayList.get(position);
+            holder.drugNameTV.setText(drugModel.DrugName);
+            holder.drugQuantityTV.setText(context.getString(R.string.drugQuantity) + " - " + drugModel.DrugQuantity);
+            holder.iconLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+
+            if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.tablet)))
+                holder.iconImageV.setImageResource(R.drawable.tablets_icon);
+            else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection)))
+                holder.iconImageV.setImageResource(R.drawable.injection_icon);
+            else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.syrup)))
+                holder.iconImageV.setImageResource(R.drawable.syrup_icon);
+            else
+                holder.iconImageV.setImageResource(R.drawable.stocking);
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     try {
-                        OnClickScreenTransition(sliderMenuModel.DrugName);
+                        OnClickScreenTransition(drugModel.DrugID, position);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -76,26 +112,52 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
         return modelArrayList != null ? modelArrayList.size() : 0;
     }
 
+    public DrugModel getItem(int position) {
+        // TODO Auto-generated method stub
+        return modelArrayList.get(position);
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        RobotoTextView drugNameTV, drugQuantityTV;
-        RelativeLayout mainLayout, iconLayout;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            mainLayout = (RelativeLayout) itemView.findViewById(R.id.mainLayout);
-            iconLayout = (RelativeLayout) itemView.findViewById(R.id.iconLayout);
-            drugNameTV = (RobotoTextView) itemView.findViewById(R.id.drugNameTV);
-            drugQuantityTV = (RobotoTextView) itemView.findViewById(R.id.drugQuantityTV);
-
+    public void AddItem(DrugModel drugModel) {
+        int position = 0;
+        try {
+            modelArrayList.add(position, drugModel);
+            notifyItemInserted(position);
+            notifyItemRangeChanged(position, modelArrayList.size());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    private void OnClickScreenTransition(String title) {
+    public void UpdateItem(DrugModel drugModel, int position) {
         try {
-            if (StringUtils.equalsIgnoreCase(title, context.getString(R.string.settings))) {
-                //SettingActivity.GotoSettingActivity(context);
+            modelArrayList.remove(position);
+            modelArrayList.add(position, drugModel);
+
+            notifyItemChanged(position);
+            notifyItemRangeChanged(position, modelArrayList.size());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void RemoveItem(int position) {
+        try {
+            modelArrayList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, modelArrayList.size());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+
+    private void OnClickScreenTransition(String drugID, int position) {
+        try {
+            if (!StringUtils.isBlank(drugID)) {
+                //DrugModel drugModel = mainActivity.GetDrugDetails(context, drugID);
+                ProcurementFragment.procurementFragment.ShowDialogAddDrug(getItem(position), position);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

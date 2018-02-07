@@ -104,17 +104,23 @@ public class DatabaseAccess extends DatabaseHelper {
     }
 
 
-    public void InsertUpdateDrugs(DrugModel drugModel) {
+    public void InsertUpdateDrugs(DrugModel drugModel, boolean isModify) {
         SQLiteDatabase db = super.getWritableDatabase();
         db.beginTransaction();
         ContentValues values = new ContentValues();
         try {
+
+            if (drugModel.DrugID != null)
+                values.put(COLUMN_DRUG_ID, drugModel.DrugID);
 
             if (drugModel.DrugName != null)
                 values.put(COLUMN_DRUG_NAME, drugModel.DrugName);
 
             if (drugModel.BatchNumber != null)
                 values.put(COLUMN_BATCH_NUMBER, drugModel.BatchNumber);
+
+            if (drugModel.DrugCategory != null)
+                values.put(COLUMN_DRUG_CATEGORY, drugModel.DrugCategory);
 
 
             values.put(COLUMN_DRUG_MRP, drugModel.DrugMRP);
@@ -135,11 +141,13 @@ public class DatabaseAccess extends DatabaseHelper {
 
             if (_id == -1) {
 
-                if (values.containsKey(COLUMN_DRUG_QUANTITY))// remove quantity other wise it will update the current quantity -- and then do increment
+                if (values.containsKey(COLUMN_DRUG_QUANTITY) && !isModify)// remove quantity other wise it will update the current quantity -- and then do increment
                     values.remove(COLUMN_DRUG_QUANTITY);
 
-                db.update(TABLE_PRODUCTS, values, COLUMN_DRUG_NAME + "= '" + drugModel.DrugName + "'", null);
-                db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.DrugName, drugModel.DrugQuantity));
+                db.update(TABLE_PRODUCTS, values, COLUMN_DRUG_ID + "= '" + drugModel.DrugID + "'", null);
+
+                if (!isModify)
+                    db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.DrugID, drugModel.DrugQuantity));
             }
 
             db.setTransactionSuccessful();
@@ -227,15 +235,17 @@ public class DatabaseAccess extends DatabaseHelper {
 
             if (cursor.moveToFirst()) {
 
+                drugModel.DrugID = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_ID));
                 drugModel.BatchNumber = cursor.getString(cursor.getColumnIndex(COLUMN_BATCH_NUMBER));
                 drugModel.DrugName = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_NAME));
                 drugModel.DrugMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP));
-                drugModel.DrugMRPString = AppConstants.decimalFormat.format(drugModel.DrugMRP);
+                drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
                 drugModel.DrugQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_QUANTITY));
                 drugModel.DrugExpiryDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_EXPIRY_DATE));
-                drugModel.DrugDiscount = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
+                drugModel.DrugDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
+                drugModel.DrugDiscountString = AppConstants.decimalFormatOnePlace.format(drugModel.DrugDiscount);
                 drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
-
+                drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -258,16 +268,23 @@ public class DatabaseAccess extends DatabaseHelper {
             cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrug(searchText), null);
 
             if (cursor.moveToFirst()) {
-                DrugModel drugModel = new DrugModel();
-                drugModel.BatchNumber = cursor.getString(cursor.getColumnIndex(COLUMN_BATCH_NUMBER));
-                drugModel.DrugName = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_NAME));
-                drugModel.DrugMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP));
-                drugModel.DrugMRPString = AppConstants.decimalFormat.format(drugModel.DrugMRP);
-                drugModel.DrugQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_QUANTITY));
-                drugModel.DrugExpiryDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_EXPIRY_DATE));
-                drugModel.DrugDiscount = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
-                drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
-                drugModelArrayList.add(drugModel);
+                while (!cursor.isAfterLast()) {
+                    DrugModel drugModel = new DrugModel();
+                    drugModel.DrugID = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_ID));
+                    drugModel.BatchNumber = cursor.getString(cursor.getColumnIndex(COLUMN_BATCH_NUMBER));
+                    drugModel.DrugName = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_NAME));
+                    drugModel.DrugMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP));
+                    drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
+                    drugModel.DrugQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_QUANTITY));
+                    drugModel.DrugExpiryDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_EXPIRY_DATE));
+                    drugModel.DrugDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
+                    drugModel.DrugDiscountString = AppConstants.decimalFormatOnePlace.format(drugModel.DrugDiscount);
+                    drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
+                    drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
+                    drugModelArrayList.add(drugModel);
+                    cursor.moveToNext();
+                }
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();

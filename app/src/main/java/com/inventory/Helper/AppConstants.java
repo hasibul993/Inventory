@@ -10,6 +10,8 @@ public interface AppConstants {
 
     public static String THEMECOLOR = "#673ab7";
 
-    public static DecimalFormat decimalFormat = new DecimalFormat("######.##");
+    public static DecimalFormat decimalFormatTwoPlace = new DecimalFormat("######.##");
+
+    public static DecimalFormat decimalFormatOnePlace = new DecimalFormat("######.#");
 
 }

@@ -38,7 +38,7 @@ public class DatabaseQuery extends DatabaseHelper {
     public static String GetQueryForDrugDetails(String drugID) {
         String query = "";
         try {
-            query = SELECT_ALL + TABLE_PRODUCTS + " Where " + COLUMN_DRUG_NAME + " = '" + drugID + "'";
+            query = SELECT_ALL + TABLE_PRODUCTS + " Where " + COLUMN_DRUG_ID + " = '" + drugID + "'";
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class DatabaseQuery extends DatabaseHelper {
         String query = "";
         try {
             query = "UPDATE " + TABLE_PRODUCTS + " SET " + COLUMN_DRUG_QUANTITY + "="
-                    + COLUMN_DRUG_QUANTITY + "+" + incrementValue + " WHERE " + COLUMN_DRUG_NAME + "= '" + drugID + "'";
+                    + COLUMN_DRUG_QUANTITY + "+" + incrementValue + " WHERE " + COLUMN_DRUG_ID+ "= '" + drugID + "'";
         } catch (Exception ex) {
             ex.printStackTrace();
         }

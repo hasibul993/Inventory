@@ -52,7 +52,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".AndroidDatabaseManager"
+            android:name=".Database.AndroidDatabaseViewer"
             android:theme="@style/Theme.AppCompat.Light" />
 
     </application>

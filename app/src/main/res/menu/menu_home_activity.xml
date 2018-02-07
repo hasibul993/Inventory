@@ -9,6 +9,14 @@
         android:title="More"
         app:showAsAction="always">
 
+        <menu>
+            <!-- Help -->
+            <item
+                android:id="@+id/viewDataBase"
+                android:title="View Database"
+                app:showAsAction="always" />
+        </menu>
+
     </item>
 
 </menu>

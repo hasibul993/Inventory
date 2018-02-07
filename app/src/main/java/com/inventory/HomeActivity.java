@@ -99,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
                             DashboardFragment dashboardFragment = (DashboardFragment) currentFragment;
                         } else if (currentFragment instanceof ProcurementFragment) {
                             ProcurementFragment procurementFragment = (ProcurementFragment) currentFragment;
-                            procurementFragment.ShowDialogAddDrug();
+                            procurementFragment.ShowDialogAddDrug(null, -1);
                         } else if (currentFragment instanceof SalesFragment) {
                             SalesFragment salesFragment = (SalesFragment) currentFragment;
                         }

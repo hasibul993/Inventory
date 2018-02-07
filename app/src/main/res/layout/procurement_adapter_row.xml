@@ -9,22 +9,24 @@
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
         android:background="@color/White"
-        android:padding="7dp">
+        android:padding="2dp">
 
         <RelativeLayout
             android:id="@+id/iconLayout"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/rectangle_sharp_corner"
+            android:background="@drawable/rectangle_round_corner"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/iconImageV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/stocking" />
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/tablets_icon" />
 
         </RelativeLayout>
 
@@ -33,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/iconLayout"
             android:orientation="vertical">
 
@@ -60,15 +62,17 @@
                 android:textSize="@dimen/text"
                 app:typeface="robotoRegular" />
 
-        </RelativeLayout>
+            <View
+                android:id="@+id/view_row"
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:layout_below="@+id/drugQuantityTV"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/main_color_grey_500"
+                android:visibility="visible" />
 
-        <View
-            android:id="@+id/view_row"
-            android:layout_width="match_parent"
-            android:layout_height="0.4dp"
-            android:layout_below="@+id/drugNameLayout"
-            android:background="@drawable/listview_divider"
-            android:visibility="visible" />
+        </RelativeLayout>
 
 
     </RelativeLayout>

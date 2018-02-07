@@ -1,11 +1,9 @@
 package com.inventory.Fragments;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,30 +12,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
+import com.inventory.Adapter.CustomSpinnerAdapter;
 import com.inventory.Adapter.ProcurementAdapter;
-import com.inventory.Adapter.SliderMenuAdapter;
 import com.inventory.Helper.Utility;
-import com.inventory.HomeActivity;
 import com.inventory.MainActivity;
 import com.inventory.Model.DrugModel;
-import com.inventory.Model.SettingsModel;
 import com.inventory.NewUi.DividerItemDecoration;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
-import com.inventory.SettingActivity;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
 public class ProcurementFragment extends Fragment {
+
     View rootView;
     RecyclerView recyclerView;
     ProcurementAdapter procurementAdapter;
     MainActivity mainActivity;
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
     Utility utility = new Utility();
+    boolean isModify = false;
+    public static ProcurementFragment procurementFragment;
+
+    ArrayList<String> drugCategories;
+    ;
 
     public ProcurementFragment() {
         // Required empty public constructor
@@ -65,12 +68,11 @@ public class ProcurementFragment extends Fragment {
             // Inflate the layout for this fragment
             rootView = inflater.inflate(R.layout.procurement_fragment, container, false);
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-
-
             mainActivity = MainActivity.getInstance();
             drugModelArrayList = mainActivity.GetDrugList(getActivity(), null);
             SetAdapter(drugModelArrayList);
-
+            drugCategories = Utility.GetDrugCategoryList(getActivity());
+            procurementFragment = this;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -102,11 +104,15 @@ public class ProcurementFragment extends Fragment {
         }
     }
 
-    public void ShowDialogAddDrug() {
+    public void ShowDialogAddDrug(final DrugModel editModel, final int position) {
         TextInputLayout drugNameET_Hint, mrpET_Hint, quantityET_Hint, discountET_Hint;
+        RelativeLayout cancelOkRelaLayout;
         final EditText drugNameET, mrpET, quantityET, discountET;
         final RobotoTextView okTV, cancelTV, expiryDateTV, transactionDateTV;
+        final Spinner spinnerCategory;
+        String prevDrugCategory = null;
         try {
+
             final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.add_drug);
             dialog.setCancelable(false);
@@ -122,6 +128,7 @@ public class ProcurementFragment extends Fragment {
             quantityET_Hint.setHint(getString(R.string.drugQuantity));
             discountET_Hint.setHint(getString(R.string.drugDiscount));
 
+            spinnerCategory = (Spinner) dialog.findViewById(R.id.spinnerCategory);
 
             drugNameET = (EditText) dialog.findViewById(R.id.drugNameET);
             mrpET = (EditText) dialog.findViewById(R.id.mrpET);
@@ -131,8 +138,29 @@ public class ProcurementFragment extends Fragment {
             expiryDateTV = (RobotoTextView) dialog.findViewById(R.id.expiryDateTV);
             transactionDateTV = (RobotoTextView) dialog.findViewById(R.id.transactionDateTV);
 
+            cancelOkRelaLayout = (RelativeLayout) dialog.findViewById(R.id.cancelOkRelaLayout);
+            GradientDrawable cancelOkRelaLayoutBackg = (GradientDrawable) cancelOkRelaLayout.getBackground();
+            cancelOkRelaLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+
+
             transactionDateTV.setText(mainActivity.GetCurrentDate());
 
+
+            if (editModel != null) {
+
+                isModify = true;
+                drugNameET.setText(editModel.DrugName);
+                drugNameET.setSelection(drugNameET.length());
+                mrpET.setText(editModel.DrugMRPString);
+                quantityET.setText(editModel.DrugQuantity + "");
+                discountET.setText(editModel.DrugDiscountString);
+                expiryDateTV.setText(editModel.DrugExpiryDate);
+                prevDrugCategory = editModel.DrugCategory;
+            } else {
+                isModify = false;
+            }
+
+            SetSpinnerAdapter(spinnerCategory, prevDrugCategory);
 
             //cancel ok btn ids
             okTV = (RobotoTextView) dialog.findViewById(R.id.okTV);
@@ -148,7 +176,6 @@ public class ProcurementFragment extends Fragment {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-
                 }
             });
 
@@ -182,13 +209,25 @@ public class ProcurementFragment extends Fragment {
                             return;
                         } else {
                             DrugModel drugModel = new DrugModel();
+                            if (isModify)
+                                drugModel.DrugID = editModel.DrugID;
+                            else
+                                drugModel.DrugID = utility.CreateID();
+
                             drugModel.DrugName = drugName;
                             drugModel.DrugMRP = Double.parseDouble(drugMRP);
                             drugModel.DrugQuantity = Integer.valueOf(drugQuantity);
-                            drugModel.DrugDiscount = Integer.valueOf(drugDiscount);
+                            drugModel.DrugDiscount = Float.valueOf(drugDiscount);
                             drugModel.DrugExpiryDate = expiryDate;
                             drugModel.DrugTransactionDate = transactionDate;
-                            mainActivity.InsertUpdateDrugs(getActivity(), drugModel);
+                            drugModel.DrugCategory = spinnerCategory.getSelectedItem().toString();
+                            mainActivity.InsertUpdateDrugs(getActivity(), drugModel, isModify);
+
+                            if (isModify)
+                                procurementAdapter.UpdateItem(drugModel,position);
+                            else
+                                procurementAdapter.AddItem(drugModel);
+
                             dialog.dismiss();
                         }
 
@@ -216,6 +255,22 @@ public class ProcurementFragment extends Fragment {
 
         } catch (Exception ex) {
 
+        }
+    }
+
+
+    private void SetSpinnerAdapter(Spinner categorySpinner, String selectedItem) {
+
+        try {
+
+            CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getActivity(), R.layout.spinner_item, drugCategories);
+            categorySpinner.setAdapter(adapter);
+
+            if (!StringUtils.isBlank(selectedItem))
+                categorySpinner.setSelection(drugCategories.indexOf(selectedItem));
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
