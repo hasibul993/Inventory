@@ -19,6 +19,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 
 import com.inventory.Adapter.SliderMenuAdapter;
 import com.inventory.Adapter.ViewPagerAdapter;
+import com.inventory.Database.AndroidDatabaseViewer;
 import com.inventory.Fragments.DashboardFragment;
 import com.inventory.Fragments.ProcurementFragment;
 import com.inventory.Fragments.SalesFragment;
@@ -267,5 +270,34 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        try {
+            getMenuInflater().inflate(R.menu.menu_home_activity, menu);
+            MenuItem moreIcon = menu.findItem(R.id.menu_more);
+            moreIcon.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.menu_more:
+                AndroidDatabaseViewer.GotoAndroidDatabaseViewer(HomeActivity.this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
 }

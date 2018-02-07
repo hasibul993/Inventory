@@ -3,7 +3,7 @@
 
 
     <item
-        android:id="@+id/menu_overflow"
+        android:id="@+id/menu_more"
         android:icon="@drawable/vector_more_vert_white"
         android:orderInCategory="11111"
         android:title="More"

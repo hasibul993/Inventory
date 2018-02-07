@@ -271,6 +271,8 @@ public class SettingActivity extends AppCompatActivity implements AppConstants {
     public boolean onCreateOptionsMenu(Menu menu) {
         try {
             getMenuInflater().inflate(R.menu.menu_home_activity, menu);
+            MenuItem moreIcon = menu.findItem(R.id.menu_more);
+            moreIcon.setVisible(false);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
