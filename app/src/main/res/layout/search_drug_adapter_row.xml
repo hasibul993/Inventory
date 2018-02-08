@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_color_grey_300">
@@ -15,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
-            android:padding="8dp">
+            android:padding="2dp">
 
             <RelativeLayout
                 android:id="@+id/iconLayout"
@@ -47,7 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:padding="2dp"
+                    android:singleLine="true"
                     android:text="Hasibul"
                     android:textColor="@color/main_color_grey_900"
                     android:textSize="@dimen/body"
@@ -62,24 +64,25 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:text="Hasibul"
-                    android:textColor="@color/main_color_grey_700"
+                    android:textColor="@color/black_56"
                     android:textSize="@dimen/text_10sp"
                     app:typeface="robotoRegular" />
 
-                <View
-                    android:id="@+id/view_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.4dp"
-                    android:layout_below="@+id/drugQuantityTV"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/main_color_grey_500"
-                    android:visibility="visible" />
 
             </RelativeLayout>
 
 
         </RelativeLayout>
+
+        <View
+            android:id="@+id/view_row"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_below="@+id/mainLayout"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/listview_divider"
+            android:visibility="visible" />
 
     </RelativeLayout>
 

@@ -49,7 +49,7 @@ public class ProcurementFragment extends Fragment {
     MainActivity mainActivity;
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
     Utility utility = new Utility();
-    boolean isModify = false;
+    boolean isModify = false, isSearchMedClicked = false, isSearchManufacturerClicked = false;
     public static ProcurementFragment procurementFragment;
 
     ArrayList<String> drugCategories;
@@ -199,13 +199,13 @@ public class ProcurementFragment extends Fragment {
                     try {
                         String searchText = viewIDModel.DrugNameEditText.getText().toString();
 
-                        if ((searchText.length() >= 2)) {
+                        if (!isSearchMedClicked && (searchText.length() >= 2)) {
                             EditTypeStop(viewIDModel, searchText, 400, viewIDModel.DrugNameRecyclerView, true);
                         } else {
                             viewIDModel.DrugNameRecyclerView.setAdapter(null);
                             viewIDModel.DrugNameRecyclerView.setVisibility(View.GONE);
                         }
-
+                        isSearchMedClicked = false;
                         Log.i(TAG, "onTextChanged : " + searchText);
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -230,14 +230,14 @@ public class ProcurementFragment extends Fragment {
                     try {
                         String searchText = viewIDModel.ManufacturerEditText.getText().toString();
                         // if (getActivity().getCurrentFocus() == viewIDModel.ManufacturerEditText) {
-                        if ((searchText.length() >= 2)) {
+                        if (!isSearchManufacturerClicked && (searchText.length() >= 2)) {
                             EditTypeStop(viewIDModel, searchText, 400, viewIDModel.DrugManufacturerRecyclerView, false);
                         } else {
                             viewIDModel.DrugManufacturerRecyclerView.setAdapter(null);
                             viewIDModel.DrugManufacturerRecyclerView.setVisibility(View.GONE);
                         }
                         //}
-
+                        isSearchManufacturerClicked = false;
                         Log.i(TAG, "onTextChanged : " + searchText);
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -454,7 +454,12 @@ public class ProcurementFragment extends Fragment {
                         @Override
                         public void onItemClick(View view, int position) {
                             try {
-
+                                if (timer != null) {
+                                    timer.cancel();
+                                    timer.purge();
+                                    isSearchMedClicked = true;
+                                    isSearchManufacturerClicked = true;
+                                }
                                 DrugModel drugModel = searchDrugAdapter.getItem(position);
                                 SetSearchedDrugDetails(drugModel, viewIDModel);
                                 Log.i(TAG, "SetSearchDrugAdapter item click : " + drugModel);
@@ -475,6 +480,7 @@ public class ProcurementFragment extends Fragment {
     private void SetSearchedDrugDetails(DrugModel drugModel, ViewIDModel viewIDModel) {
         try {
             viewIDModel.DrugNameEditText.setText(drugModel.DrugName);
+            viewIDModel.DrugNameEditText.setSelection(viewIDModel.DrugNameEditText.length());
             viewIDModel.ManufacturerEditText.setText(drugModel.DrugManufacturer);
             viewIDModel.MrpEditText.setText(drugModel.DrugMRPString);
             viewIDModel.DiscountEditText.setText(drugModel.DrugDiscountString);
@@ -506,8 +512,15 @@ public class ProcurementFragment extends Fragment {
                         @Override
                         public void onItemClick(View view, int position) {
                             try {
+                                if (timer != null) {
+                                    timer.cancel();
+                                    timer.purge();
+                                    isSearchMedClicked = true;
+                                    isSearchManufacturerClicked = true;
+                                }
                                 DrugModel drugModel = searchDrugAdapter.getItem(position);
                                 ManufacturerEditText.setText(drugModel.DrugManufacturer);
+                                ManufacturerEditText.setSelection(ManufacturerEditText.length());
                                 Log.i(TAG, "SetSearchDrugAdapter item click : " + drugModel);
                                 searchRecyclerView.setAdapter(null);
                                 searchRecyclerView.setVisibility(View.VISIBLE);
