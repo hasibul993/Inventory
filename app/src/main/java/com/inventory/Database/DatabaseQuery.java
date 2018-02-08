@@ -35,10 +35,11 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
-    public static String GetQueryForDrugDetails(String drugID) {
+    public static String GetQueryForDrugDetails(String drugBatchNo, String drugID) {
         String query = "";
         try {
-            query = SELECT_ALL + TABLE_PRODUCTS + " Where " + COLUMN_DRUG_ID + " = '" + drugID + "'";
+            query = SELECT_ALL + TABLE_PRODUCTS + " Where " + COLUMN_BATCH_NUMBER + " = '"
+                    + drugBatchNo + "' AND " + COLUMN_DRUG_ID + " = '" + drugID + "'";
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -58,11 +59,25 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
-    public static String GetQueryForIncrement(String drugID, int incrementValue) {
+
+    public static String GetQueryForSearchDrugMnaufacturer(String searchText) {
+        String query = "";
+        try {
+
+            query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_MANUFACTURER + " like '%" + searchText + "%'";
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForIncrement(String drugBatchNo, String drugName, int incrementValue) {
         String query = "";
         try {
             query = "UPDATE " + TABLE_PRODUCTS + " SET " + COLUMN_DRUG_QUANTITY + "="
-                    + COLUMN_DRUG_QUANTITY + "+" + incrementValue + " WHERE " + COLUMN_DRUG_ID+ "= '" + drugID + "'";
+                    + COLUMN_DRUG_QUANTITY + "+" + incrementValue + " WHERE " + COLUMN_BATCH_NUMBER + "= '"
+                    + drugBatchNo + "' AND " + COLUMN_DRUG_NAME + "= '" + drugName + "'";
         } catch (Exception ex) {
             ex.printStackTrace();
         }

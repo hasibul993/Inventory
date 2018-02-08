@@ -180,7 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DRUG_DISCOUNT + " REAL,"
                 + COLUMN_DRUG_MANUFACTURER + " TEXT,"
                 + COLUMN_DRUG_TRANSACTION_DATE + " TEXT,"
-                + "PRIMARY KEY (" + COLUMN_DRUG_ID + "))";
+                + "PRIMARY KEY (" + COLUMN_BATCH_NUMBER + "," + COLUMN_DRUG_ID + "))";
         //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
     }
 

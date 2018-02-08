@@ -54,17 +54,6 @@
 
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/drugNameRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/drugNameETHintLinearLayout"
-                    android:background="@color/White"
-                    android:divider="@color/White"
-                    android:focusable="false"
-                    android:visibility="gone" />
-
-
                 <LinearLayout
                     android:id="@+id/mrpQuanLayout"
                     android:layout_width="match_parent"
@@ -183,24 +172,13 @@
                         android:drawableBottom="@android:color/transparent"
                         android:ems="10"
                         android:hint="@string/drugManufacturer"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapWords|textAutoCorrect|textMultiLine"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords|textAutoCorrect"
                         android:singleLine="true"
                         android:textColor="@color/main_color_grey_900"
                         android:textColorHint="@android:color/transparent"
                         android:textSize="@dimen/body" />
                 </android.support.design.widget.TextInputLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/drugManufacturerRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/manufacturerET_Hint"
-                    android:background="@color/White"
-                    android:divider="@color/White"
-                    android:focusable="false"
-                    android:visibility="gone" />
-
 
                 <RelativeLayout
                     android:id="@+id/spinnerLayout"
@@ -230,12 +208,44 @@
 
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:id="@+id/batchNumberLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinnerLayout"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/batchNumberET_Hint"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textColorHint="@color/colorPrimary">
+
+                        <EditText
+                            android:id="@+id/batchNumberET"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:cursorVisible="true"
+                            android:drawableBottom="@android:color/transparent"
+                            android:ems="10"
+                            android:hint="@string/drugDiscount"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapWords|textAutoCorrect"
+                            android:singleLine="true"
+                            android:textColor="@color/main_color_grey_900"
+                            android:textColorHint="@android:color/transparent"
+                            android:textSize="@dimen/body" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/expiryDateLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/spinnerLayout"
+                    android:layout_below="@+id/batchNumberLayout"
                     android:layout_marginTop="10dp"
                     android:padding="6dp">
 
@@ -308,6 +318,26 @@
 
 
                 </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/drugNameRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/drugNameETHintLinearLayout"
+                    android:background="@color/Gray"
+                    android:divider="@color/White"
+                    android:focusable="false"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/drugManufacturerRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/manufacturerET_Hint"
+                    android:background="@color/Gray"
+                    android:divider="@color/White"
+                    android:focusable="false"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 

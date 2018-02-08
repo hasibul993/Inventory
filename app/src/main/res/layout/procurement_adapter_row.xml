@@ -2,9 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/com.zibmi"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/White">
 
     <RelativeLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,19 +21,35 @@
 
             <RelativeLayout
                 android:id="@+id/iconLayout"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignWithParentIfMissing="true"
                 android:background="@drawable/rectangle_round_corner"
-                android:gravity="center">
+                android:gravity="center"
+                android:transitionName="">
 
-                <ImageView
-                    android:id="@+id/iconImageV"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:src="@drawable/tablets_icon" />
+                    android:layout_centerInParent="true"
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:cardPreventCornerOverlap="false">
 
+                    <ImageView
+                        android:id="@+id/iconImageV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:src="@drawable/tablets_icon" />
+                </android.support.v7.widget.CardView>
             </RelativeLayout>
+
 
             <RelativeLayout
                 android:id="@+id/drugNameLayout"
@@ -47,33 +65,85 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:singleLine="true"
                     android:text="Hasibul"
-                    android:textColor="@color/main_color_grey_900"
-                    android:textSize="@dimen/body"
-                    app:typeface="robotoRegular" />
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/header"
+                    app:typeface="robotoMedium" />
+
 
                 <com.inventory.NewUi.RobotoTextView
-                    android:id="@+id/drugQuantityTV"
+                    android:id="@+id/drugManufacturerTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/drugNameTV"
+                    android:layout_marginTop="2dp"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:text="Hasibul"
-                    android:textColor="@color/main_color_grey_700"
-                    android:textSize="@dimen/text"
+                    android:textColor="@color/black_65"
+                    android:textSize="@dimen/body"
                     app:typeface="robotoRegular" />
 
-                <View
-                    android:id="@+id/view_row"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0.4dp"
-                    android:layout_below="@+id/drugQuantityTV"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/main_color_grey_500"
-                    android:visibility="visible" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/drugManufacturerTV"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal">
+
+                    <com.inventory.NewUi.RobotoTextView
+                        android:id="@+id/drugQuantityTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/circle_shape"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="2dp"
+                        android:text="05"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/text_10sp"
+                        app:typeface="robotoRegular" />
+
+                    <com.inventory.NewUi.RobotoTextView
+                        android:id="@+id/drugBatchNumberTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/rectangle_round_corner"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="2dp"
+                        android:text="05"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/text_10sp"
+                        app:typeface="robotoRegular" />
+
+                    <com.inventory.NewUi.RobotoTextView
+                        android:id="@+id/drugExpiryDateTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/rectangle_round_corner"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="2dp"
+                        android:text="05"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/text_10sp"
+                        app:typeface="robotoRegular" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 
@@ -82,7 +152,13 @@
 
     </RelativeLayout>
 
-
-
-
+    <View
+        android:id="@+id/view_row"
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_below="@+id/parentLayout"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/listview_divider"
+        android:visibility="visible" />
 </RelativeLayout>

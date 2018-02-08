@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.inventory.Activities.MainActivity;
 import com.inventory.Fragments.ProcurementFragment;
+import com.inventory.Helper.AppConstants;
 import com.inventory.Model.DrugModel;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
  */
 
 
-public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.ViewHolder> {
+public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.ViewHolder> implements AppConstants {
 
 
     Context context;
@@ -50,9 +51,9 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        RobotoTextView drugNameTV, drugQuantityTV;
+        RobotoTextView drugNameTV, drugQuantityTV, drugManufacturerTV, drugBatchNumberTV, drugExpiryDateTV;
         RelativeLayout mainLayout, iconLayout;
-        GradientDrawable iconLayoutBackg;
+        GradientDrawable iconLayoutBackg, drugQuantityBackg, drugBatchNumberBackg, drugExpiryDateBackg;
         ImageView iconImageV;
 
         public ViewHolder(View itemView) {
@@ -61,8 +62,16 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
             iconLayout = (RelativeLayout) itemView.findViewById(R.id.iconLayout);
             drugNameTV = (RobotoTextView) itemView.findViewById(R.id.drugNameTV);
             drugQuantityTV = (RobotoTextView) itemView.findViewById(R.id.drugQuantityTV);
+            drugManufacturerTV = (RobotoTextView) itemView.findViewById(R.id.drugManufacturerTV);
+            drugBatchNumberTV = (RobotoTextView) itemView.findViewById(R.id.drugBatchNumberTV);
+            drugExpiryDateTV = (RobotoTextView) itemView.findViewById(R.id.drugExpiryDateTV);
             iconImageV = (ImageView) itemView.findViewById(R.id.iconImageV);
+
             iconLayoutBackg = (GradientDrawable) iconLayout.getBackground();
+            drugQuantityBackg = (GradientDrawable) drugQuantityTV.getBackground();
+            drugBatchNumberBackg = (GradientDrawable) drugBatchNumberTV.getBackground();
+            drugExpiryDateBackg = (GradientDrawable) drugExpiryDateTV.getBackground();
+
         }
     }
 
@@ -74,17 +83,37 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
 
             final DrugModel drugModel = modelArrayList.get(position);
             holder.drugNameTV.setText(drugModel.DrugName);
-            holder.drugQuantityTV.setText(context.getString(R.string.drugQuantity) + " - " + drugModel.DrugQuantity);
-            holder.iconLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+            holder.drugManufacturerTV.setText(drugModel.DrugManufacturer);
 
-            if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.tablet)))
-                holder.iconImageV.setImageResource(R.drawable.tablets_icon);
-            else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection)))
-                holder.iconImageV.setImageResource(R.drawable.injection_icon);
-            else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.syrup)))
-                holder.iconImageV.setImageResource(R.drawable.syrup_icon);
+            if (drugModel.DrugQuantity > 0 && drugModel.DrugQuantity < 10)
+                holder.drugQuantityTV.setText("0" + drugModel.DrugQuantity + "");
             else
+                holder.drugQuantityTV.setText(drugModel.DrugQuantity + "");
+
+            holder.drugBatchNumberTV.setText(drugModel.BatchNumber);
+            holder.drugExpiryDateTV.setText(drugModel.DrugExpiryDate);
+
+
+            holder.drugQuantityBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+            holder.drugBatchNumberBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+            holder.drugExpiryDateBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+
+            if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.tablet))) {
+                holder.iconLayoutBackg.setColor(Color.parseColor(TABLETS_THEMECOLOR));
+                holder.iconImageV.setImageResource(R.drawable.tablets_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection))) {
+                holder.iconLayoutBackg.setColor(Color.parseColor(INJECTION_THEMECOLOR));
+                holder.iconImageV.setImageResource(R.drawable.injection_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.syrup))) {
+                holder.iconLayoutBackg.setColor(Color.parseColor(SYRUP_THEMECOLOR));
+                holder.iconImageV.setImageResource(R.drawable.syrup_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.cream))) {
+                holder.iconLayoutBackg.setColor(Color.parseColor(CREAM_THEMECOLOR));
+                holder.iconImageV.setImageResource(R.drawable.cream_icon);
+            } else {
+                holder.iconLayoutBackg.setColor(Color.parseColor(MISCELLANEOUS_THEMECOLOR));
                 holder.iconImageV.setImageResource(R.drawable.stocking);
+            }
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -125,6 +125,9 @@ public class DatabaseAccess extends DatabaseHelper {
             if (drugModel.DrugManufacturer != null)
                 values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer);
 
+            if (drugModel.BatchNumber != null)
+                values.put(COLUMN_BATCH_NUMBER, drugModel.BatchNumber);
+
             values.put(COLUMN_DRUG_MRP, drugModel.DrugMRP);
 
             values.put(COLUMN_DRUG_QUANTITY, drugModel.DrugQuantity);
@@ -146,10 +149,14 @@ public class DatabaseAccess extends DatabaseHelper {
                 if (values.containsKey(COLUMN_DRUG_QUANTITY) && !isModify)// remove quantity other wise it will update the current quantity -- and then do increment
                     values.remove(COLUMN_DRUG_QUANTITY);
 
-                db.update(TABLE_PRODUCTS, values, COLUMN_DRUG_ID + "= '" + drugModel.DrugID + "'", null);
+                // db.update(TABLE_PRODUCTS, values, COLUMN_DRUG_ID + "= '" + drugModel.DrugID + "'", null);
+
+                db.update(TABLE_PRODUCTS, values, COLUMN_BATCH_NUMBER + "= '"
+                        + drugModel.BatchNumber + "' AND " + COLUMN_DRUG_ID + " = '"
+                        + drugModel.DrugName + "'", null);
 
                 if (!isModify)
-                    db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.DrugID, drugModel.DrugQuantity));
+                    db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.BatchNumber,drugModel.DrugName, drugModel.DrugQuantity));
             }
 
             db.setTransactionSuccessful();
@@ -227,13 +234,13 @@ public class DatabaseAccess extends DatabaseHelper {
         return settingsModel;
     }
 
-    public DrugModel GetDrugDetails(String drugID) {
+    public DrugModel GetDrugDetails(String drugBatchNo,String drugID) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;
         DrugModel drugModel = new DrugModel();
 
         try {
-            cursor = db.rawQuery(DatabaseQuery.GetQueryForDrugDetails(drugID), null);
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForDrugDetails(drugBatchNo,drugID), null);
 
             if (cursor.moveToFirst()) {
 
@@ -262,13 +269,16 @@ public class DatabaseAccess extends DatabaseHelper {
     }
 
 
-    public ArrayList<DrugModel> GetDrugList(String searchText) {
+    public ArrayList<DrugModel> GetDrugList(String searchText, boolean isManufacturer) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
 
         try {
-            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrug(searchText), null);
+            if (isManufacturer)
+                cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugMnaufacturer(searchText), null);
+            else
+                cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrug(searchText), null);
 
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {

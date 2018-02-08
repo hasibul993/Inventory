@@ -33,7 +33,8 @@
     <string name="drugExpiryDate">Expiry Date</string>
     <string name="drugBatchNumber">Quantity</string>
     <string name="drugTransactionDate">Transaction Date</string>
-    <string name="drugManufacturer">Drug manufacturer</string>
+    <string name="drugManufacturer">Drug Manufacturer</string>
+    <string name="batchNumber">Batch Number</string>
     <string name="percentageSymbol">%</string>
     <string name="rs">Rs</string>
 
@@ -43,6 +44,7 @@
     <string name="enterDrugQuantity">Enter quantity</string>
     <string name="enterDrugDiscount">Enter discount</string>
     <string name="enterDrugManufacturer">Enter drug manufacturer</string>
+    <string name="enterBatchNumber">Enter batch number</string>
     <string name="chooseExpiryDate">Choose expiry date</string>
     <string name="enterValidQuantity">Enter a valid quantity</string>
 

@@ -6,6 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/main_color_grey_400"
         android:layout_height="wrap_content">
 
         <RelativeLayout
@@ -14,7 +15,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
-            android:background="@color/White"
             android:padding="8dp">
 
             <RelativeLayout

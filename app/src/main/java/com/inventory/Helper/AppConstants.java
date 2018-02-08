@@ -9,6 +9,12 @@ import java.text.DecimalFormat;
 public interface AppConstants {
 
     public static String THEMECOLOR = "#673ab7";
+    public static String TABLETS_THEMECOLOR = "#DB7093";
+    public static String INJECTION_THEMECOLOR = "#B0C4DE";
+    public static String CREAM_THEMECOLOR = "#7B68EE";
+    public static String SYRUP_THEMECOLOR = "#FF8C00";
+    public static String CAPSULES_THEMECOLOR = "#556B2F";
+    public static String MISCELLANEOUS_THEMECOLOR = "#008080";
 
     public static DecimalFormat decimalFormatTwoPlace = new DecimalFormat("######.##");
 

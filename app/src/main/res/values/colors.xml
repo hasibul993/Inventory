@@ -148,6 +148,7 @@
 
     <color name="bg_action_mode">#757575</color>
     <color name="transparent">#66000000</color>
+    <color name="transparentFullWhite">#00FFFFFF</color>
 
     <color name="main_color_grey_50">#f9fafa</color>
     <color name="main_color_grey_100">#f4f5f5</color>
@@ -168,6 +169,8 @@
     <color name="black_54">#89000000</color>
     <color name="black_65">#A5000000</color>
     <color name="white_75">#bfffffff</color>
+
+    <color name="viewColor">#B9B9B9</color>
 
 
 </resources>

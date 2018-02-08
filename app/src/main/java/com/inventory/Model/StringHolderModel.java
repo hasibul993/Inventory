@@ -12,6 +12,8 @@ public class StringHolderModel {
 
     public String drugManufacturer;
 
+    public String batchNumber;
+
     public String drugMRP;
 
     public String drugMRPString;

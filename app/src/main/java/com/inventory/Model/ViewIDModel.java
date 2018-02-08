@@ -18,12 +18,14 @@ public class ViewIDModel {
     public TextInputLayout QuantityEditTextTHint;
     public TextInputLayout DiscountEditTextTHint;
     public TextInputLayout ManufacturerEditTextTHint;
+    public TextInputLayout BatchNumberEditTextTHint;
 
     public EditText DrugNameEditText;
     public EditText MrpEditText;
     public EditText QuantityEditText;
     public EditText DiscountEditText;
     public EditText ManufacturerEditText;
+    public EditText BatchNumberEditText;
 
     public RecyclerView DrugNameRecyclerView;
 

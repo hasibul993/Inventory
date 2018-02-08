@@ -104,22 +104,22 @@ public class MainActivity implements AppConstants {
 
     }
 
-    public DrugModel GetDrugDetails(Context context, String drugID) {
+    public DrugModel GetDrugDetails(Context context, String drugBatchNo,String drugID) {
         databaseAccess = new DatabaseAccess(context);
         DrugModel drugModel = new DrugModel();
         try {
-            drugModel = databaseAccess.GetDrugDetails(drugID);
+            drugModel = databaseAccess.GetDrugDetails(drugBatchNo,drugID);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return drugModel;
     }
 
-    public ArrayList<DrugModel> GetDrugList(Context context, String searchText) {
+    public ArrayList<DrugModel> GetDrugList(Context context, String searchText,boolean isManufacturer) {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            drugModelArrayList = databaseAccess.GetDrugList(searchText);
+            drugModelArrayList = databaseAccess.GetDrugList(searchText,isManufacturer);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

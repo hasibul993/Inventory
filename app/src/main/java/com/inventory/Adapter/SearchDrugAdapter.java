@@ -74,8 +74,8 @@ public class SearchDrugAdapter extends RecyclerView.Adapter<SearchDrugAdapter.Vi
 
             final DrugModel drugModel = modelArrayList.get(position);
             holder.drugNameTV.setText(drugModel.DrugName);
-            holder.drugQuantityTV.setText(context.getString(R.string.rs) + " " + drugModel.DrugQuantity);
-            holder.iconLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+            holder.drugQuantityTV.setText(context.getString(R.string.rs) + " " + drugModel.DrugMRPString);
+            holder.iconLayoutBackg.setColor(context.getResources().getColor(R.color.main_color_grey_400));
 
             if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.tablet)))
                 holder.iconImageV.setImageResource(R.drawable.tablets_icon);
