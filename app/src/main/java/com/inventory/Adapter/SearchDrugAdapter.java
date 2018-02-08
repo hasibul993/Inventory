@@ -26,14 +26,14 @@ import java.util.ArrayList;
  */
 
 
-public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.ViewHolder> {
+public class SearchDrugAdapter extends RecyclerView.Adapter<SearchDrugAdapter.ViewHolder> {
 
 
     Context context;
     ArrayList<DrugModel> modelArrayList;
     MainActivity mainActivity;
 
-    public ProcurementAdapter(Context context, ArrayList<DrugModel> modelArrayList) {
+    public SearchDrugAdapter(Context context, ArrayList<DrugModel> modelArrayList) {
         this.context = context;
         this.modelArrayList = modelArrayList;
         mainActivity = MainActivity.getInstance();
@@ -42,7 +42,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.procurement_adapter_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_drug_adapter_row, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
 
@@ -74,7 +74,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
 
             final DrugModel drugModel = modelArrayList.get(position);
             holder.drugNameTV.setText(drugModel.DrugName);
-            holder.drugQuantityTV.setText(context.getString(R.string.drugQuantity) + " - " + drugModel.DrugQuantity);
+            holder.drugQuantityTV.setText(context.getString(R.string.rs) + " " + drugModel.DrugQuantity);
             holder.iconLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
 
             if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.tablet)))
@@ -155,7 +155,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
         try {
             if (!StringUtils.isBlank(drugID)) {
                 //DrugModel drugModel = mainActivity.GetDrugDetails(context, drugID);
-                ProcurementFragment.procurementFragment.ShowDialogAddDrug(getItem(position), position);
+                //ProcurementFragment.procurementFragment.ShowDialogAddDrug(getItem(position), position);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

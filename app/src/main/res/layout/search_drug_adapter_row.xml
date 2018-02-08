@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/com.zibmi"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:background="@color/White"
+            android:padding="8dp">
+
+            <RelativeLayout
+                android:id="@+id/iconLayout"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/rectangle_round_corner"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iconImageV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:src="@drawable/tablets_icon" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/drugNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/iconLayout"
+                android:orientation="vertical">
+
+                <com.inventory.NewUi.RobotoTextView
+                    android:id="@+id/drugNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="Hasibul"
+                    android:textColor="@color/main_color_grey_900"
+                    android:textSize="@dimen/body"
+                    app:typeface="robotoRegular" />
+
+                <com.inventory.NewUi.RobotoTextView
+                    android:id="@+id/drugQuantityTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/drugNameTV"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:text="Hasibul"
+                    android:textColor="@color/main_color_grey_700"
+                    android:textSize="@dimen/text_10sp"
+                    app:typeface="robotoRegular" />
+
+                <View
+                    android:id="@+id/view_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_below="@+id/drugQuantityTV"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/main_color_grey_500"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

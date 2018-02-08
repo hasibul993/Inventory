@@ -1,4 +1,4 @@
-package com.inventory;
+package com.inventory.Activities;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -25,11 +24,11 @@ import com.inventory.Model.SettingsModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.NewUi.MyGridView;
 import com.inventory.NewUi.RobotoTextView;
+import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by BookMEds on 02-02-2018.

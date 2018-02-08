@@ -1,7 +1,6 @@
-package com.inventory;
+package com.inventory.Activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,8 +15,11 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.RelativeLayout;
 
 import com.inventory.Helper.Utility;
+
 import com.inventory.Model.SettingsModel;
 import com.inventory.Model.UserKeyDetailsModel;
+import com.inventory.R;
+
 
 import org.apache.commons.lang3.StringUtils;
 

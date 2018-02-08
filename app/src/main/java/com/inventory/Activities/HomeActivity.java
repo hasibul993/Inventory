@@ -1,4 +1,4 @@
-package com.inventory;
+package com.inventory.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +36,7 @@ import com.inventory.Model.SliderMenuModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.NewUi.DividerItemDecoration;
 import com.inventory.NewUi.RobotoTextView;
+import com.inventory.R;
 
 import java.util.ArrayList;
 

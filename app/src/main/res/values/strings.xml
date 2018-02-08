@@ -35,6 +35,7 @@
     <string name="drugTransactionDate">Transaction Date</string>
     <string name="drugManufacturer">Drug manufacturer</string>
     <string name="percentageSymbol">%</string>
+    <string name="rs">Rs</string>
 
     <!--product toast-->
     <string name="enterDrugName">Enter drug name</string>

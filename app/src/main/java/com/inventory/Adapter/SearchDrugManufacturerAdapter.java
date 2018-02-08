@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.inventory.Activities.MainActivity;
-import com.inventory.Fragments.ProcurementFragment;
 import com.inventory.Model.DrugModel;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
@@ -26,14 +25,14 @@ import java.util.ArrayList;
  */
 
 
-public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.ViewHolder> {
+public class SearchDrugManufacturerAdapter extends RecyclerView.Adapter<SearchDrugManufacturerAdapter.ViewHolder> {
 
 
     Context context;
     ArrayList<DrugModel> modelArrayList;
     MainActivity mainActivity;
 
-    public ProcurementAdapter(Context context, ArrayList<DrugModel> modelArrayList) {
+    public SearchDrugManufacturerAdapter(Context context, ArrayList<DrugModel> modelArrayList) {
         this.context = context;
         this.modelArrayList = modelArrayList;
         mainActivity = MainActivity.getInstance();
@@ -42,7 +41,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.procurement_adapter_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_drug_manufacturer_adapter_row, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
 
@@ -50,19 +49,14 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        RobotoTextView drugNameTV, drugQuantityTV;
-        RelativeLayout mainLayout, iconLayout;
-        GradientDrawable iconLayoutBackg;
-        ImageView iconImageV;
+        RobotoTextView drugNameTV;
+        RelativeLayout mainLayout;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             mainLayout = (RelativeLayout) itemView.findViewById(R.id.mainLayout);
-            iconLayout = (RelativeLayout) itemView.findViewById(R.id.iconLayout);
             drugNameTV = (RobotoTextView) itemView.findViewById(R.id.drugNameTV);
-            drugQuantityTV = (RobotoTextView) itemView.findViewById(R.id.drugQuantityTV);
-            iconImageV = (ImageView) itemView.findViewById(R.id.iconImageV);
-            iconLayoutBackg = (GradientDrawable) iconLayout.getBackground();
         }
     }
 
@@ -73,18 +67,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
         try {
 
             final DrugModel drugModel = modelArrayList.get(position);
-            holder.drugNameTV.setText(drugModel.DrugName);
-            holder.drugQuantityTV.setText(context.getString(R.string.drugQuantity) + " - " + drugModel.DrugQuantity);
-            holder.iconLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
-
-            if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.tablet)))
-                holder.iconImageV.setImageResource(R.drawable.tablets_icon);
-            else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection)))
-                holder.iconImageV.setImageResource(R.drawable.injection_icon);
-            else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.syrup)))
-                holder.iconImageV.setImageResource(R.drawable.syrup_icon);
-            else
-                holder.iconImageV.setImageResource(R.drawable.stocking);
+            holder.drugNameTV.setText(drugModel.DrugManufacturer);
 
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -155,7 +138,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
         try {
             if (!StringUtils.isBlank(drugID)) {
                 //DrugModel drugModel = mainActivity.GetDrugDetails(context, drugID);
-                ProcurementFragment.procurementFragment.ShowDialogAddDrug(getItem(position), position);
+                //ProcurementFragment.procurementFragment.ShowDialogAddDrug(getItem(position), position);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

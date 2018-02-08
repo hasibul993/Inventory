@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.inventory.MainActivity;
+import com.inventory.Activities.MainActivity;
 import com.inventory.R;
 
 import java.util.ArrayList;

@@ -2,7 +2,6 @@ package com.inventory.Database;//add your package name here example: package com
 
 //all required import files
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,8 +30,6 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.inventory.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

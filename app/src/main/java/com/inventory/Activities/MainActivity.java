@@ -1,4 +1,4 @@
-package com.inventory;
+package com.inventory.Activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,6 +20,7 @@ import com.inventory.Helper.Utility;
 import com.inventory.Model.DrugModel;
 import com.inventory.Model.SettingsModel;
 import com.inventory.Model.UserKeyDetailsModel;
+import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -27,7 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.UUID;
 
 /**
  * Created by BookMEds on 02-02-2018.
