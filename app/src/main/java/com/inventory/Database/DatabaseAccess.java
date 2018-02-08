@@ -103,6 +103,78 @@ public class DatabaseAccess extends DatabaseHelper {
         }
     }
 
+    public void InsertUpdateDrugsInBatch(ArrayList<DrugModel> drugModelArrayList, boolean isModify) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        db.beginTransaction();
+        ContentValues values = new ContentValues();
+        try {
+
+            for (DrugModel drugModel : drugModelArrayList) {
+                try {
+
+                    if (drugModel.DrugID != null)
+                        values.put(COLUMN_DRUG_ID, drugModel.DrugID);
+
+                    if (drugModel.DrugName != null)
+                        values.put(COLUMN_DRUG_NAME, drugModel.DrugName);
+
+                    if (drugModel.BatchNumber != null)
+                        values.put(COLUMN_BATCH_NUMBER, drugModel.BatchNumber);
+
+                    if (drugModel.DrugCategory != null)
+                        values.put(COLUMN_DRUG_CATEGORY, drugModel.DrugCategory);
+
+                    if (drugModel.DrugManufacturer != null)
+                        values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer);
+
+                    if (drugModel.BatchNumber != null)
+                        values.put(COLUMN_BATCH_NUMBER, drugModel.BatchNumber);
+
+                    values.put(COLUMN_DRUG_MRP, drugModel.DrugMRP);
+
+                    values.put(COLUMN_DRUG_QUANTITY, drugModel.DrugQuantity);
+
+                    if (drugModel.DrugExpiryDate != null)
+                        values.put(COLUMN_DRUG_EXPIRY_DATE, drugModel.DrugExpiryDate);
+
+                    values.put(COLUMN_DRUG_DISCOUNT, drugModel.DrugDiscount);
+
+                    if (drugModel.DrugTransactionDate != null)
+                        values.put(COLUMN_DRUG_TRANSACTION_DATE, drugModel.DrugTransactionDate);
+
+
+                    long _id = db.insertWithOnConflict(TABLE_PRODUCTS, null,
+                            values, SQLiteDatabase.CONFLICT_IGNORE);
+
+                    if (_id == -1) {
+
+                        if (values.containsKey(COLUMN_DRUG_QUANTITY) && !isModify)// remove quantity other wise it will update the current quantity -- and then do increment
+                            values.remove(COLUMN_DRUG_QUANTITY);
+
+                        // db.update(TABLE_PRODUCTS, values, COLUMN_DRUG_ID + "= '" + drugModel.DrugID + "'", null);
+
+                        db.update(TABLE_PRODUCTS, values, COLUMN_BATCH_NUMBER + "= '"
+                                + drugModel.BatchNumber + "' AND " + COLUMN_DRUG_ID + " = '"
+                                + drugModel.DrugName + "'", null);
+
+                        if (!isModify)
+                            db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.BatchNumber, drugModel.DrugName, drugModel.DrugQuantity));
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " AddUpdateContacts : " + ex.getMessage());
+        } finally {
+            db.endTransaction();
+            values.clear();
+            db.close();
+        }
+    }
+
 
     public void InsertUpdateDrugs(DrugModel drugModel, boolean isModify) {
         SQLiteDatabase db = super.getWritableDatabase();
@@ -156,7 +228,7 @@ public class DatabaseAccess extends DatabaseHelper {
                         + drugModel.DrugName + "'", null);
 
                 if (!isModify)
-                    db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.BatchNumber,drugModel.DrugName, drugModel.DrugQuantity));
+                    db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.BatchNumber, drugModel.DrugName, drugModel.DrugQuantity));
             }
 
             db.setTransactionSuccessful();
@@ -234,13 +306,13 @@ public class DatabaseAccess extends DatabaseHelper {
         return settingsModel;
     }
 
-    public DrugModel GetDrugDetails(String drugBatchNo,String drugID) {
+    public DrugModel GetDrugDetails(String drugBatchNo, String drugID) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;
         DrugModel drugModel = new DrugModel();
 
         try {
-            cursor = db.rawQuery(DatabaseQuery.GetQueryForDrugDetails(drugBatchNo,drugID), null);
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForDrugDetails(drugBatchNo, drugID), null);
 
             if (cursor.moveToFirst()) {
 
@@ -309,6 +381,25 @@ public class DatabaseAccess extends DatabaseHelper {
             cursor.close();
         db.close();
         return drugModelArrayList;
+    }
+
+
+    public boolean IsAnyMedicineExist() {
+        SQLiteDatabase db = super.getWritableDatabase();
+        Cursor cursor = null;
+        boolean isExist = false;
+        try {
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrug(null), null);
+            if (cursor.getCount() > 1)
+                isExist = true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " IsAnyMedicineExist() : " + ex.getMessage());
+        }
+        if (cursor != null)
+            cursor.close();
+        db.close();
+        return isExist;
     }
 
 /*All Get Method - end*/

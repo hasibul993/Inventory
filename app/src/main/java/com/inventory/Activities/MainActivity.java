@@ -24,6 +24,9 @@ import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -104,26 +107,47 @@ public class MainActivity implements AppConstants {
 
     }
 
-    public DrugModel GetDrugDetails(Context context, String drugBatchNo,String drugID) {
+    public void InsertUpdateDrugsInBatch(Context context, ArrayList<DrugModel> drugModelArrayList, boolean isModify) {
+        databaseAccess = new DatabaseAccess(context);
+        try {
+            databaseAccess.InsertUpdateDrugsInBatch(drugModelArrayList, isModify);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public DrugModel GetDrugDetails(Context context, String drugBatchNo, String drugID) {
         databaseAccess = new DatabaseAccess(context);
         DrugModel drugModel = new DrugModel();
         try {
-            drugModel = databaseAccess.GetDrugDetails(drugBatchNo,drugID);
+            drugModel = databaseAccess.GetDrugDetails(drugBatchNo, drugID);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return drugModel;
     }
 
-    public ArrayList<DrugModel> GetDrugList(Context context, String searchText,boolean isManufacturer) {
+    public ArrayList<DrugModel> GetDrugList(Context context, String searchText, boolean isManufacturer) {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            drugModelArrayList = databaseAccess.GetDrugList(searchText,isManufacturer);
+            drugModelArrayList = databaseAccess.GetDrugList(searchText, isManufacturer);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return drugModelArrayList;
+    }
+
+    public boolean IsAnyMedicineExist(Context context) {
+        databaseAccess = new DatabaseAccess(context);
+        boolean isExist = false;
+        try {
+            isExist = databaseAccess.IsAnyMedicineExist();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return isExist;
     }
 
 
@@ -260,5 +284,21 @@ public class MainActivity implements AppConstants {
         return strDate;
     }
 
-
+    private String readFileFromRawDirectory(Context context) {
+        InputStream iStream;
+        ByteArrayOutputStream byteStream = null;
+        try {
+            iStream = context.getResources().openRawResource(R.raw.medicinelist);
+            byte[] buffer = new byte[iStream.available()];
+            iStream.read(buffer);
+            byteStream = new ByteArrayOutputStream();
+            byteStream.write(buffer);
+            byteStream.close();
+            iStream.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return byteStream.toString();
+    }
 }
+
