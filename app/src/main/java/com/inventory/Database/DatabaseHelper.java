@@ -196,7 +196,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return "CREATE TABLE "
                 + TABLE_MASTER_DB + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
                 + COLUMN_DRUG_ID + " TEXT,"
-                + COLUMN_BATCH_NUMBER + " TEXT ,"
                 + COLUMN_DRUG_CATEGORY + " TEXT ,"
                 + COLUMN_DRUG_MANUFACTURER + " TEXT,"
                 + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "))";
@@ -207,7 +206,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return "CREATE TABLE "
                 + TABLE_PHARMACY_DB + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
                 + COLUMN_DRUG_ID + " TEXT,"
-                + COLUMN_BATCH_NUMBER + " TEXT ,"
                 + COLUMN_DRUG_CATEGORY + " TEXT ,"
                 + COLUMN_DRUG_MANUFACTURER + " TEXT,"
                 + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "))";

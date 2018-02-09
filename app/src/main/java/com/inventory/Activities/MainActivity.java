@@ -437,5 +437,27 @@ public class MainActivity implements AppConstants {
         }
         return -1;
     }
+
+
+   /* public String ReadFileFromRaw(Context context) {
+        InputStream iStream;
+        ByteArrayOutputStream byteStream = null;
+
+        try {
+            iStream = context.getResources().openRawResource(R.raw.team);
+            byte[] buffer = new byte[iStream.available()];
+            iStream.read(buffer);
+            byteStream = new ByteArrayOutputStream();
+            byteStream.write(buffer);
+            byteStream.close();
+            iStream.close();
+
+            Model model = new Gson().fromJson(byteStream.toString(), Model.class);
+            Log.i("", " onCreate : " + "");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return byteStream.toString();
+    }*/
 }
 

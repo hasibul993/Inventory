@@ -131,9 +131,6 @@ public class DatabaseAccess extends DatabaseHelper {
                     if (drugModel.DrugManufacturer != null)
                         values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer);
 
-                    if (drugModel.BatchNumber != null)
-                        values.put(COLUMN_BATCH_NUMBER, drugModel.BatchNumber);
-
                     values.put(COLUMN_DRUG_MRP, drugModel.DrugMRP);
 
                     values.put(COLUMN_DRUG_QUANTITY, drugModel.DrugQuantity);
@@ -192,9 +189,6 @@ public class DatabaseAccess extends DatabaseHelper {
             if (drugModel.DrugName != null)
                 values.put(COLUMN_DRUG_NAME, drugModel.DrugName);
 
-            if (drugModel.BatchNumber != null)
-                values.put(COLUMN_BATCH_NUMBER, drugModel.BatchNumber);
-
             if (drugModel.DrugCategory != null)
                 values.put(COLUMN_DRUG_CATEGORY, drugModel.DrugCategory);
 
@@ -246,6 +240,97 @@ public class DatabaseAccess extends DatabaseHelper {
         }
     }
 
+    public void InsertMasterDBDrugsInBatch(ArrayList<DrugModel> drugModelArrayList) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        db.beginTransaction();
+        ContentValues values = new ContentValues();
+        try {
+
+            for (DrugModel drugModel : drugModelArrayList) {
+                try {
+
+                    if (drugModel.DrugID != null)
+                        values.put(COLUMN_DRUG_ID, drugModel.DrugID);
+
+                    if (drugModel.DrugName != null)
+                        values.put(COLUMN_DRUG_NAME, drugModel.DrugName);
+
+                    if (drugModel.DrugCategory != null)
+                        values.put(COLUMN_DRUG_CATEGORY, drugModel.DrugCategory);
+
+                    if (drugModel.DrugManufacturer != null)
+                        values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer);
+
+
+                    long _id = db.insertWithOnConflict(TABLE_MASTER_DB, null,
+                            values, SQLiteDatabase.CONFLICT_IGNORE);
+
+                    if (_id == -1) {
+
+                        db.update(TABLE_MASTER_DB, values, COLUMN_DRUG_NAME + "= '"
+                                + drugModel.DrugName + "'", null);
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " InsertMasterDBDrugsInBatch : " + ex.getMessage());
+        } finally {
+            db.endTransaction();
+            values.clear();
+            db.close();
+        }
+    }
+
+    public void InsertPharmacyDBDrugsInBatch(ArrayList<DrugModel> drugModelArrayList) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        db.beginTransaction();
+        ContentValues values = new ContentValues();
+        try {
+
+            for (DrugModel drugModel : drugModelArrayList) {
+                try {
+
+                    if (drugModel.DrugID != null)
+                        values.put(COLUMN_DRUG_ID, drugModel.DrugID);
+
+                    if (drugModel.DrugName != null)
+                        values.put(COLUMN_DRUG_NAME, drugModel.DrugName);
+
+                    if (drugModel.DrugCategory != null)
+                        values.put(COLUMN_DRUG_CATEGORY, drugModel.DrugCategory);
+
+                    if (drugModel.DrugManufacturer != null)
+                        values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer);
+
+
+                    long _id = db.insertWithOnConflict(TABLE_PHARMACY_DB, null,
+                            values, SQLiteDatabase.CONFLICT_IGNORE);
+
+                    if (_id == -1) {
+
+                        db.update(TABLE_PHARMACY_DB, values, COLUMN_DRUG_NAME + "= '"
+                                + drugModel.DrugName + "'", null);
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " InsertMasterDBDrugsInBatch : " + ex.getMessage());
+        } finally {
+            db.endTransaction();
+            values.clear();
+            db.close();
+        }
+    }
     /*All Insert/Update Method - end*/
 
     /*All Get Method - start*/
