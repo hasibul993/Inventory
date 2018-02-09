@@ -438,7 +438,6 @@ public class MainActivity implements AppConstants {
         return -1;
     }
 
-
    /* public String ReadFileFromRaw(Context context) {
         InputStream iStream;
         ByteArrayOutputStream byteStream = null;
