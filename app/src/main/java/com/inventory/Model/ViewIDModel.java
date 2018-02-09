@@ -47,6 +47,8 @@ public class ViewIDModel {
     public RobotoTextView CancelTextView;
     public RobotoTextView ExpiryDateTextView;
     public RobotoTextView TransactionDateTextView;
+    public RobotoTextView ResultOfTextViewManufacturerRecyclerView;
+    public RobotoTextView ResultOfTextViewDrugNameRecyclerView;
 
     public Spinner SpinnerCategory;
 

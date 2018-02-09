@@ -51,7 +51,7 @@ public class DatabaseQuery extends DatabaseHelper {
         /*Like %text% will search string in whole name but like text% will start search from first letter*/
         try {
             if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_NAME + " like '" + searchText + "%' "+ LIMIT_8;
+                query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
             else
                 query = SELECT_ALL + TABLE_PRODUCTS + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
         } catch (Exception ex) {
@@ -64,9 +64,12 @@ public class DatabaseQuery extends DatabaseHelper {
     public static String GetQueryForSearchDrugMnaufacturer(String searchText) {
         String query = "";
         try {
+            if (!StringUtils.isBlank(searchText))
+                query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_MANUFACTURER + " like '"
+                        + searchText + "%' " + LIMIT_8;
+            else
+                query = SELECT_ALL + TABLE_PRODUCTS + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
 
-            query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_MANUFACTURER + " like '"
-                    + searchText + "%' "+ LIMIT_8;
 
         } catch (Exception ex) {
             ex.printStackTrace();

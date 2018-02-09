@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
                             DashboardFragment dashboardFragment = (DashboardFragment) currentFragment;
                         } else if (currentFragment instanceof ProcurementFragment) {
                             ProcurementFragment procurementFragment = (ProcurementFragment) currentFragment;
-                            procurementFragment.ShowDialogAddDrug(null, -1);
+                            procurementFragment.ShowDialogAddUpdateDrug(null, -1);
                         } else if (currentFragment instanceof SalesFragment) {
                             SalesFragment salesFragment = (SalesFragment) currentFragment;
                         }
@@ -292,7 +292,7 @@ public class HomeActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.menu_more:
+            case R.id.viewDataBase:
                 AndroidDatabaseViewer.GotoAndroidDatabaseViewer(HomeActivity.this);
                 return true;
             default:

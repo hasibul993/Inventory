@@ -38,6 +38,7 @@
     <string name="batchNumber">Batch Number</string>
     <string name="percentageSymbol">%</string>
     <string name="rs">Rs</string>
+    <string name="resultOf">Result of</string>
 
     <!--product toast-->
     <string name="enterDrugName">Enter drug name</string>

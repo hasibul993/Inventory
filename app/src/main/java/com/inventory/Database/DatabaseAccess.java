@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.inventory.Activities.MainActivity;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Model.DrugModel;
 import com.inventory.Model.SettingsModel;
@@ -14,6 +15,7 @@ import com.inventory.Model.UserKeyDetailsModel;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Hasib on 05-02-2018.
@@ -23,9 +25,11 @@ public class DatabaseAccess extends DatabaseHelper {
 
     private static String TAG = "DatabaseAccess";
 
+    MainActivity mainActivity;
 
     public DatabaseAccess(Context context) {
         super(context);
+        mainActivity = MainActivity.getInstance();
     }
 
 
@@ -341,16 +345,14 @@ public class DatabaseAccess extends DatabaseHelper {
     }
 
 
-    public ArrayList<DrugModel> GetDrugList(String searchText, boolean isManufacturer) {
+    public ArrayList<DrugModel> GetDrugList(String searchText) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
 
         try {
-            if (isManufacturer)
-                cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugMnaufacturer(searchText), null);
-            else
-                cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrug(searchText), null);
+
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrug(searchText), null);
 
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
@@ -367,7 +369,9 @@ public class DatabaseAccess extends DatabaseHelper {
                     drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
                     drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
                     drugModel.DrugManufacturer = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_MANUFACTURER));
+
                     drugModelArrayList.add(drugModel);
+
                     cursor.moveToNext();
                 }
 
@@ -375,6 +379,99 @@ public class DatabaseAccess extends DatabaseHelper {
         } catch (Exception ex) {
             ex.printStackTrace();
             Log.i(TAG, " GetDrugList() : " + ex.getMessage());
+        }
+
+        if (cursor != null)
+            cursor.close();
+        db.close();
+        return drugModelArrayList;
+    }
+
+
+    public HashMap<String, DrugModel> GetInventoryHashMap(String searchText) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        Cursor cursor = null;
+        HashMap<String, DrugModel> drugModelHashMap = new HashMap<>();
+        try {
+
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrug(searchText), null);
+
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    DrugModel drugModel = new DrugModel();
+                    drugModel.DrugID = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_ID));
+                    drugModel.BatchNumber = cursor.getString(cursor.getColumnIndex(COLUMN_BATCH_NUMBER));
+                    drugModel.DrugName = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_NAME));
+                    drugModel.DrugMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP));
+                    drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
+                    drugModel.DrugQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_QUANTITY));
+                    drugModel.DrugExpiryDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_EXPIRY_DATE));
+                    drugModel.DrugDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
+                    drugModel.DrugDiscountString = AppConstants.decimalFormatOnePlace.format(drugModel.DrugDiscount);
+                    drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
+                    drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
+                    drugModel.DrugManufacturer = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_MANUFACTURER));
+
+
+                    String uniqueKey = mainActivity.GetUniqueKey(drugModel.DrugID, drugModel.BatchNumber);
+
+                    if (!drugModelHashMap.containsKey(uniqueKey))
+                        drugModelHashMap.put(uniqueKey, drugModel);
+
+                    cursor.moveToNext();
+                }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " GetInventoryList() : " + ex.getMessage());
+        }
+
+        if (cursor != null)
+            cursor.close();
+        db.close();
+
+        return drugModelHashMap;
+    }
+
+
+    public ArrayList<DrugModel> GetDrugManufacturerList(String searchText) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        HashMap<String, String> manufacHashMap = new HashMap<>();
+        try {
+
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugMnaufacturer(searchText), null);
+
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    DrugModel drugModel = new DrugModel();
+                    drugModel.DrugID = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_ID));
+                    drugModel.BatchNumber = cursor.getString(cursor.getColumnIndex(COLUMN_BATCH_NUMBER));
+                    drugModel.DrugName = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_NAME));
+                    drugModel.DrugMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP));
+                    drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
+                    drugModel.DrugQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_QUANTITY));
+                    drugModel.DrugExpiryDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_EXPIRY_DATE));
+                    drugModel.DrugDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
+                    drugModel.DrugDiscountString = AppConstants.decimalFormatOnePlace.format(drugModel.DrugDiscount);
+                    drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
+                    drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
+                    drugModel.DrugManufacturer = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_MANUFACTURER));
+
+                    if (!manufacHashMap.containsKey(drugModel.DrugManufacturer)) {
+                        manufacHashMap.put(drugModel.DrugManufacturer, "");
+                        drugModelArrayList.add(drugModel);
+                    }
+
+                    cursor.moveToNext();
+                }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " GetDrugManufacturerList() : " + ex.getMessage());
         }
 
         if (cursor != null)

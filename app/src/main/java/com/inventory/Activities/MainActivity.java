@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -33,8 +34,10 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Created by BookMEds on 02-02-2018.
@@ -132,11 +135,33 @@ public class MainActivity implements AppConstants {
         return drugModel;
     }
 
-    public ArrayList<DrugModel> GetDrugList(Context context, String searchText, boolean isManufacturer) {
+    public ArrayList<DrugModel> GetDrugList(Context context, String searchText) {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            drugModelArrayList = databaseAccess.GetDrugList(searchText, isManufacturer);
+            drugModelArrayList = databaseAccess.GetDrugList(searchText);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelArrayList;
+    }
+
+    public HashMap<String, DrugModel> GetInventoryHashMap(Context context, String searchText) {
+        databaseAccess = new DatabaseAccess(context);
+        HashMap<String, DrugModel> drugModelHashMap = new HashMap<>();
+        try {
+            drugModelHashMap = databaseAccess.GetInventoryHashMap(searchText);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelHashMap;
+    }
+
+    public ArrayList<DrugModel> GetDrugManufacturerList(Context context, String searchText) {
+        databaseAccess = new DatabaseAccess(context);
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        try {
+            drugModelArrayList = databaseAccess.GetDrugManufacturerList(searchText);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -288,6 +313,16 @@ public class MainActivity implements AppConstants {
         return strDate;
     }
 
+    public String GetUniqueKey(String drugID, String batchNumber) {
+        String key = "";
+        try {
+            key = drugID + "_@_" + batchNumber;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return key;
+    }
+
     private String ReadFileFromRawDirectory(Context context) {
         InputStream iStream;
         ByteArrayOutputStream byteStream = null;
@@ -333,6 +368,74 @@ public class MainActivity implements AppConstants {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public ArrayList<DrugModel> GetDrugModelListFromHashMap(HashMap<String, DrugModel> drugModelHashMap) {
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<DrugModel>();
+        try {
+            Set<String> keys = drugModelHashMap.keySet();
+            for (String key : keys) {
+                try {
+                    drugModelArrayList.add(drugModelHashMap.get(key));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelArrayList;
+    }
+
+
+    public HashMap<String, DrugModel> GetDrugHashMap(ArrayList<DrugModel> drugModelArrayList) {
+
+        HashMap<String, DrugModel> drugModelHashMap = new HashMap<>();
+        try {
+
+            for (DrugModel drugModel : drugModelArrayList) {
+                String uniqueKey;
+                try {
+                    uniqueKey = GetUniqueKey(drugModel.DrugID, drugModel.BatchNumber);
+                    if (!drugModelHashMap.containsKey(uniqueKey))
+                        drugModelHashMap.put(uniqueKey, drugModel);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return drugModelHashMap;
+    }
+
+
+    public int GetHashMapPosition(HashMap<String, DrugModel> drugModelHashMap, String uniqueKey) {
+        int position = -1;
+        try {
+            List<String> keyList = new ArrayList<String>(drugModelHashMap.keySet()); // <== Set to List
+            if (keyList.contains(uniqueKey))
+                position = keyList.indexOf(uniqueKey);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return position;
+    }
+
+    public int GetItemPosition(ArrayList<DrugModel> drugModelArrayList, String drugID, String batchNumber) {
+        try {
+            for (int i = 0; i < drugModelArrayList.size(); ++i) {
+                if (StringUtils.equalsIgnoreCase(drugModelArrayList.get(i).DrugID, drugID)
+                        && StringUtils.equalsIgnoreCase(drugModelArrayList.get(i).BatchNumber, batchNumber))
+                    return i;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return -1;
     }
 }
 

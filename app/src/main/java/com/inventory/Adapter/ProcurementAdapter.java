@@ -201,7 +201,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
         try {
             if (!StringUtils.isBlank(drugID)) {
                 //DrugModel drugModel = mainActivity.GetDrugDetails(context, drugID);
-                ProcurementFragment.procurementFragment.ShowDialogAddDrug(getItem(position), position);
+                ProcurementFragment.procurementFragment.ShowDialogAddUpdateDrug(getItem(position), position);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

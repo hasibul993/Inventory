@@ -333,14 +333,27 @@
                         android:background="@color/Gray"
                         android:orientation="vertical">
 
+                        <com.inventory.NewUi.RobotoTextView
+                            android:id="@+id/resultOfTextViewDrugNameRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/deleteIconDrugNameRecyclerView"
+                            android:gravity="left"
+                            android:padding="5dp"
+                            android:text="@string/resultOf"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/text"
+                            app:typeface="robotoRegular" />
+
                         <ImageView
                             android:id="@+id/deleteIconDrugNameRecyclerView"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/vector_cross_black_icon"
-                            android:tint="@color/main_color_grey_800" />
+                            android:src="@drawable/vector_cross_white_icon"
+                            android:tint="@color/White" />
 
                     </RelativeLayout>
 
@@ -369,14 +382,27 @@
                         android:background="@color/Gray"
                         android:orientation="vertical">
 
+                        <com.inventory.NewUi.RobotoTextView
+                            android:id="@+id/resultOfTextViewManufacturerRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:layout_toLeftOf="@+id/deleteIconManufacturerRecyclerView"
+                            android:gravity="left"
+                            android:padding="5dp"
+                            android:text="@string/resultOf"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/text"
+                            app:typeface="robotoRegular" />
+
                         <ImageView
                             android:id="@+id/deleteIconManufacturerRecyclerView"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_alignParentRight="true"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/vector_cross_black_icon"
-                            android:tint="@color/main_color_grey_800" />
+                            android:src="@drawable/vector_cross_white_icon"
+                            android:tint="@color/White" />
 
                     </RelativeLayout>
 
