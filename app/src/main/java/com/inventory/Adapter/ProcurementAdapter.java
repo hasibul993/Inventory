@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.inventory.Activities.MainActivity;
-import com.inventory.Fragments.ProcurementFragment;
+import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Model.DrugModel;
 import com.inventory.NewUi.RobotoTextView;
@@ -201,7 +201,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
         try {
             if (!StringUtils.isBlank(drugID)) {
                 //DrugModel drugModel = mainActivity.GetDrugDetails(context, drugID);
-                ProcurementFragment.procurementFragment.ShowDialogAddUpdateDrug(getItem(position), position);
+                InventoryFragment.inventoryFragment.ShowDialogAddUpdateDrug(getItem(position), position);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

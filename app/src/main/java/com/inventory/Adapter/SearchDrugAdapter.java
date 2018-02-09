@@ -1,7 +1,6 @@
 package com.inventory.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.inventory.Activities.MainActivity;
-import com.inventory.Fragments.ProcurementFragment;
 import com.inventory.Model.DrugModel;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
@@ -155,7 +153,7 @@ public class SearchDrugAdapter extends RecyclerView.Adapter<SearchDrugAdapter.Vi
         try {
             if (!StringUtils.isBlank(drugID)) {
                 //DrugModel drugModel = mainActivity.GetDrugDetails(context, drugID);
-                //ProcurementFragment.procurementFragment.ShowDialogAddUpdateDrug(getItem(position), position);
+                //InventoryFragment.inventoryFragment.ShowDialogAddUpdateDrug(getItem(position), position);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

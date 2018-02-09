@@ -1,5 +1,6 @@
 package com.inventory.Activities;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -11,12 +12,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
@@ -30,7 +33,7 @@ import com.inventory.Adapter.SliderMenuAdapter;
 import com.inventory.Adapter.ViewPagerAdapter;
 import com.inventory.Database.AndroidDatabaseViewer;
 import com.inventory.Fragments.DashboardFragment;
-import com.inventory.Fragments.ProcurementFragment;
+import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Fragments.SalesFragment;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Model.UserKeyDetailsModel;
@@ -44,7 +47,7 @@ import static android.view.View.VISIBLE;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static TabLayout myOrdersTabLayout;
+    public static TabLayout tabLayout;
     CharSequence mDrawerTitle;
     Toolbar toolbar;
     TextView toolbar_title;
@@ -98,9 +101,9 @@ public class HomeActivity extends AppCompatActivity {
                         currentFragment = viewPagerAdapter.getItem(index);
                         if (currentFragment instanceof DashboardFragment) {
                             DashboardFragment dashboardFragment = (DashboardFragment) currentFragment;
-                        } else if (currentFragment instanceof ProcurementFragment) {
-                            ProcurementFragment procurementFragment = (ProcurementFragment) currentFragment;
-                            procurementFragment.ShowDialogAddUpdateDrug(null, -1);
+                        } else if (currentFragment instanceof InventoryFragment) {
+                            InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
+                            inventoryFragment.ShowDialogAddUpdateDrug(null, -1);
                         } else if (currentFragment instanceof SalesFragment) {
                             SalesFragment salesFragment = (SalesFragment) currentFragment;
                         }
@@ -131,8 +134,8 @@ public class HomeActivity extends AppCompatActivity {
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
 
             viewPager = (ViewPager) findViewById(R.id.viewpager);
-            myOrdersTabLayout = (TabLayout) findViewById(R.id.tabs);
-            myOrdersTabLayout.setVisibility(VISIBLE);
+            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setVisibility(VISIBLE);
 
             floatActionButton = (FloatingActionButton) findViewById(R.id.floatActionButton);
 
@@ -149,7 +152,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             sliderHeaderLayout.setBackgroundColor(Color.parseColor(MainActivity.GetThemeColor()));
-            myOrdersTabLayout.setBackgroundColor(Color.parseColor(MainActivity.GetThemeColor()));
+            tabLayout.setBackgroundColor(Color.parseColor(MainActivity.GetThemeColor()));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -173,7 +176,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 public void onDrawerOpened(View drawerView) {
-                    myOrdersTabLayout.requestDisallowInterceptTouchEvent(true);
+                    tabLayout.requestDisallowInterceptTouchEvent(true);
                     invalidateOptionsMenu();
                 }
             };
@@ -231,15 +234,15 @@ public class HomeActivity extends AppCompatActivity {
         try {
             viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
             viewPagerAdapter.addFragment(new DashboardFragment(), getString(R.string.dashboard));
-            viewPagerAdapter.addFragment(new ProcurementFragment(), getString(R.string.procurement));
+            viewPagerAdapter.addFragment(new InventoryFragment(), getString(R.string.inventory));
             viewPagerAdapter.addFragment(new SalesFragment(), getString(R.string.sale));
-            myOrdersTabLayout.setTabMode(TabLayout.MODE_FIXED);
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
             viewPager.setAdapter(null);
             viewPager.setAdapter(viewPagerAdapter);
             viewPager.setCurrentItem(tabPosition);
             viewPager.getAdapter().notifyDataSetChanged();
 
-            myOrdersTabLayout.setupWithViewPager(viewPager);
+            tabLayout.setupWithViewPager(viewPager);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -278,6 +281,52 @@ public class HomeActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.menu_home_activity, menu);
             MenuItem moreIcon = menu.findItem(R.id.menu_more);
             moreIcon.setVisible(true);
+
+            SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+            SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    int index = -1;
+                    Fragment currentFragment;
+                    try {
+                        index = viewPager.getCurrentItem();
+                        viewPagerAdapter = ((ViewPagerAdapter) viewPager.getAdapter());
+                        currentFragment = viewPagerAdapter.getItem(index);
+                        if (currentFragment instanceof InventoryFragment) {
+                            InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
+                            inventoryFragment.GetDrugsLocally(newText);
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    return true;
+                }
+
+            });
+
+            MenuItem item = menu.findItem(R.id.action_search);
+            MenuItemCompat.setOnActionExpandListener(item, new MenuItemCompat.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                    tabLayout.setVisibility(View.GONE);
+                    return false;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                    tabLayout.setVisibility(View.VISIBLE);
+                    return false;
+                }
+            });
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

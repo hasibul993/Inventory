@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,9 +43,9 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ProcurementFragment extends Fragment {
+public class InventoryFragment extends Fragment {
 
-    private static final String TAG = "ProcurementFragment";
+    private static final String TAG = "InventoryFragment";
     View rootView;
     RecyclerView recyclerView;
     ProcurementAdapter procurementAdapter;
@@ -55,7 +54,7 @@ public class ProcurementFragment extends Fragment {
     HashMap<String, DrugModel> drugModelHashMap = new HashMap<>();
     Utility utility = new Utility();
     boolean isModify = false, isSearchMedClicked = false, isSearchManufacturerClicked = false;
-    public static ProcurementFragment procurementFragment;
+    public static InventoryFragment inventoryFragment;
 
     ArrayList<String> drugCategories;
 
@@ -64,25 +63,9 @@ public class ProcurementFragment extends Fragment {
     SearchDrugAdapter searchDrugAdapter;
     SearchDrugManufacturerAdapter searchDrugManufacturerAdapter;
 
-    public ProcurementFragment() {
+    public InventoryFragment() {
         // Required empty public constructor
     }
-
-
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
-        try {
-
-            Bundle args = new Bundle();
-            //args.putString(ARG_PARAM2, param2);
-            fragment.setArguments(args);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return fragment;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,15 +75,12 @@ public class ProcurementFragment extends Fragment {
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
             mainActivity = MainActivity.getInstance();
 
-            drugModelArrayList = mainActivity.GetDrugList(getActivity(), null);
-
             //drugModelHashMap = mainActivity.GetDrugHashMap(drugModelArrayList);
-
-            SetAdapter(drugModelArrayList);
+            GetDrugsLocally(null);
 
             drugCategories = Utility.GetDrugCategoryList(getActivity());
 
-            procurementFragment = this;
+            inventoryFragment = this;
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -122,12 +102,26 @@ public class ProcurementFragment extends Fragment {
         }
     }
 
+    public void GetDrugsLocally(String searchedText) {
+        try {
+
+            drugModelArrayList = mainActivity.GetDrugList(getActivity(), searchedText);
+
+            SetAdapter(drugModelArrayList);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
     private void SetAdapter(ArrayList<DrugModel> drugModelArrayList) {
         try {
             procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
             recyclerView.setAdapter(procurementAdapter);
+            procurementAdapter.notifyDataSetChanged();
         } catch (Exception ex) {
 
         }
