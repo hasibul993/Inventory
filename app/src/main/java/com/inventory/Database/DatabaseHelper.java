@@ -35,6 +35,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String TABLE_SETTINGS = "Settings";
     protected static final String TABLE_PRODUCTS = "Products";
 
+    protected static final String TABLE_MASTER_DB = "MasterDB";
+    protected static final String TABLE_PHARMACY_DB = "PharmacyDB";
+
     // Table Columns names - TABLE_SETTINGS
     protected static final String COLUMN_USERGUID = "UserGuid";
     protected static final String COLUMN_IS_DEFAUL_TTHEME = "IsDefaultTheme";
@@ -75,6 +78,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(QueryToCreateUserKeyDetailsTable());
             db.execSQL(QueryToCreateSettingsTable());
             db.execSQL(QueryToCreateProductTable());
+            db.execSQL(QueryToCreateMasterDBTable());
+            db.execSQL(QueryToCreatePharmacyDBTable());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -184,6 +189,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DRUG_MANUFACTURER + " TEXT,"
                 + COLUMN_DRUG_TRANSACTION_DATE + " TEXT,"
                 + "PRIMARY KEY (" + COLUMN_BATCH_NUMBER + "," + COLUMN_DRUG_ID + "))";
+        //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
+    }
+
+    public String QueryToCreateMasterDBTable() {
+        return "CREATE TABLE "
+                + TABLE_MASTER_DB + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
+                + COLUMN_DRUG_ID + " TEXT,"
+                + COLUMN_BATCH_NUMBER + " TEXT ,"
+                + COLUMN_DRUG_CATEGORY + " TEXT ,"
+                + COLUMN_DRUG_MANUFACTURER + " TEXT,"
+                + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "))";
+        //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
+    }
+
+    public String QueryToCreatePharmacyDBTable() {
+        return "CREATE TABLE "
+                + TABLE_PHARMACY_DB + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
+                + COLUMN_DRUG_ID + " TEXT,"
+                + COLUMN_BATCH_NUMBER + " TEXT ,"
+                + COLUMN_DRUG_CATEGORY + " TEXT ,"
+                + COLUMN_DRUG_MANUFACTURER + " TEXT,"
+                + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "))";
         //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
     }
 
