@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
@@ -124,15 +126,12 @@ public class ProcurementFragment extends Fragment {
     }
 
     public void ShowDialogAddDrug(final DrugModel editModel, final int position) {
-        TextInputLayout drugNameET_Hint, mrpET_Hint, quantityET_Hint, discountET_Hint, manufacturerET_Hint;
+
         RelativeLayout cancelOkRelaLayout;
-        final EditText drugNameET, mrpET, quantityET, discountET, manufacturerET;
-        final RobotoTextView okTV, cancelTV, expiryDateTV, transactionDateTV;
-        final Spinner spinnerCategory;
         String prevDrugCategory = null;
-        final RecyclerView drugManufacturerRecyclerView, drugNameRecyclerView;
 
         final ViewIDModel viewIDModel = new ViewIDModel();
+
         try {
 
             final Dialog dialog = new Dialog(getActivity());
@@ -156,11 +155,16 @@ public class ProcurementFragment extends Fragment {
             viewIDModel.ManufacturerEditText = (EditText) dialog.findViewById(R.id.manufacturerET);
             viewIDModel.BatchNumberEditText = (EditText) dialog.findViewById(R.id.batchNumberET);
 
-            viewIDModel.DrugNameRecyclerView = (RecyclerView) dialog.findViewById(R.id.drugNameRecyclerView);
-            viewIDModel.DrugManufacturerRecyclerView = (RecyclerView) dialog.findViewById(R.id.drugManufacturerRecyclerView);
-
             viewIDModel.ExpiryDateTextView = (RobotoTextView) dialog.findViewById(R.id.expiryDateTV);
             viewIDModel.TransactionDateTextView = (RobotoTextView) dialog.findViewById(R.id.transactionDateTV);
+
+            viewIDModel.DrugNameRecyclerView = (RecyclerView) dialog.findViewById(R.id.drugNameRecyclerView);
+            viewIDModel.DrugManufacturerRecyclerView = (RecyclerView) dialog.findViewById(R.id.drugManufacturerRecyclerView);
+            viewIDModel.DrugNameRecyclerViewLayout = (LinearLayout) dialog.findViewById(R.id.drugNameRecyclerViewLayout);
+            viewIDModel.DrugManufacturerRecyclerViewLayout = (LinearLayout) dialog.findViewById(R.id.drugManufacturerRecyclerViewLayout);
+
+            viewIDModel.DeleteIconDrugNameRecyclerView = (ImageView) dialog.findViewById(R.id.deleteIconDrugNameRecyclerView);
+            viewIDModel.DeleteIconManufacturerRecyclerView = (ImageView) dialog.findViewById(R.id.deleteIconManufacturerRecyclerView);
 
             //cancel ok btn ids
             viewIDModel.OkTextView = (RobotoTextView) dialog.findViewById(R.id.okTV);
@@ -175,7 +179,6 @@ public class ProcurementFragment extends Fragment {
 
 
             if (editModel != null) {
-
                 isModify = true;
                 viewIDModel.DrugNameEditText.setText(editModel.DrugName);
                 viewIDModel.DrugNameEditText.setSelection(viewIDModel.DrugNameEditText.length());
@@ -185,8 +188,10 @@ public class ProcurementFragment extends Fragment {
                 viewIDModel.ExpiryDateTextView.setText(editModel.DrugExpiryDate);
                 viewIDModel.ManufacturerEditText.setText(editModel.DrugManufacturer);
                 viewIDModel.BatchNumberEditText.setText(editModel.BatchNumber);
-
                 prevDrugCategory = editModel.DrugCategory;
+
+                viewIDModel.OkTextView.setText(getString(R.string.update));
+
             } else {
                 isModify = false;
             }
@@ -202,8 +207,7 @@ public class ProcurementFragment extends Fragment {
                         if (!isSearchMedClicked && (searchText.length() >= 2)) {
                             EditTypeStop(viewIDModel, searchText, 400, viewIDModel.DrugNameRecyclerView, true);
                         } else {
-                            viewIDModel.DrugNameRecyclerView.setAdapter(null);
-                            viewIDModel.DrugNameRecyclerView.setVisibility(View.GONE);
+                            SetRecyclerViewVisibility(viewIDModel, false);
                         }
                         isSearchMedClicked = false;
                         Log.i(TAG, "onTextChanged : " + searchText);
@@ -233,8 +237,7 @@ public class ProcurementFragment extends Fragment {
                         if (!isSearchManufacturerClicked && (searchText.length() >= 2)) {
                             EditTypeStop(viewIDModel, searchText, 400, viewIDModel.DrugManufacturerRecyclerView, false);
                         } else {
-                            viewIDModel.DrugManufacturerRecyclerView.setAdapter(null);
-                            viewIDModel.DrugManufacturerRecyclerView.setVisibility(View.GONE);
+                            SetRecyclerViewVisibility(viewIDModel, true);
                         }
                         //}
                         isSearchManufacturerClicked = false;
@@ -327,11 +330,35 @@ public class ProcurementFragment extends Fragment {
                 }
             });
 
+            viewIDModel.DeleteIconDrugNameRecyclerView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        SetRecyclerViewVisibility(viewIDModel, false);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+            });
+
+            viewIDModel.DeleteIconManufacturerRecyclerView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        SetRecyclerViewVisibility(viewIDModel, true);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+            });
+
 
             dialog.show();
 
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
     }
 
@@ -343,7 +370,7 @@ public class ProcurementFragment extends Fragment {
             viewIDModel.DiscountEditTextTHint.setHint(getString(R.string.drugDiscount));
             viewIDModel.ManufacturerEditTextTHint.setHint(getString(R.string.drugManufacturer));
             viewIDModel.BatchNumberEditTextTHint.setHint(getString(R.string.batchNumber));
-            ;
+
             viewIDModel.OkTextView.setTextColor(getActivity().getResources().getColor(R.color.White));
             viewIDModel.CancelTextView.setTextColor(getActivity().getResources().getColor(R.color.White));
 
@@ -384,8 +411,11 @@ public class ProcurementFragment extends Fragment {
 
             if (isModify)
                 procurementAdapter.UpdateItem(drugModel, position);
-            else
+            else {
                 procurementAdapter.AddItem(drugModel);
+                recyclerView.scrollToPosition(0);
+            }
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -422,9 +452,9 @@ public class ProcurementFragment extends Fragment {
                         public void run() {
                             // This code will always run on the UI thread, therefore is safe to modify UI elements.
                             if (isDrugSearch)
-                                SetSearchDrugAdapter(searchText, recyclerView, viewIDModel);
+                                SetSearchDrugAdapter(searchText, viewIDModel);
                             else
-                                SetSearchDrugManufacturerAdapter(searchText, recyclerView, viewIDModel.ManufacturerEditText);
+                                SetSearchDrugManufacturerAdapter(searchText, viewIDModel);
                         }
                     });
                 }
@@ -435,21 +465,23 @@ public class ProcurementFragment extends Fragment {
         }
     }
 
-    private void SetSearchDrugAdapter(final String searchText, final RecyclerView searchRecyclerView, final ViewIDModel viewIDModel) {
+    private void SetSearchDrugAdapter(final String searchText, final ViewIDModel viewIDModel) {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
+
             drugModelArrayList = mainActivity.GetDrugList(getActivity(), searchText, false);
+
             if (drugModelArrayList.size() > 0) {
-                searchRecyclerView.setVisibility(View.VISIBLE);
+                viewIDModel.DrugNameRecyclerViewLayout.setVisibility(View.VISIBLE);
                 searchDrugAdapter = new SearchDrugAdapter(getActivity(), drugModelArrayList);
-                searchRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                searchRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-                searchRecyclerView.setAdapter(searchDrugAdapter);
+                viewIDModel.DrugNameRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                viewIDModel.DrugNameRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+                viewIDModel.DrugNameRecyclerView.setAdapter(searchDrugAdapter);
             } else {
-                searchRecyclerView.setVisibility(View.GONE);
+                SetRecyclerViewVisibility(viewIDModel, false);
             }
             // Setup item Clicks
-            searchRecyclerView.addOnItemTouchListener(
+            viewIDModel.DrugNameRecyclerView.addOnItemTouchListener(
                     new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
@@ -463,8 +495,7 @@ public class ProcurementFragment extends Fragment {
                                 DrugModel drugModel = searchDrugAdapter.getItem(position);
                                 SetSearchedDrugDetails(drugModel, viewIDModel);
                                 Log.i(TAG, "SetSearchDrugAdapter item click : " + drugModel);
-                                searchRecyclerView.setAdapter(null);
-                                searchRecyclerView.setVisibility(View.VISIBLE);
+                                SetRecyclerViewVisibility(viewIDModel, false);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -492,22 +523,24 @@ public class ProcurementFragment extends Fragment {
         }
     }
 
-    private void SetSearchDrugManufacturerAdapter(String searchText, final RecyclerView searchRecyclerView, final EditText ManufacturerEditText) {
+    private void SetSearchDrugManufacturerAdapter(String searchText, final ViewIDModel viewIDModel) {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
+
             drugModelArrayList = mainActivity.GetDrugList(getActivity(), searchText, true);
+
             if (drugModelArrayList.size() > 0) {
-                searchRecyclerView.setVisibility(View.VISIBLE);
+                viewIDModel.DrugManufacturerRecyclerViewLayout.setVisibility(View.VISIBLE);
                 searchDrugManufacturerAdapter = new SearchDrugManufacturerAdapter(getActivity(), drugModelArrayList);
-                searchRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                searchRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-                searchRecyclerView.setAdapter(searchDrugManufacturerAdapter);
+                viewIDModel.DrugManufacturerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                viewIDModel.DrugManufacturerRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+                viewIDModel.DrugManufacturerRecyclerView.setAdapter(searchDrugManufacturerAdapter);
             } else {
-                searchRecyclerView.setVisibility(View.GONE);
+                SetRecyclerViewVisibility(viewIDModel, true);
             }
 
             // Setup item Clicks
-            searchRecyclerView.addOnItemTouchListener(
+            viewIDModel.DrugManufacturerRecyclerView.addOnItemTouchListener(
                     new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
@@ -519,17 +552,31 @@ public class ProcurementFragment extends Fragment {
                                     isSearchManufacturerClicked = true;
                                 }
                                 DrugModel drugModel = searchDrugAdapter.getItem(position);
-                                ManufacturerEditText.setText(drugModel.DrugManufacturer);
-                                ManufacturerEditText.setSelection(ManufacturerEditText.length());
+                                viewIDModel.ManufacturerEditText.setText(drugModel.DrugManufacturer);
+                                viewIDModel.ManufacturerEditText.setSelection(viewIDModel.ManufacturerEditText.length());
                                 Log.i(TAG, "SetSearchDrugAdapter item click : " + drugModel);
-                                searchRecyclerView.setAdapter(null);
-                                searchRecyclerView.setVisibility(View.VISIBLE);
+                                SetRecyclerViewVisibility(viewIDModel, true);
+
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
                         }
                     })
             );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void SetRecyclerViewVisibility(ViewIDModel viewIDModel, boolean isManufacturer) {
+        try {
+            if (isManufacturer) {
+                viewIDModel.DrugManufacturerRecyclerView.setAdapter(null);
+                viewIDModel.DrugManufacturerRecyclerViewLayout.setVisibility(View.GONE);
+            } else {
+                viewIDModel.DrugNameRecyclerView.setAdapter(null);
+                viewIDModel.DrugNameRecyclerViewLayout.setVisibility(View.GONE);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

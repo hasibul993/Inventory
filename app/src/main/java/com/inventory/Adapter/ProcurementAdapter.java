@@ -94,24 +94,41 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
             holder.drugExpiryDateTV.setText(drugModel.DrugExpiryDate);
 
 
-            holder.drugQuantityBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
-            holder.drugBatchNumberBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
-            holder.drugExpiryDateBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
-
             if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.tablet))) {
                 holder.iconLayoutBackg.setColor(Color.parseColor(TABLETS_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(TABLETS_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(TABLETS_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(TABLETS_THEMECOLOR));
                 holder.iconImageV.setImageResource(R.drawable.tablets_icon);
-            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection))) {
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.capsules))) {
+                holder.iconLayoutBackg.setColor(Color.parseColor(CAPSULES_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(CAPSULES_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(CAPSULES_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(CAPSULES_THEMECOLOR));
+                holder.iconImageV.setImageResource(R.drawable.capsules_icon);
+            }  else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection))) {
                 holder.iconLayoutBackg.setColor(Color.parseColor(INJECTION_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(INJECTION_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(INJECTION_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(INJECTION_THEMECOLOR));
                 holder.iconImageV.setImageResource(R.drawable.injection_icon);
             } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.syrup))) {
                 holder.iconLayoutBackg.setColor(Color.parseColor(SYRUP_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(SYRUP_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(SYRUP_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(SYRUP_THEMECOLOR));
                 holder.iconImageV.setImageResource(R.drawable.syrup_icon);
             } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.cream))) {
                 holder.iconLayoutBackg.setColor(Color.parseColor(CREAM_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(CREAM_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(CREAM_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(CREAM_THEMECOLOR));
                 holder.iconImageV.setImageResource(R.drawable.cream_icon);
             } else {
                 holder.iconLayoutBackg.setColor(Color.parseColor(MISCELLANEOUS_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(MISCELLANEOUS_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(MISCELLANEOUS_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(MISCELLANEOUS_THEMECOLOR));
                 holder.iconImageV.setImageResource(R.drawable.stocking);
             }
 

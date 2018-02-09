@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.inventory.Database.DatabaseAccess;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
@@ -27,9 +29,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -284,9 +288,10 @@ public class MainActivity implements AppConstants {
         return strDate;
     }
 
-    private String readFileFromRawDirectory(Context context) {
+    private String ReadFileFromRawDirectory(Context context) {
         InputStream iStream;
         ByteArrayOutputStream byteStream = null;
+
         try {
             iStream = context.getResources().openRawResource(R.raw.medicinelist);
             byte[] buffer = new byte[iStream.available()];
@@ -299,6 +304,35 @@ public class MainActivity implements AppConstants {
             ex.printStackTrace();
         }
         return byteStream.toString();
+    }
+
+    public ArrayList<DrugModel> GetDrugModelList(String rawData) {
+        List<DrugModel> entityList = null;
+        Gson gson = new Gson();
+        ArrayList<DrugModel> entityArrayList = new ArrayList<DrugModel>();
+        try {
+            Type typeOfObjectsList = new TypeToken<ArrayList<DrugModel>>() {
+            }.getType();
+            entityList = gson.fromJson(rawData, typeOfObjectsList);
+
+            entityArrayList = new ArrayList<>(entityList.size());
+            entityArrayList.addAll(entityList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return entityArrayList;
+    }
+
+    public void InsertDrugsFromRawDirectory(Context context) {
+        ArrayList<DrugModel> entityArrayList = new ArrayList<DrugModel>();
+        String rawData = "";
+        try {
+            rawData = ReadFileFromRawDirectory(context);
+            entityArrayList = GetDrugModelList(rawData);
+            InsertUpdateDrugsInBatch(context, entityArrayList, false);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
 

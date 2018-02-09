@@ -319,25 +319,79 @@
 
                 </RelativeLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/drugNameRecyclerView"
+                <LinearLayout
+                    android:id="@+id/drugNameRecyclerViewLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/drugNameETHintLinearLayout"
-                    android:background="@color/Gray"
-                    android:divider="@color/White"
-                    android:focusable="false"
-                    android:visibility="gone" />
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/drugManufacturerRecyclerView"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/Gray"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/deleteIconDrugNameRecyclerView"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/vector_cross_black_icon"
+                            android:tint="@color/main_color_grey_800" />
+
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/drugNameRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/Gray"
+                        android:divider="@color/White"
+                        android:focusable="false"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/drugManufacturerRecyclerViewLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/manufacturerET_Hint"
-                    android:background="@color/Gray"
-                    android:divider="@color/White"
-                    android:focusable="false"
-                    android:visibility="gone" />
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/Gray"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/deleteIconManufacturerRecyclerView"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/vector_cross_black_icon"
+                            android:tint="@color/main_color_grey_800" />
+
+                    </RelativeLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/drugManufacturerRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/Gray"
+                        android:divider="@color/White"
+                        android:focusable="false"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 

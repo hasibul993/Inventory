@@ -50,9 +50,9 @@ public class DatabaseQuery extends DatabaseHelper {
         String query = "";
         try {
             if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_NAME + " like '%" + searchText + "%'";
+                query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_NAME + " like '%" + searchText + "%' "+ LIMIT_8;
             else
-                query = SELECT_ALL + TABLE_PRODUCTS;
+                query = SELECT_ALL + TABLE_PRODUCTS + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -64,7 +64,8 @@ public class DatabaseQuery extends DatabaseHelper {
         String query = "";
         try {
 
-            query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_MANUFACTURER + " like '%" + searchText + "%'";
+            query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_MANUFACTURER + " like '%"
+                    + searchText + "%' "+ LIMIT_8;
 
         } catch (Exception ex) {
             ex.printStackTrace();

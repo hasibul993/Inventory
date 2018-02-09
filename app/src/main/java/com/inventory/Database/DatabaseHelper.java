@@ -26,6 +26,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     ////query
     public static final String SELECT_ALL = "select * from ";
+    public static final String ORDER_BY = " ORDER BY ";
+    public static final String ALPHABETICAL_OREDER = " COLLATE NOCASE ";
+    public static final String LIMIT_8 = " LIMIT 8 ";
 
     // Table name
     protected static final String TABLE_USER_KEY_DETAILS = "UserKeyDetails";

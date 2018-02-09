@@ -3,6 +3,9 @@ package com.inventory.Model;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.inventory.NewUi.RobotoTextView;
@@ -30,6 +33,14 @@ public class ViewIDModel {
     public RecyclerView DrugNameRecyclerView;
 
     public RecyclerView DrugManufacturerRecyclerView;
+
+    public LinearLayout DrugNameRecyclerViewLayout;
+
+    public LinearLayout DrugManufacturerRecyclerViewLayout;
+
+    public ImageView DeleteIconDrugNameRecyclerView;
+
+    public ImageView DeleteIconManufacturerRecyclerView;
 
 
     public RobotoTextView OkTextView;
