@@ -49,7 +49,6 @@ public class SplashActivity extends AppCompatActivity {
         if (!mainActivity.IsAnyMedicineExist(SplashActivity.this)) {
             mainActivity.InsertDrugsFromRawDirectory(SplashActivity.this);
         }
-        mainActivity.ReadFileFromRaw(SplashActivity.this);
 
         startAnimating();
     }
