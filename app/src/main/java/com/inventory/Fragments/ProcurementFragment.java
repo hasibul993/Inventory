@@ -551,7 +551,7 @@ public class ProcurementFragment extends Fragment {
                                     isSearchMedClicked = true;
                                     isSearchManufacturerClicked = true;
                                 }
-                                DrugModel drugModel = searchDrugAdapter.getItem(position);
+                                DrugModel drugModel = searchDrugManufacturerAdapter.getItem(position);
                                 viewIDModel.ManufacturerEditText.setText(drugModel.DrugManufacturer);
                                 viewIDModel.ManufacturerEditText.setSelection(viewIDModel.ManufacturerEditText.length());
                                 Log.i(TAG, "SetSearchDrugAdapter item click : " + drugModel);
