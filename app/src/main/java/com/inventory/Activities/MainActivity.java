@@ -49,6 +49,8 @@ public class MainActivity implements AppConstants {
 
     public static String THEMECOLOR = "#673ab7";
 
+    private static String TAG = "MainActivity";
+
     DatabaseAccess databaseAccess;
 
     private static final MainActivity instance = new MainActivity();
@@ -124,6 +126,37 @@ public class MainActivity implements AppConstants {
 
     }
 
+
+    public void InsertDrugsInBatchInMasterDB(Context context, ArrayList<DrugModel> drugModelArrayList) {
+        databaseAccess = new DatabaseAccess(context);
+        try {
+            databaseAccess.InsertDrugsInBatchInMasterDB(drugModelArrayList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void InsertDrugsInBatchInPharmacyDB(Context context, ArrayList<DrugModel> drugModelArrayList) {
+        databaseAccess = new DatabaseAccess(context);
+        try {
+            databaseAccess.InsertDrugsInBatchInPharmacyDB(drugModelArrayList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void InsertDrugsInPharmacyDB(Context context, DrugModel drugModel) {
+        try {
+            ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+            drugModelArrayList.add(drugModel);
+            InsertDrugsInBatchInPharmacyDB(context, drugModelArrayList);
+            //InsertDrugsInBatchInMasterDB(drugModelArrayList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " InsertPharmacyDBDrugs : " + ex.getMessage());
+        }
+    }
+
     public DrugModel GetDrugDetails(Context context, String drugBatchNo, String drugID) {
         databaseAccess = new DatabaseAccess(context);
         DrugModel drugModel = new DrugModel();
@@ -135,33 +168,34 @@ public class MainActivity implements AppConstants {
         return drugModel;
     }
 
-    public ArrayList<DrugModel> GetDrugList(Context context, String searchText) {
+    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(Context context, String searchText) {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            drugModelArrayList = databaseAccess.GetDrugList(searchText);
+            drugModelArrayList = databaseAccess.GetInventoryListFromInventoryDB(searchText);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return drugModelArrayList;
     }
 
-    public HashMap<String, DrugModel> GetInventoryHashMap(Context context, String searchText) {
-        databaseAccess = new DatabaseAccess(context);
-        HashMap<String, DrugModel> drugModelHashMap = new HashMap<>();
-        try {
-            drugModelHashMap = databaseAccess.GetInventoryHashMap(searchText);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return drugModelHashMap;
-    }
-
-    public ArrayList<DrugModel> GetDrugManufacturerList(Context context, String searchText) {
+    public ArrayList<DrugModel> GetSearchDrugListFromMasterDB(Context context, String searchText) {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            drugModelArrayList = databaseAccess.GetDrugManufacturerList(searchText);
+            drugModelArrayList = databaseAccess.GetSearchDrugListFromMasterDB(searchText);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelArrayList;
+    }
+
+
+    public ArrayList<DrugModel> GetDrugManufacturerListFromMasterDB(Context context, String searchText) {
+        databaseAccess = new DatabaseAccess(context);
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        try {
+            drugModelArrayList = databaseAccess.GetDrugManufacturerListFromMasterDB(searchText);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -364,7 +398,8 @@ public class MainActivity implements AppConstants {
         try {
             rawData = ReadFileFromRawDirectory(context);
             entityArrayList = GetDrugModelList(rawData);
-            InsertUpdateDrugsInBatch(context, entityArrayList, false);
+            InsertDrugsInBatchInMasterDB(context, entityArrayList);
+            //InsertUpdateDrugsInBatch(context, entityArrayList, false);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -31,19 +31,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LIMIT_8 = " LIMIT 8 ";
 
     // Table name
-    protected static final String TABLE_USER_KEY_DETAILS = "UserKeyDetails";
-    protected static final String TABLE_SETTINGS = "Settings";
-    protected static final String TABLE_PRODUCTS = "Products";
+    protected static final String TABLE_USER_KEY_DETAILS_DB = "UserKeyDetails";
+    protected static final String TABLE_SETTINGS_DB = "Settings";
+    protected static final String TABLE_INVENTORY_DB = "InventoryDB";
 
     protected static final String TABLE_MASTER_DB = "MasterDB";
     protected static final String TABLE_PHARMACY_DB = "PharmacyDB";
 
-    // Table Columns names - TABLE_SETTINGS
+    // Table Columns names - TABLE_SETTINGS_DB
     protected static final String COLUMN_USERGUID = "UserGuid";
     protected static final String COLUMN_IS_DEFAUL_TTHEME = "IsDefaultTheme";
     protected static final String COLUMN_THEME_COLORCODE = "ThemeColorCode";
 
-    // Table Columns names - TABLE_USER_KEY_DETAILS
+    // Table Columns names - TABLE_USER_KEY_DETAILS_DB
     protected static final String COLUMN_DEVICE_ID = "DeviceID";
     protected static final String COLUMN_DEVICE_UNIQUE_ID = "DeviceUniqueID";
     protected static final String COLUMN_PHONE_NUMBER = "PhoneNumber";
@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_EMAIL_ADDRESS = "EmailAddress";
     protected static final String COLUMN_PROFILE_PICTURE = "ProfilePicture";
 
-    // Table Columns names - TABLE_PRODUCTS
+    // Table Columns names - TABLE_INVENTORY_DB
     protected static final String COLUMN_DRUG_ID = "DrugID";
     protected static final String COLUMN_BATCH_NUMBER = "BatchNumber";
     protected static final String COLUMN_DRUG_NAME = "DrugName";
@@ -158,7 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String QueryToCreateUserKeyDetailsTable() {
         return "CREATE TABLE "
-                + TABLE_USER_KEY_DETAILS + "(" + COLUMN_USERGUID + " TEXT ,"
+                + TABLE_USER_KEY_DETAILS_DB + "(" + COLUMN_USERGUID + " TEXT ,"
                 + COLUMN_PHONE_NUMBER + " TEXT PRIMARY KEY NOT NULL ,"
                 + COLUMN_NICK_NAME + " TEXT ,"
                 + COLUMN_DEVICE_UNIQUE_ID + " TEXT ,"
@@ -169,7 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String QueryToCreateSettingsTable() {
         return "CREATE TABLE "
-                + TABLE_SETTINGS + "(" + COLUMN_USERGUID + " TEXT NOT NULL , "
+                + TABLE_SETTINGS_DB + "(" + COLUMN_USERGUID + " TEXT NOT NULL , "
                 + COLUMN_THEME_COLORCODE + " TEXT ,"
                 + COLUMN_IS_DEFAUL_TTHEME + " INTEGER,"
                 + "PRIMARY KEY (" + COLUMN_USERGUID + "))";
@@ -178,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String QueryToCreateProductTable() {
         return "CREATE TABLE "
-                + TABLE_PRODUCTS + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
+                + TABLE_INVENTORY_DB + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
                 + COLUMN_DRUG_ID + " TEXT NOT NULL ,"
                 + COLUMN_BATCH_NUMBER + " TEXT ,"
                 + COLUMN_DRUG_CATEGORY + " TEXT ,"
@@ -195,20 +195,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String QueryToCreateMasterDBTable() {
         return "CREATE TABLE "
                 + TABLE_MASTER_DB + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
-                + COLUMN_DRUG_ID + " TEXT,"
+                + COLUMN_DRUG_ID + " TEXT NOT NULL,"
+                + COLUMN_DRUG_MRP + " REAL,"
                 + COLUMN_DRUG_CATEGORY + " TEXT ,"
                 + COLUMN_DRUG_MANUFACTURER + " TEXT,"
-                + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "))";
+                + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "," + COLUMN_DRUG_ID + "))";
         //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
     }
 
     public String QueryToCreatePharmacyDBTable() {
         return "CREATE TABLE "
                 + TABLE_PHARMACY_DB + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
-                + COLUMN_DRUG_ID + " TEXT,"
+                + COLUMN_DRUG_ID + " TEXT NOT NULL,"
+                + COLUMN_DRUG_MRP + " REAL,"
                 + COLUMN_DRUG_CATEGORY + " TEXT ,"
                 + COLUMN_DRUG_MANUFACTURER + " TEXT,"
-                + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "))";
+                + "PRIMARY KEY (" + COLUMN_DRUG_NAME + "," + COLUMN_DRUG_ID + "))";
         //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
     }
 

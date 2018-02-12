@@ -18,7 +18,7 @@ public class DatabaseQuery extends DatabaseHelper {
     public static String GetQueryForUserKeyDetails() {
         String query = "";
         try {
-            query = SELECT_ALL + TABLE_USER_KEY_DETAILS + " LIMIT 1 ";
+            query = SELECT_ALL + TABLE_USER_KEY_DETAILS_DB + " LIMIT 1 ";
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -28,7 +28,7 @@ public class DatabaseQuery extends DatabaseHelper {
     public static String GetQueryForSettings(String userID) {
         String query = "";
         try {
-            query = SELECT_ALL + TABLE_SETTINGS + " Where " + COLUMN_USERGUID + " = '" + userID + "'";
+            query = SELECT_ALL + TABLE_SETTINGS_DB + " Where " + COLUMN_USERGUID + " = '" + userID + "'";
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class DatabaseQuery extends DatabaseHelper {
     public static String GetQueryForDrugDetails(String drugBatchNo, String drugID) {
         String query = "";
         try {
-            query = SELECT_ALL + TABLE_PRODUCTS + " Where " + COLUMN_BATCH_NUMBER + " = '"
+            query = SELECT_ALL + TABLE_INVENTORY_DB + " Where " + COLUMN_BATCH_NUMBER + " = '"
                     + drugBatchNo + "' AND " + COLUMN_DRUG_ID + " = '" + drugID + "'";
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -46,14 +46,42 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
-    public static String GetQueryForSearchDrug(String searchText) {
+    public static String GetQueryForSearchDrugInInventoryDB(String searchText) {
         String query = "";
         /*Like %text% will search string in whole name but like text% will start search from first letter*/
         try {
             if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
+                query = SELECT_ALL + TABLE_INVENTORY_DB + " where " + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
             else
-                query = SELECT_ALL + TABLE_PRODUCTS + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
+                query = SELECT_ALL + TABLE_INVENTORY_DB + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForSearchDrugInMasterDB(String searchText) {
+        String query = "";
+        /*Like %text% will search string in whole name but like text% will start search from first letter*/
+        try {
+            if (!StringUtils.isBlank(searchText))
+                query = SELECT_ALL + TABLE_MASTER_DB + " where " + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
+            else
+                query = SELECT_ALL + TABLE_MASTER_DB + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForSearchDrugInPharmacyDB(String searchText) {
+        String query = "";
+        /*Like %text% will search string in whole name but like text% will start search from first letter*/
+        try {
+            if (!StringUtils.isBlank(searchText))
+                query = SELECT_ALL + TABLE_PHARMACY_DB + " where " + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
+            else
+                query = SELECT_ALL + TABLE_PHARMACY_DB + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -61,14 +89,30 @@ public class DatabaseQuery extends DatabaseHelper {
     }
 
 
-    public static String GetQueryForSearchDrugMnaufacturer(String searchText) {
+    public static String GetQueryForSearchDrugManufacturerInMasterDB(String searchText) {
         String query = "";
         try {
             if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_PRODUCTS + " where " + COLUMN_DRUG_MANUFACTURER + " like '"
+                query = SELECT_ALL + TABLE_MASTER_DB + " where " + COLUMN_DRUG_MANUFACTURER + " like '"
                         + searchText + "%' " + LIMIT_8;
             else
-                query = SELECT_ALL + TABLE_PRODUCTS + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
+                query = SELECT_ALL + TABLE_MASTER_DB + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForSearchDrugManufacturerPharmacyDB(String searchText) {
+        String query = "";
+        try {
+            if (!StringUtils.isBlank(searchText))
+                query = SELECT_ALL + TABLE_PHARMACY_DB + " where " + COLUMN_DRUG_MANUFACTURER + " like '"
+                        + searchText + "%' " + LIMIT_8;
+            else
+                query = SELECT_ALL + TABLE_PHARMACY_DB + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
 
 
         } catch (Exception ex) {
@@ -80,7 +124,7 @@ public class DatabaseQuery extends DatabaseHelper {
     public static String GetQueryForIncrement(String drugBatchNo, String drugName, int incrementValue) {
         String query = "";
         try {
-            query = "UPDATE " + TABLE_PRODUCTS + " SET " + COLUMN_DRUG_QUANTITY + "="
+            query = "UPDATE " + TABLE_INVENTORY_DB + " SET " + COLUMN_DRUG_QUANTITY + "="
                     + COLUMN_DRUG_QUANTITY + "+" + incrementValue + " WHERE " + COLUMN_BATCH_NUMBER + "= '"
                     + drugBatchNo + "' AND " + COLUMN_DRUG_NAME + "= '" + drugName + "'";
         } catch (Exception ex) {

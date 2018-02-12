@@ -1,6 +1,10 @@
 <resources>
 
+    <!--normal size-->
+
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="fab_size">56dp</dimen>
 
     <dimen name="header_24sp">24sp</dimen>
     <dimen name="header_20sp">20sp</dimen>
@@ -10,5 +14,7 @@
     <dimen name="header_28sp">28sp</dimen>
     <dimen name="text">12sp</dimen>
     <dimen name="text_10sp">10sp</dimen>
+
+
 
 </resources>

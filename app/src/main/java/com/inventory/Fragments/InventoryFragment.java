@@ -105,7 +105,7 @@ public class InventoryFragment extends Fragment {
     public void GetDrugsLocally(String searchedText) {
         try {
 
-            drugModelArrayList = mainActivity.GetDrugList(getActivity(), searchedText);
+            drugModelArrayList = mainActivity.GetInventoryListFromInventoryDB(getActivity(), searchedText);
 
             SetAdapter(drugModelArrayList);
 
@@ -510,7 +510,7 @@ public class InventoryFragment extends Fragment {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
 
-            drugModelArrayList = mainActivity.GetDrugList(getActivity(), searchText);
+            drugModelArrayList = mainActivity.GetSearchDrugListFromMasterDB(getActivity(), searchText);
 
             if (drugModelArrayList.size() > 0) {
                 viewIDModel.DrugNameRecyclerViewLayout.setVisibility(View.VISIBLE);
@@ -553,7 +553,7 @@ public class InventoryFragment extends Fragment {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
 
-            drugModelArrayList = mainActivity.GetDrugManufacturerList(getActivity(), searchText);
+            drugModelArrayList = mainActivity.GetDrugManufacturerListFromMasterDB(getActivity(), searchText);
 
             if (drugModelArrayList.size() > 0) {
                 viewIDModel.DrugManufacturerRecyclerViewLayout.setVisibility(View.VISIBLE);

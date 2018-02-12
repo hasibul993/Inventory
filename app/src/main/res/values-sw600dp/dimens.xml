@@ -1,0 +1,18 @@
+<resources>
+    <!--increases size by 6dp from normal size-->
+
+
+    <dimen name="fab_margin">22dp</dimen>
+
+    <dimen name="fab_size">62dp</dimen>
+
+    <dimen name="header_24sp">30sp</dimen>
+    <dimen name="header_20sp">26sp</dimen>
+    <dimen name="header">22sp</dimen>
+    <dimen name="title">21sp</dimen>
+    <dimen name="body">20sp</dimen>
+    <dimen name="header_28sp">34sp</dimen>
+    <dimen name="text">18sp</dimen>
+    <dimen name="text_10sp">16sp</dimen>
+
+</resources>

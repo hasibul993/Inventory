@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -77,6 +78,9 @@ public class HomeActivity extends AppCompatActivity {
             setContentView(R.layout.home_activity);
 
             InitializeIDS();
+
+            Configuration config = getResources().getConfiguration();
+            int size=config.smallestScreenWidthDp;
 
             Intent intent = getIntent();
             tabPosition = intent.getIntExtra(getString(R.string.tabPosition), 0);
