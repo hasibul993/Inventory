@@ -8,7 +8,8 @@ import java.text.DecimalFormat;
 
 public interface AppConstants {
 
-    public static String THEMECOLOR = "#673ab7";
+    public static String THEMECOLOR = "#008B8B";
+
     public static String TABLETS_THEMECOLOR = "#DB7093";
     public static String INJECTION_THEMECOLOR = "#A0522D";
     public static String CREAM_THEMECOLOR = "#2E8B57";

@@ -71,7 +71,7 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         try {
             // Inflate the layout for this fragment
-            rootView = inflater.inflate(R.layout.procurement_fragment, container, false);
+            rootView = inflater.inflate(R.layout.inventory_fragment, container, false);
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
             mainActivity = MainActivity.getInstance();
 

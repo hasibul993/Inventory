@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.inventory.Model.SliderMenuModel;
 import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
@@ -193,6 +194,36 @@ public class Utility {
             ex.printStackTrace();
         }
         return arrayList;
+    }
+
+    public static ArrayList<SliderMenuModel> GetSliderMenuList(Context context) {
+        ArrayList<SliderMenuModel> sliderMenuModels = new ArrayList();
+        SliderMenuModel sliderMenuModel;
+        try {
+            sliderMenuModel = new SliderMenuModel();
+            sliderMenuModel.Title = context.getString(R.string.masterDB);
+            sliderMenuModel.drawableInt = R.drawable.database_icon;
+            sliderMenuModels.add(sliderMenuModel);
+
+            sliderMenuModel = new SliderMenuModel();
+            sliderMenuModel.Title = context.getString(R.string.pharmacyDB);
+            sliderMenuModel.drawableInt = R.drawable.database_icon;
+            sliderMenuModels.add(sliderMenuModel);
+
+            sliderMenuModel = new SliderMenuModel();
+            sliderMenuModel.Title = context.getString(R.string.settings);
+            sliderMenuModel.drawableInt = R.drawable.settings_black_24dp;
+            sliderMenuModels.add(sliderMenuModel);
+
+            sliderMenuModel = new SliderMenuModel();
+            sliderMenuModel.Title = context.getString(R.string.share);
+            sliderMenuModel.drawableInt = R.drawable.share_black_24dp;
+            sliderMenuModels.add(sliderMenuModel);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return sliderMenuModels;
     }
 
 

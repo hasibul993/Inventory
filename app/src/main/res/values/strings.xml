@@ -78,5 +78,7 @@
     <string name="popupcolor_17">#455a64</string>
     <string name="popupcolor_18">#263238</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="masterDB">MasterDB</string>
+    <string name="pharmacyDB">PharmacyDB</string>
+
 </resources>

@@ -12,11 +12,23 @@
         android:background="@color/White"
         android:padding="7dp">
 
+        <ImageView
+            android:id="@+id/titleImageV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/settings_black_24dp"
+            android:backgroundTint="@color/colorPrimary" />
+
         <com.inventory.NewUi.RobotoTextView
             android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="0dp"
+            android:layout_toRightOf="@+id/titleImageV"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
@@ -26,6 +38,17 @@
             android:textColor="@color/main_color_grey_900"
             android:textSize="@dimen/header"
             app:typeface="robotoMedium" />
+
+
+        <ImageView
+            android:id="@+id/syncImageV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/sync_black_24dp"
+            android:backgroundTint="@color/DarkSeaGreen" />
 
     </RelativeLayout>
 

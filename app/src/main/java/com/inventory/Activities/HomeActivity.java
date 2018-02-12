@@ -36,6 +36,7 @@ import com.inventory.Database.AndroidDatabaseViewer;
 import com.inventory.Fragments.DashboardFragment;
 import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Fragments.SalesFragment;
+import com.inventory.Helper.Utility;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.NewUi.DividerItemDecoration;
@@ -209,23 +210,17 @@ public class HomeActivity extends AppCompatActivity {
 
     private void SetAdapterSliderMenu() {
         ArrayList<SliderMenuModel> sliderMenuModels = new ArrayList<>();
-        SliderMenuModel sliderMenuModel;
+        Utility utility = new Utility();
         try {
             header_usernameTV.setText(userKeyDetailsModel.NickName);
             header_mobileTV.setText(userKeyDetailsModel.PhoneNumber);
 
-            sliderMenuModel = new SliderMenuModel();
-            sliderMenuModel.Title = getString(R.string.settings);
-            sliderMenuModels.add(sliderMenuModel);
-
-            sliderMenuModel = new SliderMenuModel();
-            sliderMenuModel.Title = getString(R.string.share);
-            sliderMenuModels.add(sliderMenuModel);
+            sliderMenuModels = utility.GetSliderMenuList(HomeActivity.this);
 
             sliderMenuAdapter = new SliderMenuAdapter(HomeActivity.this, sliderMenuModels);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.addItemDecoration(new DividerItemDecoration(HomeActivity.this, LinearLayoutManager.VERTICAL, 0, 1));
-            //recyclerView.addItemDecoration(new DividerItemDecoration(this));
+            //recyclerView.addItemDecoration(new DividerItemDecoration(HomeActivity.this, LinearLayoutManager.VERTICAL, 0, 1));
+            recyclerView.addItemDecoration(new DividerItemDecoration(this));
             recyclerView.setAdapter(sliderMenuAdapter);
 
         } catch (Exception ex) {

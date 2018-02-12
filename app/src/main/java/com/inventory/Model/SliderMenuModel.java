@@ -7,4 +7,6 @@ package com.inventory.Model;
 public class SliderMenuModel {
 
     public String Title;
+
+    public int drawableInt;
 }
