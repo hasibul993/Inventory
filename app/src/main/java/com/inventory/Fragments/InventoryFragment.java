@@ -468,6 +468,10 @@ public class InventoryFragment extends Fragment {
 
             mainActivity.InsertUpdateDrugs(getActivity(), drugModel, isModify);
 
+            if(searchDrugModel==null){
+                mainActivity.InsertDrugsInPharmacyDB(getActivity(), drugModel);
+            }
+
             searchDrugModel = null;
         } catch (Exception ex) {
             ex.printStackTrace();
