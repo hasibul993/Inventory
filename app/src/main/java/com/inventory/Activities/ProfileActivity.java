@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,9 +38,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
 
-        InitializeIDS();
+        //InitializeIDS();
 
-        submitTV.setOnClickListener(new View.OnClickListener() {
+        /*submitTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -48,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
     }
 
     private void OnSubmitPressed() {
@@ -107,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public static void GotoRegistrationActivity(Context context) {
+    public static void GotoProfileActivity(Context context) {
         try {
             Intent intent = new Intent(context, ProfileActivity.class);
             context.startActivity(intent);
@@ -115,6 +117,39 @@ public class ProfileActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        try {
+            getMenuInflater().inflate(R.menu.menu_setting_activity, menu);
+            MenuItem moreIcon = menu.findItem(R.id.menu_more);
+            moreIcon.setVisible(false);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    public void onBackPressed() {
+        try {
+            HomeActivity.GotoHomeActivity(ProfileActivity.this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

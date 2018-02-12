@@ -125,6 +125,17 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                 }
             });
 
+            sliderHeaderLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                      ProfileActivity.GotoProfileActivity(HomeActivity.this);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
