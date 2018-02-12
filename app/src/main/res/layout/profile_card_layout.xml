@@ -109,7 +109,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/card_versionName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/parent_card"
         android:paddingBottom="5dp"
         android:visibility="visible"
@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="versionname"
+                android:text="version name"
                 android:textAllCaps="true"
                 android:textColor="@color/version_status_color"
                 android:textSize="12sp"
