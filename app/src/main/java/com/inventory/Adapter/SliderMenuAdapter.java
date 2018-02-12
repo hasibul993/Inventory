@@ -95,7 +95,6 @@ public class SliderMenuAdapter extends RecyclerView.Adapter<SliderMenuAdapter.Vi
 
     }
 
-
     @Override
     public int getItemCount() {
         return modelArrayList != null ? modelArrayList.size() : 0;
