@@ -443,17 +443,17 @@ public class InventoryFragment extends Fragment {
                         int itemIndex = mainActivity.GetItemPosition(drugModelArrayList, drugModel.DrugID, drugModel.BatchNumber);
                         if (itemIndex >= 0) {
                             DrugModel existDrugModel = procurementAdapter.getItem(itemIndex);
-                            existDrugModel.DrugName=drugModel.DrugName;
-                            existDrugModel.DrugMRP=drugModel.DrugMRP;
-                            existDrugModel.DrugQuantity=drugModel.DrugQuantity + existDrugModel.DrugQuantity;
-                            existDrugModel.DrugDiscount=drugModel.DrugDiscount;
-                            existDrugModel.DrugManufacturer=drugModel.DrugManufacturer;
-                            existDrugModel.DrugCategory=drugModel.DrugCategory;
-                            existDrugModel.BatchNumber=drugModel.BatchNumber;
-                            existDrugModel.DrugExpiryDate=drugModel.DrugExpiryDate;
-                            existDrugModel.DrugTransactionDate=drugModel.DrugTransactionDate;
+                            existDrugModel.DrugName = drugModel.DrugName;
+                            existDrugModel.DrugMRP = drugModel.DrugMRP;
+                            existDrugModel.DrugQuantity = drugModel.DrugQuantity + existDrugModel.DrugQuantity;
+                            existDrugModel.DrugDiscount = drugModel.DrugDiscount;
+                            existDrugModel.DrugManufacturer = drugModel.DrugManufacturer;
+                            existDrugModel.DrugCategory = drugModel.DrugCategory;
+                            existDrugModel.BatchNumber = drugModel.BatchNumber;
+                            existDrugModel.DrugExpiryDate = drugModel.DrugExpiryDate;
+                            existDrugModel.DrugTransactionDate = drugModel.DrugTransactionDate;
                             procurementAdapter.notifyItemChanged(itemIndex);
-                           // procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
+                            // procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
                         } else {
                             procurementAdapter.AddItem(drugModel);
                             recyclerView.scrollToPosition(0);
@@ -468,7 +468,7 @@ public class InventoryFragment extends Fragment {
 
             mainActivity.InsertUpdateDrugs(getActivity(), drugModel, isModify);
 
-            if(searchDrugModel==null){
+            if (searchDrugModel == null && !isModify) {
                 mainActivity.InsertDrugsInPharmacyDB(getActivity(), drugModel);
             }
 
