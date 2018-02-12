@@ -489,8 +489,8 @@ public class DatabaseAccess extends DatabaseHelper {
 
             cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInMasterDB(searchText), null);
 
-            if (cursor.getCount() == 0)
-                cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInPharmacyDB(searchText), null);
+           // if (cursor.getCount() == 0)
+                //cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInPharmacyDB(searchText), null);
 
 
             if (cursor.moveToFirst()) {
