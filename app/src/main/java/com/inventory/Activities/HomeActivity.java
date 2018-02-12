@@ -79,8 +79,8 @@ public class HomeActivity extends AppCompatActivity {
 
             InitializeIDS();
 
-            Configuration config = getResources().getConfiguration();
-            int size=config.smallestScreenWidthDp;
+            //Configuration config = getResources().getConfiguration();
+            //int size=config.smallestScreenWidthDp;
 
             Intent intent = getIntent();
             tabPosition = intent.getIntExtra(getString(R.string.tabPosition), 0);

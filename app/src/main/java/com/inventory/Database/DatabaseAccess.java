@@ -223,10 +223,10 @@ public class DatabaseAccess extends DatabaseHelper {
 
                 db.update(TABLE_INVENTORY_DB, values, COLUMN_BATCH_NUMBER + "= '"
                         + drugModel.BatchNumber + "' AND " + COLUMN_DRUG_ID + " = '"
-                        + drugModel.DrugName + "'", null);
+                        + drugModel.DrugID + "'", null);
 
                 if (!isModify)
-                    db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.BatchNumber, drugModel.DrugName, drugModel.DrugQuantity));
+                    db.execSQL(DatabaseQuery.GetQueryForIncrement(drugModel.BatchNumber, drugModel.DrugID, drugModel.DrugQuantity));
             }
 
             db.setTransactionSuccessful();

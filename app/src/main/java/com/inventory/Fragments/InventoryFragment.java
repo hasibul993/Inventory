@@ -441,9 +441,23 @@ public class InventoryFragment extends Fragment {
                 } else {
                     if (StringUtils.equalsIgnoreCase(stringHolderModel.drugName, searchDrugModel.DrugName)) {
                         int itemIndex = mainActivity.GetItemPosition(drugModelArrayList, drugModel.DrugID, drugModel.BatchNumber);
-                        DrugModel existDrugModel = procurementAdapter.getItem(itemIndex);
-                        drugModel.DrugQuantity = drugModel.DrugQuantity + existDrugModel.DrugQuantity;
-                        procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
+                        if (itemIndex >= 0) {
+                            DrugModel existDrugModel = procurementAdapter.getItem(itemIndex);
+                            existDrugModel.DrugName=drugModel.DrugName;
+                            existDrugModel.DrugMRP=drugModel.DrugMRP;
+                            existDrugModel.DrugQuantity=drugModel.DrugQuantity + existDrugModel.DrugQuantity;
+                            existDrugModel.DrugDiscount=drugModel.DrugDiscount;
+                            existDrugModel.DrugManufacturer=drugModel.DrugManufacturer;
+                            existDrugModel.DrugCategory=drugModel.DrugCategory;
+                            existDrugModel.BatchNumber=drugModel.BatchNumber;
+                            existDrugModel.DrugExpiryDate=drugModel.DrugExpiryDate;
+                            existDrugModel.DrugTransactionDate=drugModel.DrugTransactionDate;
+                            procurementAdapter.notifyItemChanged(itemIndex);
+                           // procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
+                        } else {
+                            procurementAdapter.AddItem(drugModel);
+                            recyclerView.scrollToPosition(0);
+                        }
                     } else {
                         procurementAdapter.AddItem(drugModel);
                         recyclerView.scrollToPosition(0);
