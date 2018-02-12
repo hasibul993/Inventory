@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
@@ -230,6 +232,24 @@ public class Utility {
     public String CreateID() throws Exception {
         return UUID.randomUUID().toString();
         //return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+    }
+
+
+    public boolean IsInternetConnected(Context context) {
+        boolean isConnected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
+            if (info != null) {
+                for (int i = 0; i < info.length; i++) {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                        isConnected = true;
+                    }
+                }
+            }
+        }
+        return isConnected;
     }
 
 

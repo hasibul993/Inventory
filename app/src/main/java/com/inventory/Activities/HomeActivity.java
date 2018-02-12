@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.inventory.Adapter.SliderMenuAdapter;
 import com.inventory.Adapter.ViewPagerAdapter;
@@ -36,18 +37,23 @@ import com.inventory.Database.AndroidDatabaseViewer;
 import com.inventory.Fragments.DashboardFragment;
 import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Fragments.SalesFragment;
+import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.NewUi.DividerItemDecoration;
 import com.inventory.NewUi.RobotoTextView;
+import com.inventory.Operation.Post;
 import com.inventory.R;
 
 import java.util.ArrayList;
 
 import static android.view.View.VISIBLE;
+import static com.inventory.Helper.AppConstants.CONNECTION_GONE;
+import static com.inventory.Helper.AppConstants.INVALID_HOSTNAME;
+import static com.inventory.Helper.AppConstants.SOCKET_TIMEOUT;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements AppConstants {
 
     public static TabLayout tabLayout;
     CharSequence mDrawerTitle;
@@ -71,6 +77,7 @@ public class HomeActivity extends AppCompatActivity {
     RobotoTextView header_usernameTV, header_mobileTV, header_emailTV;
     UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
     MainActivity mainActivity;
+    Utility utility = new Utility();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +217,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void SetAdapterSliderMenu() {
         ArrayList<SliderMenuModel> sliderMenuModels = new ArrayList<>();
-        Utility utility = new Utility();
+
         try {
             header_usernameTV.setText(userKeyDetailsModel.NickName);
             header_mobileTV.setText(userKeyDetailsModel.PhoneNumber);
@@ -345,6 +352,35 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void SyncMasterDB() {
+
+        String url = "", json = "";
+        try {
+            if (utility.IsInternetConnected(this)) {
+                new Post(this, url, json, false) {
+                    @Override
+                    public void onResponseReceived(String response) {
+                        try {
+                            if (response.contains(SOCKET_TIMEOUT)) {
+                                String messageBody = getString(R.string.internet_slow);
+                            } else if (response.contains(INVALID_HOSTNAME) || response.contains(CONNECTION_GONE)) {
+                                String messageBody = getString(R.string.internet_gone);
+
+                            } else {
+
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }.execute();
+            } else
+                MainActivity.ShowToast(this, getString(R.string.check_internet));
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

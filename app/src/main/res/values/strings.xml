@@ -80,5 +80,9 @@
 
     <string name="masterDB">MasterDB</string>
     <string name="pharmacyDB">PharmacyDB</string>
+    <string name="pleaseWait">Please wait...</string>
+    <string name="check_internet">Check your internet connection</string>
+    <string name="internet_slow">Sorry, it seems your internet connection is slow, we could not update your data, please try again.</string>
+    <string name="internet_gone">Sorry, it seems your internet connection is gone, we could not update your data, please try again.</string>
 
 </resources>

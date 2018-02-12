@@ -8,6 +8,12 @@ import java.text.DecimalFormat;
 
 public interface AppConstants {
 
+    public static String URL = "http://xamprdemo.cloudapp.net/";
+
+    public static String SOCKET_TIMEOUT = "java.net.SocketTimeoutException";
+    public static String INVALID_HOSTNAME = "java.net.UnknownHostException";
+    public static String CONNECTION_GONE = "failed to connect";
+
     public static String THEMECOLOR = "#008B8B";
 
     public static String TABLETS_THEMECOLOR = "#DB7093";

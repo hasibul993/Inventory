@@ -45,8 +45,6 @@ import java.util.Set;
 
 public class MainActivity implements AppConstants {
 
-    public static String URL = "http://xamprdemo.cloudapp.net/";
-
     public static String THEMECOLOR = "#008B8B";
 
     private static String TAG = "MainActivity";
