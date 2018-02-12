@@ -85,4 +85,8 @@
     <string name="internet_slow">Sorry, it seems your internet connection is slow, we could not update your data, please try again.</string>
     <string name="internet_gone">Sorry, it seems your internet connection is gone, we could not update your data, please try again.</string>
 
+
+
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
 </resources>

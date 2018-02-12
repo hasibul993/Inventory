@@ -133,8 +133,8 @@
                 android:layout_centerVertical="true"
                 android:text="version name"
                 android:textAllCaps="true"
-                android:textColor="@color/version_status_color"
-                android:textSize="12sp"
+                android:textColor="@color/main_color_grey_600"
+                android:textSize="@dimen/text"
                 app:typeface="robotoMedium" />
 
         </RelativeLayout>

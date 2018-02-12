@@ -135,7 +135,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/White"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -148,13 +148,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.6dp"
-                android:background="#dddddd">
-
-            </View>
+                android:background="#dddddd" />
 
             <include layout="@layout/profile_card_layout" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatActionButton"
