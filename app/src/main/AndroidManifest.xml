@@ -64,6 +64,12 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".Activities.SalesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.HomeNoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".Database.AndroidDatabaseViewer"
             android:theme="@style/Theme.AppCompat.Light" />
 

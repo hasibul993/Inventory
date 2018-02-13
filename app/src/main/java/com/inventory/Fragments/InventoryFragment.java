@@ -123,7 +123,7 @@ public class InventoryFragment extends Fragment {
             recyclerView.setAdapter(procurementAdapter);
             procurementAdapter.notifyDataSetChanged();
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
     }
 

@@ -122,7 +122,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                             InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
                             inventoryFragment.ShowDialogAddUpdateDrug(null, -1);
                         } else if (currentFragment instanceof SalesFragment) {
-                            SalesFragment salesFragment = (SalesFragment) currentFragment;
+                            SalesActivity.GotoSalesActivity(HomeActivity.this);
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
