@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -29,14 +28,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.inventory.Adapter.SliderMenuAdapter;
 import com.inventory.Adapter.ViewPagerAdapter;
 import com.inventory.Database.AndroidDatabaseViewer;
-import com.inventory.Fragments.DashboardFragment;
+import com.inventory.Fragments.ExpiredDurationFragment;
 import com.inventory.Fragments.InventoryFragment;
-import com.inventory.Fragments.SalesFragment;
+import com.inventory.Fragments.ExpiredFragment;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
 import com.inventory.Helper.ViewImageCircle;
@@ -52,9 +50,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 
 import static android.view.View.VISIBLE;
-import static com.inventory.Helper.AppConstants.CONNECTION_GONE;
-import static com.inventory.Helper.AppConstants.INVALID_HOSTNAME;
-import static com.inventory.Helper.AppConstants.SOCKET_TIMEOUT;
 
 public class HomeActivity extends AppCompatActivity implements AppConstants {
 
@@ -116,12 +111,12 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                         index = viewPager.getCurrentItem();
                         viewPagerAdapter = ((ViewPagerAdapter) viewPager.getAdapter());
                         currentFragment = viewPagerAdapter.getItem(index);
-                        if (currentFragment instanceof DashboardFragment) {
-                            DashboardFragment dashboardFragment = (DashboardFragment) currentFragment;
+                        if (currentFragment instanceof ExpiredDurationFragment) {
+                            ExpiredDurationFragment expiredDurationFragment = (ExpiredDurationFragment) currentFragment;
                         } else if (currentFragment instanceof InventoryFragment) {
                             InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
                             inventoryFragment.ShowDialogAddUpdateDrug(null, -1);
-                        } else if (currentFragment instanceof SalesFragment) {
+                        } else if (currentFragment instanceof ExpiredFragment) {
                             SalesActivity.GotoSalesActivity(HomeActivity.this);
                         }
                     } catch (Exception ex) {
@@ -268,9 +263,9 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
     private void SetViewPagerAdapter(ViewPager viewPager, String searchedText) {
         try {
             viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-            viewPagerAdapter.addFragment(new DashboardFragment(), getString(R.string.dashboard));
-            viewPagerAdapter.addFragment(new InventoryFragment(), getString(R.string.inventory));
-            viewPagerAdapter.addFragment(new SalesFragment(), getString(R.string.sale));
+            viewPagerAdapter.addFragment(new InventoryFragment(), getString(R.string.inventoryAll));
+            viewPagerAdapter.addFragment(new ExpiredDurationFragment(), getString(R.string.expiredDuration));
+            viewPagerAdapter.addFragment(new ExpiredFragment(), getString(R.string.expired));
             tabLayout.setTabMode(TabLayout.MODE_FIXED);
             viewPager.setAdapter(null);
             viewPager.setAdapter(viewPagerAdapter);

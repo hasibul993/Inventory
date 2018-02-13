@@ -107,7 +107,7 @@ public class DatabaseAccess extends DatabaseHelper {
         }
     }
 
-    public void InsertUpdateDrugsInBatch(ArrayList<DrugModel> drugModelArrayList, boolean isModify) {
+    public void InsertUpdateDrugsInBatchInInventoryDB(ArrayList<DrugModel> drugModelArrayList, boolean isModify) {
         SQLiteDatabase db = super.getWritableDatabase();
         db.beginTransaction();
         ContentValues values = new ContentValues();
@@ -480,6 +480,99 @@ public class DatabaseAccess extends DatabaseHelper {
         return drugModelArrayList;
     }
 
+    public ArrayList<DrugModel> GetExpiredDurationInventoryFromInventoryDB(String searchText, String startDate, String endDate) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+
+        try {
+
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForDrugBetweenDatesInInventoryDB(searchText, startDate, endDate), null);
+
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    try {
+                        DrugModel drugModel = new DrugModel();
+                        drugModel.DrugID = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_ID));
+                        drugModel.BatchNumber = cursor.getString(cursor.getColumnIndex(COLUMN_BATCH_NUMBER));
+                        drugModel.DrugName = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_NAME));
+                        drugModel.DrugMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP));
+                        drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
+                        drugModel.DrugQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_QUANTITY));
+                        drugModel.DrugExpiryDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_EXPIRY_DATE));
+                        drugModel.DrugDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
+                        drugModel.DrugDiscountString = AppConstants.decimalFormatOnePlace.format(drugModel.DrugDiscount);
+                        drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
+                        drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
+                        drugModel.DrugManufacturer = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_MANUFACTURER));
+
+                        drugModelArrayList.add(drugModel);
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    cursor.moveToNext();
+                }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " GetExpiredDurationInventoryFromInventoryDB() : " + ex.getMessage());
+        }
+
+        if (cursor != null)
+            cursor.close();
+        db.close();
+        return drugModelArrayList;
+    }
+
+    public ArrayList<DrugModel> GetExpiredInventoryFromInventoryDB(String searchText, String startDate) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+
+        try {
+
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForExpiredDrugInInventoryDB(searchText, startDate), null);
+
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    try {
+                        DrugModel drugModel = new DrugModel();
+                        drugModel.DrugID = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_ID));
+                        drugModel.BatchNumber = cursor.getString(cursor.getColumnIndex(COLUMN_BATCH_NUMBER));
+                        drugModel.DrugName = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_NAME));
+                        drugModel.DrugMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP));
+                        drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
+                        drugModel.DrugQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_QUANTITY));
+                        drugModel.DrugExpiryDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_EXPIRY_DATE));
+                        drugModel.DrugDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
+                        drugModel.DrugDiscountString = AppConstants.decimalFormatOnePlace.format(drugModel.DrugDiscount);
+                        drugModel.DrugTransactionDate = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_TRANSACTION_DATE));
+                        drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
+                        drugModel.DrugManufacturer = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_MANUFACTURER));
+
+                        drugModelArrayList.add(drugModel);
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    cursor.moveToNext();
+                }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " GetExpiredInventoryFromInventoryDB() : " + ex.getMessage());
+        }
+
+        if (cursor != null)
+            cursor.close();
+        db.close();
+        return drugModelArrayList;
+    }
+
+
     public ArrayList<DrugModel> GetSearchDrugListFromMasterDB(String searchText) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;
@@ -489,8 +582,8 @@ public class DatabaseAccess extends DatabaseHelper {
 
             cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInMasterDB(searchText), null);
 
-            // if (cursor.getCount() == 0)
-            //cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInPharmacyDB(searchText), null);
+            if (cursor.getCount() == 0)
+                cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInPharmacyDB(searchText), null);
 
 
             if (cursor.moveToFirst()) {
@@ -534,6 +627,9 @@ public class DatabaseAccess extends DatabaseHelper {
         try {
 
             cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugManufacturerInMasterDB(searchText), null);
+
+            if (cursor.getCount() == 0)
+                cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugManufacturerPharmacyDB(searchText), null);
 
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {

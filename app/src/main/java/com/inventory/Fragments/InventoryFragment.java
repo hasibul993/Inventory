@@ -432,32 +432,21 @@ public class InventoryFragment extends Fragment {
             drugModel.BatchNumber = stringHolderModel.batchNumber;
             drugModel.DrugCategory = spinnerCategory.getSelectedItem().toString();
 
-            if (isModify)
-                procurementAdapter.UpdateItem(drugModel, position);
-            else {
+            if (isModify) {
+                //  procurementAdapter.UpdateItem(drugModel, position);
+                if (StringUtils.equalsIgnoreCase(stringHolderModel.drugName, editModel.DrugName)) {
+                    UpdateItem(drugModel);
+                } else {
+                    procurementAdapter.AddItem(drugModel);
+                    recyclerView.scrollToPosition(0);
+                }
+            } else {
                 if (searchDrugModel == null) {
                     procurementAdapter.AddItem(drugModel);
                     recyclerView.scrollToPosition(0);
                 } else {
                     if (StringUtils.equalsIgnoreCase(stringHolderModel.drugName, searchDrugModel.DrugName)) {
-                        int itemIndex = mainActivity.GetItemPosition(drugModelArrayList, drugModel.DrugID, drugModel.BatchNumber);
-                        if (itemIndex >= 0) {
-                            DrugModel existDrugModel = procurementAdapter.getItem(itemIndex);
-                            existDrugModel.DrugName = drugModel.DrugName;
-                            existDrugModel.DrugMRP = drugModel.DrugMRP;
-                            existDrugModel.DrugQuantity = drugModel.DrugQuantity + existDrugModel.DrugQuantity;
-                            existDrugModel.DrugDiscount = drugModel.DrugDiscount;
-                            existDrugModel.DrugManufacturer = drugModel.DrugManufacturer;
-                            existDrugModel.DrugCategory = drugModel.DrugCategory;
-                            existDrugModel.BatchNumber = drugModel.BatchNumber;
-                            existDrugModel.DrugExpiryDate = drugModel.DrugExpiryDate;
-                            existDrugModel.DrugTransactionDate = drugModel.DrugTransactionDate;
-                            procurementAdapter.notifyItemChanged(itemIndex);
-                            // procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
-                        } else {
-                            procurementAdapter.AddItem(drugModel);
-                            recyclerView.scrollToPosition(0);
-                        }
+                        UpdateItem(drugModel);
                     } else {
                         procurementAdapter.AddItem(drugModel);
                         recyclerView.scrollToPosition(0);
@@ -478,6 +467,31 @@ public class InventoryFragment extends Fragment {
             searchDrugModel = null;
         }
         return true;
+    }
+
+    private void UpdateItem(DrugModel drugModel) {
+        try {
+            int itemIndex = mainActivity.GetItemPosition(drugModelArrayList, drugModel.DrugID, drugModel.BatchNumber);
+            if (itemIndex >= 0) {
+                DrugModel existDrugModel = procurementAdapter.getItem(itemIndex);
+                existDrugModel.DrugName = drugModel.DrugName;
+                existDrugModel.DrugMRP = drugModel.DrugMRP;
+                existDrugModel.DrugQuantity = drugModel.DrugQuantity + existDrugModel.DrugQuantity;
+                existDrugModel.DrugDiscount = drugModel.DrugDiscount;
+                existDrugModel.DrugManufacturer = drugModel.DrugManufacturer;
+                existDrugModel.DrugCategory = drugModel.DrugCategory;
+                existDrugModel.BatchNumber = drugModel.BatchNumber;
+                existDrugModel.DrugExpiryDate = drugModel.DrugExpiryDate;
+                existDrugModel.DrugTransactionDate = drugModel.DrugTransactionDate;
+                procurementAdapter.notifyItemChanged(itemIndex);
+                // procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
+            } else {
+                procurementAdapter.AddItem(drugModel);
+                recyclerView.scrollToPosition(0);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void SetSpinnerAdapter(Spinner categorySpinner, String selectedItem) {

@@ -2,6 +2,9 @@ package com.inventory.Database;
 
 import android.content.Context;
 
+import com.inventory.Activities.MainActivity;
+import com.inventory.R;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -9,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 
 public class DatabaseQuery extends DatabaseHelper {
+
+    MainActivity mainActivity = MainActivity.getInstance();
 
     public DatabaseQuery(Context context) {
         super(context);
@@ -113,6 +118,35 @@ public class DatabaseQuery extends DatabaseHelper {
                         + searchText + "%' " + LIMIT_8;
             else
                 query = SELECT_ALL + TABLE_PHARMACY_DB + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForDrugBetweenDatesInInventoryDB(String searchText, String startDate, String endDate) {
+        String query = "";
+        try {
+            query = SELECT_ALL + TABLE_INVENTORY_DB + " WHERE " + COLUMN_DRUG_EXPIRY_DATE
+                    + " BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForExpiredDrugInInventoryDB(String searchText, String today) {
+        String query = "";
+        try {
+            if (!StringUtils.isBlank(searchText))
+                query = SELECT_ALL + TABLE_INVENTORY_DB + " where " + COLUMN_DRUG_EXPIRY_DATE + " like '"
+                        + searchText + "%' " + LIMIT_8;
+           // else
+              // query = SELECT_ALL + TABLE_INVENTORY_DB + " where " + COLUMN_DRUG_EXPIRY_DATE + >= "Datetime(" + "'" + today + "'" + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
+
+           // query=SELECT_ALL + TABLE_INVENTORY_DB + " where " + COLUMN_DRUG_EXPIRY_DATE >= "Datetime('"+today+"')";
 
 
         } catch (Exception ex) {

@@ -17,25 +17,24 @@ import com.inventory.R;
 import java.util.ArrayList;
 
 
-public class SalesFragment extends Fragment {
+public class ExpiredDurationFragment extends Fragment {
 
     View rootView;
 
-    public static SalesFragment salesFragment;
+    public static ExpiredDurationFragment expiredDurationFragment;
     RecyclerView recyclerView;
     ProcurementAdapter procurementAdapter;
     MainActivity mainActivity;
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
 
-    public SalesFragment() {
+    public ExpiredDurationFragment() {
         // Required empty public constructor
     }
 
 
-    public static SalesFragment newInstance(String param1, String param2) {
-        SalesFragment fragment = new SalesFragment();
+    public static ExpiredDurationFragment newInstance(String param1, String param2) {
+        ExpiredDurationFragment fragment = new ExpiredDurationFragment();
         try {
-
             Bundle args = new Bundle();
             //args.putString(ARG_PARAM2, param2);
             fragment.setArguments(args);
@@ -50,14 +49,13 @@ public class SalesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         try {
-            rootView = inflater.inflate(R.layout.sales_fragment, container, false);
-
+            rootView = inflater.inflate(R.layout.dashboard_fragment, container, false);
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
             mainActivity = MainActivity.getInstance();
 
             GetDrugsLocally(null);
 
-            salesFragment = this;
+            expiredDurationFragment = this;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -80,8 +78,11 @@ public class SalesFragment extends Fragment {
 
     public void GetDrugsLocally(String searchedText) {
         try {
-            drugModelArrayList = mainActivity.GetInventoryListFromInventoryDB(getActivity(), searchedText);
+
+            drugModelArrayList = mainActivity.GetExpiredDurationInventoryFromInventoryDB(getActivity(), searchedText, 1);
+
             SetAdapter(drugModelArrayList);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

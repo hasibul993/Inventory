@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -114,10 +115,10 @@ public class MainActivity implements AppConstants {
 
     }
 
-    public void InsertUpdateDrugsInBatch(Context context, ArrayList<DrugModel> drugModelArrayList, boolean isModify) {
+    public void InsertUpdateDrugsInBatchInInventoryDB(Context context, ArrayList<DrugModel> drugModelArrayList, boolean isModify) {
         databaseAccess = new DatabaseAccess(context);
         try {
-            databaseAccess.InsertUpdateDrugsInBatch(drugModelArrayList, isModify);
+            databaseAccess.InsertUpdateDrugsInBatchInInventoryDB(drugModelArrayList, isModify);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -171,6 +172,33 @@ public class MainActivity implements AppConstants {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
             drugModelArrayList = databaseAccess.GetInventoryListFromInventoryDB(searchText);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelArrayList;
+    }
+
+    public ArrayList<DrugModel> GetExpiredDurationInventoryFromInventoryDB(Context context, String searchText, int month) {
+        databaseAccess = new DatabaseAccess(context);
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        String startDate, endDate;
+        try {
+            startDate = GetCurrentDate();
+            endDate = GetDatePlusOneMonth(month);
+
+            drugModelArrayList = databaseAccess.GetExpiredDurationInventoryFromInventoryDB(searchText, startDate, endDate);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelArrayList;
+    }
+
+    public ArrayList<DrugModel> GetExpiredInventoryFromInventoryDB(Context context, String searchText) {
+        databaseAccess = new DatabaseAccess(context);
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        try {
+            String startDate = GetCurrentDate();
+            drugModelArrayList = databaseAccess.GetExpiredInventoryFromInventoryDB(searchText, startDate);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -345,6 +373,23 @@ public class MainActivity implements AppConstants {
         return strDate;
     }
 
+    public String GetDatePlusOneMonth(int month) {
+        String newDate = "";
+        try {
+
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MONTH, month);
+
+            SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);//dd/MM/yyyy
+            Date now = cal.getTime();
+            newDate = sdfDate.format(now);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return newDate;
+    }
+
     public String GetUniqueKey(String drugID, String batchNumber) {
         String key = "";
         try {
@@ -397,7 +442,7 @@ public class MainActivity implements AppConstants {
             rawData = ReadFileFromRawDirectory(context);
             entityArrayList = GetDrugModelList(rawData);
             InsertDrugsInBatchInMasterDB(context, entityArrayList);
-            //InsertUpdateDrugsInBatch(context, entityArrayList, false);
+            //InsertUpdateDrugsInBatchInInventoryDB(context, entityArrayList, false);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
