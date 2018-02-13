@@ -34,26 +34,41 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/drugNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/iconLayout"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <com.inventory.NewUi.RobotoTextView
                     android:id="@+id/drugNameTV"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1.80"
                     android:ellipsize="end"
+                    android:gravity="left"
                     android:padding="2dp"
                     android:singleLine="true"
-                    android:text="Hasibul"
+                    android:text="Dolo"
                     android:textColor="@color/main_color_grey_900"
                     android:textSize="@dimen/body"
                     app:typeface="robotoRegular" />
+
+                <ImageView
+                    android:id="@+id/searchIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/drugNameTV"
+                    android:layout_weight="0.20"
+                    android:background="@drawable/vector_search_white_icon"
+                    android:backgroundTint="@color/black_65" />
 
                 <com.inventory.NewUi.RobotoTextView
                     android:id="@+id/drugQuantityTV"
@@ -66,10 +81,11 @@
                     android:text="Hasibul"
                     android:textColor="@color/black_56"
                     android:textSize="@dimen/text_10sp"
+                    android:visibility="gone"
                     app:typeface="robotoRegular" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
         </RelativeLayout>

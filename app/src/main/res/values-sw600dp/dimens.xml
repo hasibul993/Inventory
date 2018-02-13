@@ -15,6 +15,6 @@
     <dimen name="text">18sp</dimen>
     <dimen name="text_10sp">16sp</dimen>
 
-    <dimen name="toolbar">66dp</dimen>
+    <dimen name="toolbar_60dp">66dp</dimen>
 
 </resources>

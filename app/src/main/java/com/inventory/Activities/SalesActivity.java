@@ -26,10 +26,6 @@ import java.util.UUID;
 
 public class SalesActivity extends AppCompatActivity {
 
-    EditText enterNameET, enterMobileET;
-
-    TextView submitTV;
-
     private Toolbar toolbar;
     TextView toolbar_title;
 
@@ -44,7 +40,7 @@ public class SalesActivity extends AppCompatActivity {
 
         RecreateLayout();
 
-        submitTV.setOnClickListener(new View.OnClickListener() {
+       /* submitTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -54,7 +50,7 @@ public class SalesActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
     }
 
     private void OnSubmitPressed() {
@@ -70,12 +66,6 @@ public class SalesActivity extends AppCompatActivity {
 
     private void InitializeIDS() {
         try {
-
-
-            enterNameET = (EditText) findViewById(R.id.enterNameET);
-            enterMobileET = (EditText) findViewById(R.id.enterMobileET);
-
-            submitTV = (TextView) findViewById(R.id.submitTV);
 
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);

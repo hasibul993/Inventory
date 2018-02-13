@@ -15,7 +15,7 @@
     <dimen name="text">12sp</dimen>
     <dimen name="text_10sp">10sp</dimen>
 
-    <dimen name="toolbar">60dp</dimen>
+    <dimen name="toolbar_60dp">60dp</dimen>
 
 
 

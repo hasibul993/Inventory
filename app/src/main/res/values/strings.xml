@@ -114,4 +114,7 @@
     <string name="profileActivity">ProfileActivity</string>
     <string name="profileEditActivity">ProfileEditActivity</string>
 
+    <!--Sales-->
+    <string name="searchMedicine">Search medicine</string>
+
 </resources>
