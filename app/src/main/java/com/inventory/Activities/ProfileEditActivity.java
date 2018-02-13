@@ -1,5 +1,6 @@
 package com.inventory.Activities;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,10 +9,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +48,7 @@ public class ProfileEditActivity extends AppCompatActivity implements AppConstan
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
+    String imagePath = "";
 
     MainActivity mainActivity = MainActivity.getInstance();
     ViewImageCircle viewImageCircle = ViewImageCircle.getInstance();
@@ -57,7 +61,11 @@ public class ProfileEditActivity extends AppCompatActivity implements AppConstan
 
         InitializeIDS();
 
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
         userKeyDetailsModel = mainActivity.GetUserKeyDetails(ProfileEditActivity.this);
+        imagePath = userKeyDetailsModel.ProfilePicture;
 
         FillLayoutData();
 
@@ -96,7 +104,7 @@ public class ProfileEditActivity extends AppCompatActivity implements AppConstan
 
 
             if (!StringUtils.isBlank(userKeyDetailsModel.ProfilePicture)) {
-                viewImageCircle.SetProfileIconProfileView(ProfileEditActivity.this, profileImage, userKeyDetailsModel.ProfilePicture, true);
+                viewImageCircle.SetProfileIconProfileView(ProfileEditActivity.this, profileImage, userKeyDetailsModel.ProfilePicture, false);
             }
 
         } catch (Exception ex) {
@@ -140,12 +148,24 @@ public class ProfileEditActivity extends AppCompatActivity implements AppConstan
 
     public void SetActivityIcon(Bitmap bitmap, String filePath) {
         try {
+
             if (bitmap != null) {
+                imagePath = filePath;
                 profileImage.setImageBitmap(null);
                 profileImage.setImageBitmap(bitmap);
             } else {
                 MainActivity.ShowToast(ProfileEditActivity.this, getString(R.string.upload_fail));
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void SetActivityNull() {
+        try {
+            imagePath = null;
+            profileImage.setImageBitmap(null);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -170,8 +190,8 @@ public class ProfileEditActivity extends AppCompatActivity implements AppConstan
             case android.R.id.home:
                 onBackPressed();
                 return true;
-                case R.id.camera:
-                    pickMediaActivity.checkPermission(ProfileEditActivity.this, PERMISSIONS_CAMERA, getString(R.string.cameraNeverAskAgain));
+            case R.id.camera:
+                pickMediaActivity.checkPermission(ProfileEditActivity.this, PERMISSIONS_CAMERA, getString(R.string.cameraNeverAskAgain));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -179,8 +199,28 @@ public class ProfileEditActivity extends AppCompatActivity implements AppConstan
     }
 
     public void onBackPressed() {
+        String name, email;
         try {
-            ProfileActivity.GotoProfileActivity(ProfileEditActivity.this);
+            name = editProfileName.getText().toString().trim();
+            email = editProfileEmail.getText().toString().trim();
+
+            if (StringUtils.isBlank(name)) {
+                MainActivity.ShowToast(ProfileEditActivity.this, getString(R.string.enterNickName));
+                return;
+            } else if (!StringUtils.isBlank(email) && !isValidEmail(email)) {
+                MainActivity.ShowToast(ProfileEditActivity.this, getString(R.string.enterValidEmail));
+                return;
+            } else {
+                userKeyDetailsModel.NickName = name;
+                userKeyDetailsModel.EmailAddress = email;
+
+                userKeyDetailsModel.ProfilePicture = imagePath;
+                mainActivity.InsertUpdateUserKeyDetails(this, userKeyDetailsModel);
+
+                ProfileActivity.GotoProfileActivity(ProfileEditActivity.this);
+            }
+
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -222,6 +262,13 @@ public class ProfileEditActivity extends AppCompatActivity implements AppConstan
             ex.printStackTrace();
         }
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.FROYO)
+    public final static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target)
+                && android.util.Patterns.EMAIL_ADDRESS.matcher(target)
+                .matches();
     }
 
 }

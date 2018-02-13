@@ -98,7 +98,8 @@
                             android:text="Do your work and disappear"
                             android:textColor="#bcbcbc"
                             android:textSize="@dimen/header"
-                            app:typeface="robotoItalic" />
+                            app:typeface="robotoItalic"
+                            android:visibility="gone"/>
                     </LinearLayout>
 
 

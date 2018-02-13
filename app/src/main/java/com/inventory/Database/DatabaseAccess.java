@@ -80,8 +80,8 @@ public class DatabaseAccess extends DatabaseHelper {
             if (keyDetailsModel.UserGuid != null)
                 values.put(COLUMN_USERGUID, keyDetailsModel.UserGuid);
 
-            if (keyDetailsModel.ProfilePicture != null)
-                values.put(COLUMN_PROFILE_PICTURE, keyDetailsModel.ProfilePicture);
+
+            values.put(COLUMN_PROFILE_PICTURE, keyDetailsModel.ProfilePicture);
 
             if (keyDetailsModel.DeviceID != null)
                 values.put(COLUMN_DEVICE_ID, keyDetailsModel.DeviceID);
@@ -489,8 +489,8 @@ public class DatabaseAccess extends DatabaseHelper {
 
             cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInMasterDB(searchText), null);
 
-           // if (cursor.getCount() == 0)
-                //cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInPharmacyDB(searchText), null);
+            // if (cursor.getCount() == 0)
+            //cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInPharmacyDB(searchText), null);
 
 
             if (cursor.moveToFirst()) {

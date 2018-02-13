@@ -125,8 +125,9 @@ public class PickMediaActivity extends AppCompatActivity implements AppConstants
 
                     } else if (item == 2) {
                         imagePath = null;
+                        ProfileEditActivity profileEditActivity = (ProfileEditActivity) context;
+                        profileEditActivity.SetActivityNull();
                         return;
-
                     } else
                         alertDialog.cancel();
                 }
@@ -312,7 +313,7 @@ public class PickMediaActivity extends AppCompatActivity implements AppConstants
         return filePath;
     }
 
-    public void activityResult(Activity activity, String screenName,int requestCode, int resultCode, Intent data) {
+    public void activityResult(Activity activity, String screenName, int requestCode, int resultCode, Intent data) {
         try {
             Log.i(TAG, "result code" + resultCode);
             Log.i(TAG, "request code" + requestCode);
@@ -340,7 +341,9 @@ public class PickMediaActivity extends AppCompatActivity implements AppConstants
                         } else
                             imagePath = mCurrentPhotoPath;
 
-                        decodeFile(activity, screenName, imagePath);
+                        //decodeFile(activity, screenName, imagePath);
+
+                        performCrop(activity, screenName, currentImageUri);
 
                     } catch (Exception e) {
                         MainActivity.ShowToast(activity, activity.getString(R.string.internal_error));

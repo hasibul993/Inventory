@@ -16,4 +16,6 @@
     <dimen name="text">20sp</dimen>
     <dimen name="text_10sp">18sp</dimen>
 
+    <dimen name="toolbar">68dp</dimen>
+
 </resources>

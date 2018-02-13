@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 
 import com.inventory.Activities.MainActivity;
+import com.inventory.R;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,7 +56,7 @@ public class ViewImageCircle {
                 else
                     imageView.setImageBitmap(null);
 
-                filePath = Environment.getExternalStorageDirectory().toString() + "/Xampr/Xampr Images/" + actualFileName;
+                filePath = Environment.getExternalStorageDirectory().toString() + "/" + context.getString(R.string.app_name) + "/" + context.getString(R.string.app_name) + " Images/" + actualFileName;
 
                 File file = new File(filePath);
                 if (file.exists()) {

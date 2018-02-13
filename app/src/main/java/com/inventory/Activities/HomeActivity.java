@@ -39,12 +39,15 @@ import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Fragments.SalesFragment;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
+import com.inventory.Helper.ViewImageCircle;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.NewUi.DividerItemDecoration;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.Operation.Post;
 import com.inventory.R;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
@@ -98,6 +101,8 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
 
             SetDrawerToggleAction();
 
+            SetSliderMenuHeaderData();
+
             SetAdapterSliderMenu();
 
             SetViewPagerAdapter(viewPager, null);
@@ -129,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                 @Override
                 public void onClick(View v) {
                     try {
-                      ProfileActivity.GotoProfileActivity(HomeActivity.this);
+                        ProfileActivity.GotoProfileActivity(HomeActivity.this);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -225,13 +230,26 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
         }
     }
 
+    private void SetSliderMenuHeaderData() {
+        ViewImageCircle viewImageCircle = ViewImageCircle.getInstance();
+        try {
+            header_usernameTV.setText(userKeyDetailsModel.NickName);
+            header_mobileTV.setText(userKeyDetailsModel.PhoneNumber);
+
+            if (!StringUtils.isBlank(userKeyDetailsModel.ProfilePicture)) {
+                viewImageCircle.SetProfileIconProfileView(HomeActivity.this, header_UserIcon, userKeyDetailsModel.ProfilePicture, true);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     private void SetAdapterSliderMenu() {
         ArrayList<SliderMenuModel> sliderMenuModels = new ArrayList<>();
 
         try {
-            header_usernameTV.setText(userKeyDetailsModel.NickName);
-            header_mobileTV.setText(userKeyDetailsModel.PhoneNumber);
+
 
             sliderMenuModels = utility.GetSliderMenuList(HomeActivity.this);
 
