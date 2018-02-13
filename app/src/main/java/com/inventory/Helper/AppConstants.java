@@ -1,5 +1,8 @@
 package com.inventory.Helper;
 
+import android.Manifest;
+import android.content.SharedPreferences;
+
 import java.text.DecimalFormat;
 
 /**
@@ -14,6 +17,9 @@ public interface AppConstants {
     public static String INVALID_HOSTNAME = "java.net.UnknownHostException";
     public static String CONNECTION_GONE = "failed to connect";
 
+
+    public static final String MyPREFERENCES = "share_preference_key";
+
     public static String THEMECOLOR = "#008B8B";
 
     public static String TABLETS_THEMECOLOR = "#DB7093";
@@ -26,5 +32,7 @@ public interface AppConstants {
     public static DecimalFormat decimalFormatTwoPlace = new DecimalFormat("######.##");
 
     public static DecimalFormat decimalFormatOnePlace = new DecimalFormat("######.#");
+
+    public static String[] PERMISSIONS_CAMERA = {android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 }

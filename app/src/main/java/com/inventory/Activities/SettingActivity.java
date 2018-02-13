@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 public class SettingActivity extends AppCompatActivity implements AppConstants {
 
-    Utility utility = new Utility();
+    Utility utility = Utility.getInstance();
     SettingsModel settingsModel = new SettingsModel();
     UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
     MainActivity mainActivity = MainActivity.getInstance();

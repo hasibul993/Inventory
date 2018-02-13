@@ -4,18 +4,25 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.inventory.Model.SliderMenuModel;
+import com.inventory.Operation.LoadBitmapFromURL;
 import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,6 +36,15 @@ import java.util.UUID;
 public class Utility {
 
     int myear, mmonth, mday, mhour, mmin;
+    private static final Utility instance = new Utility();
+
+    //private constructor to avoid client applications to use constructor
+    private Utility() {
+    }
+
+    public static Utility getInstance() {
+        return instance;
+    }
 
     public static int MergeColors(int backgroundColor, int foregroundColor) {
         final byte ALPHA_CHANNEL = 24;
@@ -72,6 +88,28 @@ public class Utility {
             ex.printStackTrace();
         }
 
+    }
+
+    public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+        try {
+            if (height > reqHeight || width > reqWidth) {
+                final int heightRatio = Math.round((float) height / (float) reqHeight);
+                final int widthRatio = Math.round((float) width / (float) reqWidth);
+                inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+            }
+            final float totalPixels = width * height;
+            final float totalReqPixelsCap = reqWidth * reqHeight * 2;
+
+            while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+                inSampleSize++;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return inSampleSize;
     }
 
 
@@ -250,6 +288,86 @@ public class Utility {
             }
         }
         return isConnected;
+    }
+
+
+    public String SaveImageGallery(Context context, Bitmap bitmap, String filename, String imgActualPath) {
+        File file = null, galleryDirectory, directory;
+        String root;
+        byte[] byteArrayData;
+        Bitmap localBitMap;
+        FileOutputStream fos;
+        boolean isGallery = false;
+        try {
+            root = Environment.getExternalStorageDirectory().toString();
+            directory = new File(root + "/" + context.getString(R.string.app_name));
+            if (!directory.exists())
+                directory.mkdirs();
+
+            galleryDirectory = directory.getParentFile();
+
+            galleryDirectory = new File(directory + "/" + context.getString(R.string.app_name) + " Images");
+
+
+            if (!galleryDirectory.exists())
+                galleryDirectory.mkdirs();
+
+            if (filename != null) {
+                if (filename.toString().endsWith(".jpg")
+                        || filename.toString().endsWith(".png")
+                        || filename.toString().endsWith(".jpeg")) {
+
+                    file = new File(galleryDirectory, filename);
+                    isGallery = true;
+                }
+            }
+            if (file != null && file.exists())
+                file.delete();
+            try {
+                if (file != null) {
+                    fos = new FileOutputStream(file, false);
+                    if (isGallery) {
+                        if (imgActualPath != null) {
+                            localBitMap = BitmapFactory.decodeFile(imgActualPath);
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            localBitMap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                            byteArrayData = stream.toByteArray();
+                            fos.write(byteArrayData);
+                        } else
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 95, fos);
+                    }
+                    fos.flush();
+                    fos.close();
+                    return galleryDirectory + "/" + filename;
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } catch (OutOfMemoryError ex) {
+                ex.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
+        }
+        return "";
+    }
+
+
+    public Bitmap GetBitmapFromURI(Context context, String picURI) {
+        Bitmap bitmap = null;
+        try {
+            String actualFileName = picURI.substring(picURI.lastIndexOf("/") + 1);
+            LoadBitmapFromURL loadBitmapFromURL = new LoadBitmapFromURL(picURI);
+            boolean isLive = IsInternetConnected(context);
+            if (isLive) {
+                bitmap = loadBitmapFromURL.execute().get();
+                SaveImageGallery(context, bitmap, actualFileName, null);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return bitmap;
     }
 
 

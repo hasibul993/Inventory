@@ -100,8 +100,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
             submitTV = (TextView) findViewById(R.id.submitTV);
 
-            enterNameET.setHint(getString(R.string.enterNickName));
-            enterMobileET.setHint(getString(R.string.enterMobileNo));
+            //enterNameET.setHint(getString(R.string.enterNickName));
+            //enterMobileET.setHint(getString(R.string.enterMobileNo));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

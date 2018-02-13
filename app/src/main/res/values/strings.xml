@@ -20,6 +20,7 @@
     <string name="enterNickName">Enter your name</string>
     <string name="submit">Submit</string>
     <string name="name">Name</string>
+    <string name="email">Email</string>
     <string name="mobile">Mobile</string>
     <string name="update">Update</string>
     <string name="ok">Ok</string>
@@ -85,8 +86,31 @@
     <string name="internet_slow">Sorry, it seems your internet connection is slow, we could not update your data, please try again.</string>
     <string name="internet_gone">Sorry, it seems your internet connection is gone, we could not update your data, please try again.</string>
 
-
-
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
+
+    <string name="version">Version :</string>
+
+    <!--Camera-->
+    <string name="SDCardNotAvailable">Please turn off USB storage or insert your SD card and try again</string>
+    <string name="permission_unavailable">%s is not available</string>
+    <string name="takeNewPhoto">Take New Photo</string>
+    <string name="chooseFromGallery">Choose from Gallery</string>
+    <string name="remove">Remove</string>
+    <string name="selectImageToUpload">Select picture to upload</string>
+    <string name="cameraNeverAskAgain">CameraNeverAskAgain</string>
+    <string name="gpsNeverAskAgain">GPSNeverAskAgain</string>
+    <string name="writeExternalStorageNeverAskAgain">WriteExternalStorageNeverAskAgain</string>
+    <string name="internal_error">Internal error</string>
+    <string name="memory_low">Device is low on memory! Please clear some files and retry.</string>
+    <string name="gpsDisableEnableText">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="statusYesBtn">Yes, thanks</string>
+    <string name="statusNoBtn">No, later</string>
+    <string name="upload_fail">Uploading failed</string>
+    <string name="upload_success">Succesfully uploaded</string>
+    <string name="camera">Camera</string>
+
+    <string name="profileActivity">ProfileActivity</string>
+    <string name="profileEditActivity">ProfileEditActivity</string>
 
 </resources>

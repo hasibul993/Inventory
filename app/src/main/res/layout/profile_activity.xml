@@ -11,7 +11,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_myprofile"
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -82,7 +82,7 @@
                             android:singleLine="true"
                             android:text="Sk Hasibul"
                             android:textColor="@color/Black"
-                            android:textSize="24sp"
+                            android:textSize="@dimen/header_24sp"
                             android:textStyle="bold"
                             android:transitionName="view_profile_transition_name"
                             app:typeface="robotoRegular" />
@@ -97,7 +97,7 @@
                             android:maxLines="2"
                             android:text="Do your work and disappear"
                             android:textColor="#bcbcbc"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/header"
                             app:typeface="robotoItalic" />
                     </LinearLayout>
 

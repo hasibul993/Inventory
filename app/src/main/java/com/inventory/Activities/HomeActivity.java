@@ -77,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
     RobotoTextView header_usernameTV, header_mobileTV, header_emailTV;
     UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
     MainActivity mainActivity;
-    Utility utility = new Utility();
+    Utility utility = Utility.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

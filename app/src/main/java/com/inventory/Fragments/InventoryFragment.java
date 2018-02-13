@@ -52,7 +52,7 @@ public class InventoryFragment extends Fragment {
     MainActivity mainActivity;
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
     HashMap<String, DrugModel> drugModelHashMap = new HashMap<>();
-    Utility utility = new Utility();
+    Utility utility = Utility.getInstance();
     boolean isModify = false, isSearchMedClicked = false, isSearchManufacturerClicked = false;
     public static InventoryFragment inventoryFragment;
 
