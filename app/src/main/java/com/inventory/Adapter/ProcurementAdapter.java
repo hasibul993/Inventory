@@ -33,10 +33,12 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
     Context context;
     ArrayList<DrugModel> modelArrayList;
     MainActivity mainActivity;
+    boolean isAllInventory;
 
-    public ProcurementAdapter(Context context, ArrayList<DrugModel> modelArrayList) {
+    public ProcurementAdapter(Context context, ArrayList<DrugModel> modelArrayList, boolean isAllInventory) {
         this.context = context;
         this.modelArrayList = modelArrayList;
+        this.isAllInventory = isAllInventory;
         mainActivity = MainActivity.getInstance();
     }
 
@@ -106,7 +108,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
                 holder.drugBatchNumberBackg.setColor(Color.parseColor(CAPSULES_THEMECOLOR));
                 holder.drugExpiryDateBackg.setColor(Color.parseColor(CAPSULES_THEMECOLOR));
                 holder.iconImageV.setImageResource(R.drawable.capsules_icon);
-            }  else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection))) {
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection))) {
                 holder.iconLayoutBackg.setColor(Color.parseColor(INJECTION_THEMECOLOR));
                 holder.drugQuantityBackg.setColor(Color.parseColor(INJECTION_THEMECOLOR));
                 holder.drugBatchNumberBackg.setColor(Color.parseColor(INJECTION_THEMECOLOR));
@@ -200,8 +202,8 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
     private void OnClickScreenTransition(String drugID, int position) {
         try {
             if (!StringUtils.isBlank(drugID)) {
-                //DrugModel drugModel = mainActivity.GetDrugDetails(context, drugID);
-                InventoryFragment.inventoryFragment.ShowDialogAddUpdateDrug(getItem(position), position);
+                if (isAllInventory)
+                    InventoryFragment.inventoryFragment.ShowDialogAddUpdateDrug(getItem(position), position);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

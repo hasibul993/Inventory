@@ -29,6 +29,8 @@ public interface AppConstants {
     public static String CAPSULES_THEMECOLOR = "#556B2F";
     public static String MISCELLANEOUS_THEMECOLOR = "#008080";
 
+    public static String SIMPLE_DATE_FORMAT = "dd-MM-yyyy";
+
     public static DecimalFormat decimalFormatTwoPlace = new DecimalFormat("######.##");
 
     public static DecimalFormat decimalFormatOnePlace = new DecimalFormat("######.#");

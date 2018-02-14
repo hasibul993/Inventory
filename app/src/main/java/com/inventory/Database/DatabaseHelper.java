@@ -26,9 +26,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     ////query
     public static final String SELECT_ALL = "select * from ";
+    public static final String WHERE = " WHERE ";
     public static final String ORDER_BY = " ORDER BY ";
     public static final String ALPHABETICAL_OREDER = " COLLATE NOCASE ";
     public static final String LIMIT_8 = " LIMIT 8 ";
+    public static final String LIMIT_1 = " LIMIT 1 ";
 
     // Table name
     protected static final String TABLE_USER_KEY_DETAILS_DB = "UserKeyDetails";
@@ -62,6 +64,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_DRUG_EXPIRY_DATE = "DrugExpiryDate";
     protected static final String COLUMN_DRUG_DISCOUNT = "DrugDiscount";
     protected static final String COLUMN_DRUG_MANUFACTURER = "DrugManufacturer";
+    protected static final String COLUMN_TIMESTAMP = "TimeStamp";
+    protected static final String COLUMN_EXPIRY_DATE_IN_MILLISECOND = "ExpiryDateInMilliSecond";
 
 
     public DatabaseHelper(Context context) {
@@ -77,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             db.execSQL(QueryToCreateUserKeyDetailsTable());
             db.execSQL(QueryToCreateSettingsTable());
-            db.execSQL(QueryToCreateProductTable());
+            db.execSQL(QueryToCreateInventoryTable());
             db.execSQL(QueryToCreateMasterDBTable());
             db.execSQL(QueryToCreatePharmacyDBTable());
 
@@ -176,7 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
     }
 
-    public String QueryToCreateProductTable() {
+    public String QueryToCreateInventoryTable() {
         return "CREATE TABLE "
                 + TABLE_INVENTORY_DB + "(" + COLUMN_DRUG_NAME + " TEXT NOT NULL , "
                 + COLUMN_DRUG_ID + " TEXT NOT NULL ,"
@@ -188,6 +192,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DRUG_DISCOUNT + " REAL,"
                 + COLUMN_DRUG_MANUFACTURER + " TEXT,"
                 + COLUMN_DRUG_TRANSACTION_DATE + " TEXT,"
+                + COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
+                + COLUMN_EXPIRY_DATE_IN_MILLISECOND + " INTEGER,"
                 + "PRIMARY KEY (" + COLUMN_BATCH_NUMBER + "," + COLUMN_DRUG_ID + "))";
         //+ "PRIMARY KEY (" + COLUMN_USERGUID + "," + KEY_USER_ID_TRIMMED + "))";
     }

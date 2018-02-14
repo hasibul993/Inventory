@@ -26,6 +26,7 @@ public class ExpiredDurationFragment extends Fragment {
     ProcurementAdapter procurementAdapter;
     MainActivity mainActivity;
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+    boolean isOncreateCalled = false;
 
     public ExpiredDurationFragment() {
         // Required empty public constructor
@@ -56,6 +57,7 @@ public class ExpiredDurationFragment extends Fragment {
             GetDrugsLocally(null);
 
             expiredDurationFragment = this;
+            isOncreateCalled = true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -69,7 +71,8 @@ public class ExpiredDurationFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-
+                if (isOncreateCalled)
+                    GetDrugsLocally(null);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -91,7 +94,7 @@ public class ExpiredDurationFragment extends Fragment {
 
     private void SetAdapter(ArrayList<DrugModel> drugModelArrayList) {
         try {
-            procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList);
+            procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList,false);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
             recyclerView.setAdapter(procurementAdapter);

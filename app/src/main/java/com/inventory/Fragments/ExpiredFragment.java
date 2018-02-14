@@ -80,7 +80,7 @@ public class ExpiredFragment extends Fragment {
 
     public void GetDrugsLocally(String searchedText) {
         try {
-            drugModelArrayList = mainActivity.GetInventoryListFromInventoryDB(getActivity(), searchedText);
+            drugModelArrayList = mainActivity.GetExpiredInventoryFromInventoryDB(getActivity(), searchedText);
             SetAdapter(drugModelArrayList);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -90,7 +90,7 @@ public class ExpiredFragment extends Fragment {
 
     private void SetAdapter(ArrayList<DrugModel> drugModelArrayList) {
         try {
-            procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList);
+            procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList, false);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
             recyclerView.setAdapter(procurementAdapter);

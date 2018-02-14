@@ -18,7 +18,11 @@ public class DrugModel {
 
     public double DrugMRP;
 
+    public long ExpiryDateInMilliSecond;
+
     public String DrugMRPString;
+
+    public String TimeStamp;
 
     public int DrugQuantity;
 

@@ -117,7 +117,7 @@ public class InventoryFragment extends Fragment {
 
     private void SetAdapter(ArrayList<DrugModel> drugModelArrayList) {
         try {
-            procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList);
+            procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList,true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
             recyclerView.setAdapter(procurementAdapter);
@@ -427,6 +427,7 @@ public class InventoryFragment extends Fragment {
             }
 
             drugModel.DrugExpiryDate = stringHolderModel.drugExpiryDate;
+            drugModel.ExpiryDateInMilliSecond = mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate);
             drugModel.DrugTransactionDate = stringHolderModel.drugTransactionDate;
             drugModel.DrugManufacturer = stringHolderModel.drugManufacturer;
             drugModel.BatchNumber = stringHolderModel.batchNumber;
@@ -483,6 +484,7 @@ public class InventoryFragment extends Fragment {
                 existDrugModel.BatchNumber = drugModel.BatchNumber;
                 existDrugModel.DrugExpiryDate = drugModel.DrugExpiryDate;
                 existDrugModel.DrugTransactionDate = drugModel.DrugTransactionDate;
+                existDrugModel.ExpiryDateInMilliSecond = drugModel.ExpiryDateInMilliSecond;
                 procurementAdapter.notifyItemChanged(itemIndex);
                 // procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
             } else {

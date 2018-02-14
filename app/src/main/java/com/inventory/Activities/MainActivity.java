@@ -31,6 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -363,7 +364,7 @@ public class MainActivity implements AppConstants {
     public String GetCurrentDate() {
         String strDate = "";
         try {
-            SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);//dd/MM/yyyy
+            SimpleDateFormat sdfDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.ENGLISH);//dd/MM/yyyy
             Date now = new Date();
             strDate = sdfDate.format(now);
 
@@ -380,7 +381,7 @@ public class MainActivity implements AppConstants {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MONTH, month);
 
-            SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);//dd/MM/yyyy
+            SimpleDateFormat sdfDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.ENGLISH);//dd/MM/yyyy
             Date now = cal.getTime();
             newDate = sdfDate.format(now);
 
@@ -389,6 +390,43 @@ public class MainActivity implements AppConstants {
         }
         return newDate;
     }
+
+    public static long GetMilliSecondsFromDate(String date) {
+        long timeInMilliseconds = 0;
+        try {
+
+            SimpleDateFormat sdfDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.ENGLISH);//dd/MM/yyyy
+
+            try {
+                Date mDate = sdfDate.parse(date);
+                timeInMilliseconds = mDate.getTime();
+                Log.i(TAG, " " + timeInMilliseconds);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return timeInMilliseconds;
+    }
+
+    public static String GetDateFromMilliseconds(long milliSeconds) {
+        String date = "";
+        try {
+            // Create a DateFormatter object for displaying date in specified format.
+            SimpleDateFormat sdfDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.ENGLISH);//dd/MM/yyyy
+
+            // Create a calendar object that will convert the date and time value in milliseconds to date.
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(milliSeconds);
+            date = sdfDate.format(calendar.getTime());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return date;
+    }
+
 
     public String GetUniqueKey(String drugID, String batchNumber) {
         String key = "";
