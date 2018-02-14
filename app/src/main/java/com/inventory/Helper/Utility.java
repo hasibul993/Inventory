@@ -251,6 +251,11 @@ public class Utility {
             sliderMenuModels.add(sliderMenuModel);
 
             sliderMenuModel = new SliderMenuModel();
+            sliderMenuModel.Title = context.getString(R.string.sale);
+            sliderMenuModel.drawableInt = R.drawable.sale_black_24dp;
+            sliderMenuModels.add(sliderMenuModel);
+
+            sliderMenuModel = new SliderMenuModel();
             sliderMenuModel.Title = context.getString(R.string.settings);
             sliderMenuModel.drawableInt = R.drawable.settings_black_24dp;
             sliderMenuModels.add(sliderMenuModel);

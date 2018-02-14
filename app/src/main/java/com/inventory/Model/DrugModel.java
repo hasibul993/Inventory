@@ -1,10 +1,12 @@
 package com.inventory.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by BookMEds on 06-02-2018.
  */
 
-public class DrugModel {
+public class DrugModel implements Serializable {
 
     public String BatchNumber;
 

@@ -108,17 +108,21 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                     int index = -1;
                     Fragment currentFragment;
                     try {
-                        index = viewPager.getCurrentItem();
+
+                        AddInventoryActivity.GotoAddInventoryActivity(HomeActivity.this, null, false);
+
+                        /*index = viewPager.getCurrentItem();
                         viewPagerAdapter = ((ViewPagerAdapter) viewPager.getAdapter());
                         currentFragment = viewPagerAdapter.getItem(index);
                         if (currentFragment instanceof ExpiredDurationFragment) {
                             ExpiredDurationFragment expiredDurationFragment = (ExpiredDurationFragment) currentFragment;
                         } else if (currentFragment instanceof InventoryFragment) {
-                            InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
-                            inventoryFragment.ShowDialogAddUpdateDrug(null, -1);
+                            *//*InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
+                            inventoryFragment.ShowDialogAddUpdateDrug(null, -1);*//*
+                            //AddInventoryActivity.GotoAddInventoryActivity(HomeActivity.this, null, false);
                         } else if (currentFragment instanceof ExpiredFragment) {
-                            SalesActivity.GotoSalesActivity(HomeActivity.this);
-                        }
+                            //SalesActivity.GotoSalesActivity(HomeActivity.this);
+                        }*/
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -166,6 +170,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
 
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+            recyclerView.setBackgroundColor(getResources().getColor(R.color.White));
 
 
             if (Build.VERSION.SDK_INT <= 22) {

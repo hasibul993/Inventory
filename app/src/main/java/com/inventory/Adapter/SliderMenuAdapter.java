@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.inventory.Activities.MainActivity;
+import com.inventory.Activities.SalesActivity;
 import com.inventory.Activities.SettingActivity;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.NewUi.RobotoTextView;
@@ -121,6 +122,8 @@ public class SliderMenuAdapter extends RecyclerView.Adapter<SliderMenuAdapter.Vi
         try {
             if (StringUtils.equalsIgnoreCase(title, context.getString(R.string.settings))) {
                 SettingActivity.GotoSettingActivity(context);
+            } else if (StringUtils.equalsIgnoreCase(title, context.getString(R.string.sale))) {
+                SalesActivity.GotoSalesActivity(context);
             } else if (StringUtils.equalsIgnoreCase(title, context.getString(R.string.share))) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");

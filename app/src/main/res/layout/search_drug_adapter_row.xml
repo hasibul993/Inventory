@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
-            android:padding="2dp">
+            android:padding="4dp">
 
             <RelativeLayout
                 android:id="@+id/iconLayout"
@@ -49,11 +49,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_weight="1.80"
+                    android:layout_weight="1.82"
                     android:ellipsize="end"
                     android:gravity="left"
                     android:padding="2dp"
                     android:singleLine="true"
+                    android:textAllCaps="true"
                     android:text="Dolo"
                     android:textColor="@color/main_color_grey_900"
                     android:textSize="@dimen/body"
@@ -66,7 +67,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/drugNameTV"
-                    android:layout_weight="0.20"
+                    android:layout_weight="0.18"
                     android:background="@drawable/vector_search_white_icon"
                     android:backgroundTint="@color/black_65" />
 

@@ -137,7 +137,7 @@ public class InventoryFragment extends Fragment {
         try {
 
             final Dialog dialog = new Dialog(getActivity());
-            dialog.setContentView(R.layout.add_drug);
+            dialog.setContentView(R.layout.add_inventory_activity);
             dialog.setCancelable(false);
 
             //product ids
@@ -652,16 +652,6 @@ public class InventoryFragment extends Fragment {
                 viewIDModel.DrugNameRecyclerView.setAdapter(null);
                 viewIDModel.DrugNameRecyclerViewLayout.setVisibility(View.GONE);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void UpdateHashMap(DrugModel drugModel) {
-        try {
-            String uniqueKey = mainActivity.GetUniqueKey(drugModel.DrugID, drugModel.BatchNumber);
-            if (!drugModelHashMap.containsKey(uniqueKey))
-                drugModelHashMap.put(uniqueKey, drugModel);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -46,6 +46,12 @@
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <activity
+            android:name=".Activities.AddInventoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.HomeNoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <activity
             android:name=".Activities.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.HomeNoActionBar"

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.inventory.Activities.AddInventoryActivity;
 import com.inventory.Activities.MainActivity;
 import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Helper.AppConstants;
@@ -203,7 +204,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
         try {
             if (!StringUtils.isBlank(drugID)) {
                 if (isAllInventory)
-                    InventoryFragment.inventoryFragment.ShowDialogAddUpdateDrug(getItem(position), position);
+                    AddInventoryActivity.GotoAddInventoryActivity(context, getItem(position), true);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

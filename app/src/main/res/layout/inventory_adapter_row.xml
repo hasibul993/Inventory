@@ -59,6 +59,7 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="Hasibul"
+                    android:textAllCaps="true"
                     android:textColor="@color/Black"
                     android:textSize="@dimen/header"
                     android:textStyle="normal"
@@ -74,6 +75,7 @@
                     android:ellipsize="end"
                     android:gravity="left"
                     android:text="Hasibul"
+                    android:textAllCaps="true"
                     android:textColor="@color/black_65"
                     android:textSize="@dimen/body"
                     app:typeface="robotoRegular" />
