@@ -49,7 +49,7 @@ public class ExpiredDurationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         try {
-            rootView = inflater.inflate(R.layout.dashboard_fragment, container, false);
+            rootView = inflater.inflate(R.layout.expired_duration_fragment, container, false);
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
             mainActivity = MainActivity.getInstance();
 

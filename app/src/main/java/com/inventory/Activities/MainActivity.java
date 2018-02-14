@@ -442,7 +442,7 @@ public class MainActivity implements AppConstants {
             rawData = ReadFileFromRawDirectory(context);
             entityArrayList = GetDrugModelList(rawData);
             InsertDrugsInBatchInMasterDB(context, entityArrayList);
-            //InsertUpdateDrugsInBatchInInventoryDB(context, entityArrayList, false);
+            InsertUpdateDrugsInBatchInInventoryDB(context, entityArrayList, false);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
