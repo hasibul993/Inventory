@@ -13,12 +13,14 @@
         android:layout_height="wrap_content" />
 
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/cancelOkRelaLayout"
-        android:layout_below="@+id/toolbarId">
+        android:layout_below="@+id/toolbarId"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.CardView
             android:id="@+id/orderDetailsCardLayout"
@@ -200,39 +202,12 @@
                             android:textSize="@dimen/body" />
                     </android.support.design.widget.TextInputLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/spinnerLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/manufacturerET_Hint"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/White"
-                        android:padding="10dp">
-
-                        <Spinner
-                            android:id="@+id/spinnerCategory"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="0dp"
-                            android:paddingTop="1dp"
-                            android:visibility="visible" />
-
-                        <View
-                            android:id="@+id/divider3"
-                            android:layout_width="match_parent"
-                            android:layout_height="0.7dp"
-                            android:layout_below="@+id/spinnerCategory"
-                            android:layout_marginTop="7dp"
-                            android:background="@color/main_color_grey_400" />
-
-                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/batchNumberLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/spinnerLayout"
+                        android:layout_below="@+id/manufacturerET_Hint"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
@@ -280,7 +255,7 @@
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@+id/expiryDateHeaderTV">
 
@@ -338,6 +313,33 @@
 
 
                     </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/drugIconLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transactionDateLayout"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/White"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/tab_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="6dp"
+                            app:tabBackground="@drawable/viewpager_tab_selector"
+                            app:tabGravity="center"
+                            app:tabIndicatorHeight="0dp"
+                            android:visibility="gone"/>
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/viewpager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v4.view.ViewPager>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/drugNameRecyclerViewLayout"
@@ -447,38 +449,16 @@
         </android.support.v7.widget.CardView>
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
-    <RelativeLayout
-        android:id="@+id/cancelOkRelaLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatActionButton"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/rectangle_sharp_corner"
-        android:padding="8dp">
-
-        <LinearLayout
-            android:id="@+id/cancelOkLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <com.inventory.NewUi.RobotoTextView
-                android:id="@+id/okTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/ok"
-                android:textColor="@color/Black"
-                android:textSize="@dimen/header"
-                app:typeface="robotoMedium" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/vector_check_right_white_icon"
+        app:backgroundTint="@color/colorPrimary" />
 
 </RelativeLayout>

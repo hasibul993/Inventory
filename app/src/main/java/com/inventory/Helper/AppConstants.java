@@ -31,6 +31,8 @@ public interface AppConstants {
 
     public static String SIMPLE_DATE_FORMAT = "dd-MM-yyyy";
 
+    public final String DEFAULT_ITEM_FONT = "&#xE8FD;";
+
     public static DecimalFormat decimalFormatTwoPlace = new DecimalFormat("######.##");
 
     public static DecimalFormat decimalFormatOnePlace = new DecimalFormat("######.#");

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <com.inventory.NewUi.MaterialNew
+        android:id="@+id/font_icon"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:layout_margin="6dp"
+        android:background="@drawable/circle_shape"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/font_user"
+        android:textColor="@color/main_color_grey_500"
+        android:textSize="22sp"
+        tools:ignore="SpUsage" />
+</LinearLayout>

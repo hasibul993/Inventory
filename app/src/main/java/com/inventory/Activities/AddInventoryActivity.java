@@ -8,7 +8,13 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +35,7 @@ import android.widget.TextView;
 import com.inventory.Adapter.CustomSpinnerAdapter;
 import com.inventory.Adapter.SearchDrugAdapter;
 import com.inventory.Adapter.SearchDrugManufacturerAdapter;
+import com.inventory.Fragments.FragmentForIcons;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.RecyclerItemClickListener;
 import com.inventory.Helper.Utility;
@@ -42,6 +49,7 @@ import com.inventory.R;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,8 +65,9 @@ public class AddInventoryActivity extends AppCompatActivity {
     private Toolbar toolbar;
     TextView toolbar_title;
 
+    FloatingActionButton floatActionButton;
+
     ViewIDModel viewIDModel = new ViewIDModel();
-    RelativeLayout cancelOkRelaLayout;
     String prevDrugCategory = null;
 
     DrugModel editModel = null;
@@ -76,6 +85,14 @@ public class AddInventoryActivity extends AppCompatActivity {
     SearchDrugAdapter searchDrugAdapter;
     SearchDrugManufacturerAdapter searchDrugManufacturerAdapter;
 
+
+    /*Medicine icon*/
+    String iconFont = "", fromIconFont = "";
+    static String defaultColorCode = MainActivity.GetThemeColor();
+
+    MyAdapter myAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +104,11 @@ public class AddInventoryActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         editModel = (DrugModel) bundle.getSerializable(getString(R.string.drugModel));
         isModify = (boolean) bundle.getSerializable(getString(R.string.isModify));
+
+        if (editModel == null)
+            fromIconFont = AppConstants.DEFAULT_ITEM_FONT;
+        else
+            fromIconFont = editModel.DrugIcon;
 
         RecreateLayout();
 
@@ -164,7 +186,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             }
         });
 
-        viewIDModel.OkTextView.setOnClickListener(new View.OnClickListener() {
+        floatActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -244,7 +266,7 @@ public class AddInventoryActivity extends AppCompatActivity {
                 MainActivity.ShowToast(AddInventoryActivity.this, getString(R.string.chooseExpiryDate));
                 return;
             } else {
-                boolean isDataOk = AddUpdateItem(stringHolderModel, editModel, viewIDModel.SpinnerCategory, position);
+                boolean isDataOk = AddUpdateItem(stringHolderModel, editModel, fromIconFont, position);
                 if (isDataOk)
                     HomeActivity.GotoHomeActivity(AddInventoryActivity.this);
             }
@@ -261,6 +283,8 @@ public class AddInventoryActivity extends AppCompatActivity {
             toolbar = (Toolbar) findViewById(R.id.toolbarId);
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
 
+            floatActionButton = (FloatingActionButton) findViewById(R.id.floatActionButton);
+
             //product ids
             viewIDModel.DrugNameEditTextTHint = (TextInputLayout) findViewById(R.id.drugNameET_Hint);
             viewIDModel.MrpEditTextTHint = (TextInputLayout) findViewById(R.id.mrpET_Hint);
@@ -269,7 +293,8 @@ public class AddInventoryActivity extends AppCompatActivity {
             viewIDModel.ManufacturerEditTextTHint = (TextInputLayout) findViewById(R.id.manufacturerET_Hint);
             viewIDModel.BatchNumberEditTextTHint = (TextInputLayout) findViewById(R.id.batchNumberET_Hint);
 
-            viewIDModel.SpinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
+            viewIDModel.viewPager = (ViewPager) findViewById(R.id.viewpager);
+            viewIDModel.tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
             viewIDModel.DrugNameEditText = (EditText) findViewById(R.id.drugNameET);
             viewIDModel.MrpEditText = (EditText) findViewById(R.id.mrpET);
@@ -293,12 +318,8 @@ public class AddInventoryActivity extends AppCompatActivity {
             viewIDModel.DeleteIconManufacturerRecyclerView = (ImageView) findViewById(R.id.deleteIconManufacturerRecyclerView);
 
             //cancel ok btn ids
-            viewIDModel.OkTextView = (RobotoTextView) findViewById(R.id.okTV);
+            //viewIDModel.OkTextView = (RobotoTextView) findViewById(R.id.okTV);
             //viewIDModel.CancelTextView = (RobotoTextView) findViewById(R.id.cancelTV);
-
-            cancelOkRelaLayout = (RelativeLayout) findViewById(R.id.cancelOkRelaLayout);
-            GradientDrawable cancelOkRelaLayoutBackg = (GradientDrawable) cancelOkRelaLayout.getBackground();
-            cancelOkRelaLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -313,8 +334,9 @@ public class AddInventoryActivity extends AppCompatActivity {
 
             setSupportActionBar(toolbar);
 
-            MainActivity.getInstance().SupportActionBar(AddInventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.sale), false);
+            MainActivity.getInstance().SupportActionBar(AddInventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.addMedicine), false);
 
+            utility.SetFabColor(AddInventoryActivity.this, floatActionButton);
             try {
                 final Drawable upArrow = getResources().getDrawable(R.drawable.vector_cross_white_icon);
                 getSupportActionBar().setHomeAsUpIndicator(upArrow);
@@ -336,15 +358,25 @@ public class AddInventoryActivity extends AppCompatActivity {
                 viewIDModel.BatchNumberEditText.setText(editModel.BatchNumber);
                 prevDrugCategory = editModel.DrugCategory;
 
-                viewIDModel.OkTextView.setText(getString(R.string.update));
+                toolbar_title.setText(getString(R.string.update));
+
 
             } else {
                 isModify = false;
             }
 
-            SetSpinnerAdapter(viewIDModel.SpinnerCategory, prevDrugCategory);
+            SetDrugIconAdapter();
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
+    private void SetDrugIconAdapter() {
+        try {
+            myAdapter = new MyAdapter(getSupportFragmentManager());
+            viewIDModel.viewPager.setAdapter(myAdapter);
+            viewIDModel.tabLayout.setupWithViewPager(viewIDModel.viewPager, true);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -359,7 +391,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             viewIDModel.ManufacturerEditTextTHint.setHint(getString(R.string.drugManufacturer));
             viewIDModel.BatchNumberEditTextTHint.setHint(getString(R.string.batchNumber));
 
-            viewIDModel.OkTextView.setTextColor(getResources().getColor(R.color.White));
+            //viewIDModel.OkTextView.setTextColor(getResources().getColor(R.color.White));
             // viewIDModel.CancelTextView.setTextColor(getResources().getColor(R.color.White));
 
             viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate());
@@ -369,7 +401,7 @@ public class AddInventoryActivity extends AppCompatActivity {
         }
     }
 
-    private boolean AddUpdateItem(StringHolderModel stringHolderModel, DrugModel editModel, Spinner spinnerCategory, int position) {
+    private boolean AddUpdateItem(StringHolderModel stringHolderModel, DrugModel editModel, String fromIconFont, int position) {
         try {
             DrugModel drugModel = new DrugModel();
 
@@ -415,7 +447,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             drugModel.DrugTransactionDate = stringHolderModel.drugTransactionDate;
             drugModel.DrugManufacturer = stringHolderModel.drugManufacturer;
             drugModel.BatchNumber = stringHolderModel.batchNumber;
-            drugModel.DrugCategory = spinnerCategory.getSelectedItem().toString();
+            drugModel.DrugCategory = fromIconFont;
 
             mainActivity.InsertUpdateDrugs(AddInventoryActivity.this, drugModel, isModify);
 
@@ -429,22 +461,6 @@ public class AddInventoryActivity extends AppCompatActivity {
             searchDrugModel = null;
         }
         return true;
-    }
-
-
-    private void SetSpinnerAdapter(Spinner categorySpinner, String selectedItem) {
-
-        try {
-
-            CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(AddInventoryActivity.this, R.layout.spinner_item, drugCategories);
-            categorySpinner.setAdapter(adapter);
-
-            if (!StringUtils.isBlank(selectedItem))
-                categorySpinner.setSelection(drugCategories.indexOf(selectedItem));
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
 
@@ -573,7 +589,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             viewIDModel.DiscountEditText.setText(drugModel.DrugDiscountString);
 
             viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate());
-            viewIDModel.SpinnerCategory.setSelection(drugCategories.indexOf(drugModel.DrugCategory));
+            // viewIDModel.SpinnerCategory.setSelection(drugCategories.indexOf(drugModel.DrugCategory));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -608,6 +624,49 @@ public class AddInventoryActivity extends AppCompatActivity {
         }
 
     }
+
+
+    class MyAdapter extends FragmentStatePagerAdapter {
+        ArrayList<HashMap> mapList = null;
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+            mapList = utility.GetDrugIcon();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            for (int i = 0; i < mapList.size(); i++) {
+                HashMap hashMapsList = mapList.get(i);
+                if (i == position) {
+                    return FragmentForIcons.newInstance(hashMapsList, fromIconFont);
+                }
+            }
+            return FragmentForIcons.newInstance(null, fromIconFont);
+        }
+
+        @Override
+        public int getCount() {
+            return mapList != null ? mapList.size() : 0;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return "";
+        }
+    }
+
+    public void setIconFont(String iconFont) {
+        this.iconFont = iconFont;
+        fromIconFont = iconFont;
+        Log.i("tag", "new iconfont" + iconFont);
+    }
+
+    public String GetSelectedColor() {
+        return defaultColorCode;
+    }
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         try {

@@ -1,12 +1,15 @@
 package com.inventory.Model;
 
+import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 
 import com.inventory.NewUi.RobotoTextView;
 
@@ -50,7 +53,8 @@ public class ViewIDModel {
     public RobotoTextView ResultOfTextViewManufacturerRecyclerView;
     public RobotoTextView ResultOfTextViewDrugNameRecyclerView;
 
-    public Spinner SpinnerCategory;
+    public ViewPager viewPager;
 
+    public TabLayout tabLayout;
 
 }

@@ -173,6 +173,8 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.White));
 
 
+            utility.SetFabColor(HomeActivity.this, floatActionButton);
+
             if (Build.VERSION.SDK_INT <= 22) {
                 floatActionButton.getBackground().setColorFilter(Color.parseColor(MainActivity.GetThemeColor()), PorterDuff.Mode.SRC_ATOP);
             } else {

@@ -6,14 +6,19 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.inventory.Activities.MainActivity;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Operation.LoadBitmapFromURL;
 import com.inventory.R;
@@ -27,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -271,6 +277,24 @@ public class Utility {
         return sliderMenuModels;
     }
 
+    public ArrayList<HashMap> GetDrugIcon() {
+        ArrayList<HashMap> hashMapList1 = new ArrayList<>();
+        HashMap hashMap1 = new HashMap();
+        hashMap1.put(0, "&#xE8FD;");
+        hashMap1.put(1, "&#xE627;");
+        hashMap1.put(2, "&#xE01D;");
+        hashMap1.put(3, "&#xE645;");
+        hashMap1.put(4, "&#xE876;");
+        hashMap1.put(5, "&#xE56C;");
+        hashMap1.put(6, "&#xE533;");
+        hashMap1.put(7, "&#xE0AF;");
+        hashMap1.put(8, "&#xE254;");
+        hashMap1.put(9, "&#xE42E;");
+        hashMapList1.add(hashMap1);
+
+        return hashMapList1;
+    }
+
 
     public String CreateID() throws Exception {
         return UUID.randomUUID().toString();
@@ -373,6 +397,18 @@ public class Utility {
             ex.printStackTrace();
         }
         return bitmap;
+    }
+
+    public void SetFabColor(Context context, FloatingActionButton floatingActionButton) {
+        try {
+            if (Build.VERSION.SDK_INT <= 22) {
+                floatingActionButton.getBackground().setColorFilter(Color.parseColor(MainActivity.GetThemeColor()), PorterDuff.Mode.SRC_ATOP);
+            } else {
+                floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(MainActivity.GetThemeColor())));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 
