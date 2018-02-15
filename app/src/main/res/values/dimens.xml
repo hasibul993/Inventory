@@ -8,14 +8,18 @@
 
     <dimen name="header_24sp">24sp</dimen>
     <dimen name="header_20sp">20sp</dimen>
+    <dimen name="header_18sp">18sp</dimen>
     <dimen name="header">16sp</dimen>
     <dimen name="title">15sp</dimen>
     <dimen name="body">14sp</dimen>
     <dimen name="header_28sp">28sp</dimen>
     <dimen name="text">12sp</dimen>
     <dimen name="text_10sp">10sp</dimen>
+    <dimen name="toolbar_title_8sp">8sp</dimen>
 
     <dimen name="toolbar_60dp">60dp</dimen>
+
+    <dimen name="cicle_width_50dp">50dp</dimen>
 
 
 

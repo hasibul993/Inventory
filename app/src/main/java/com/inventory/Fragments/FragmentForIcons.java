@@ -3,7 +3,6 @@ package com.inventory.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ public class FragmentForIcons extends Fragment {
     HashMap hashMapArrayList;
     RecyclerView recyclerView;
     IconsAdapter iconsAdapter;
-    String selectedIconFont;
+    String selectedDrugIcon;
 
     // newInstance constructor for creating fragment with arguments
     public static FragmentForIcons newInstance(HashMap hashMapArrayList, String selectedIconFont) {
@@ -42,13 +41,13 @@ public class FragmentForIcons extends Fragment {
         View view = inflater.inflate(R.layout.drug_icon_recyclerview, container, false);
 
         hashMapArrayList = (HashMap) getArguments().getSerializable("map");
-        selectedIconFont = getArguments().getString("iconfont");
+        selectedDrugIcon = getArguments().getString("iconfont");
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         //define columns
-        int numberOfColumns = 5;
+        int numberOfColumns = 6;
 
 
-        iconsAdapter = new IconsAdapter(getActivity(), hashMapArrayList, selectedIconFont);
+        iconsAdapter = new IconsAdapter(getActivity(), hashMapArrayList, selectedDrugIcon);
         //recyclerView.setAdapter(null);
         recyclerView.setAdapter(iconsAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns));

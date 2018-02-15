@@ -8,13 +8,17 @@
 
     <dimen name="header_24sp">30sp</dimen>
     <dimen name="header_20sp">26sp</dimen>
+    <dimen name="header_18sp">24sp</dimen>
     <dimen name="header">22sp</dimen>
     <dimen name="title">21sp</dimen>
     <dimen name="body">20sp</dimen>
     <dimen name="header_28sp">34sp</dimen>
     <dimen name="text">18sp</dimen>
     <dimen name="text_10sp">16sp</dimen>
+    <dimen name="toolbar_title_8sp">14sp</dimen>
 
     <dimen name="toolbar_60dp">66dp</dimen>
+
+    <dimen name="cicle_width_50dp">56dp</dimen>
 
 </resources>

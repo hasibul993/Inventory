@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.inventory.Activities.MainActivity;
+import com.inventory.Model.DrugModel;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Operation.LoadBitmapFromURL;
 import com.inventory.R;
@@ -277,22 +278,47 @@ public class Utility {
         return sliderMenuModels;
     }
 
-    public ArrayList<HashMap> GetDrugIcon() {
-        ArrayList<HashMap> hashMapList1 = new ArrayList<>();
-        HashMap hashMap1 = new HashMap();
-        hashMap1.put(0, "&#xE8FD;");
-        hashMap1.put(1, "&#xE627;");
-        hashMap1.put(2, "&#xE01D;");
-        hashMap1.put(3, "&#xE645;");
-        hashMap1.put(4, "&#xE876;");
-        hashMap1.put(5, "&#xE56C;");
-        hashMap1.put(6, "&#xE533;");
-        hashMap1.put(7, "&#xE0AF;");
-        hashMap1.put(8, "&#xE254;");
-        hashMap1.put(9, "&#xE42E;");
-        hashMapList1.add(hashMap1);
+    public ArrayList<HashMap> GetDrugIcon(Context context) {
+        ArrayList<HashMap> hashMapList = new ArrayList<>();
+        DrugModel drugModel;
+        try {
+            HashMap hashMap = new HashMap();
+            drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.tablets_icon;
+            drugModel.DrugCategory = context.getString(R.string.tablet);
+            hashMap.put(0, drugModel);
 
-        return hashMapList1;
+            drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.capsules_icon;
+            drugModel.DrugCategory = context.getString(R.string.capsules);
+            hashMap.put(1, drugModel);
+
+            drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.injection_icon;
+            drugModel.DrugCategory = context.getString(R.string.injection);
+            hashMap.put(2, drugModel);
+
+            drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.cream_icon;
+            drugModel.DrugCategory = context.getString(R.string.cream);
+            hashMap.put(3, drugModel);
+
+            drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.syrup_icon;
+            drugModel.DrugCategory = context.getString(R.string.syrup);
+            hashMap.put(4, drugModel);
+
+            drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.stocking;
+            drugModel.DrugCategory = context.getString(R.string.miscellaneous);
+            hashMap.put(5, drugModel);
+
+            hashMapList.add(hashMap);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return hashMapList;
     }
 
 

@@ -7,17 +7,19 @@ package com.inventory.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 
 import com.inventory.Activities.AddInventoryActivity;
 import com.inventory.Activities.MainActivity;
+import com.inventory.Model.DrugModel;
 import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
@@ -31,13 +33,13 @@ public class IconsAdapter extends RecyclerView.Adapter<IconsAdapter.MyViewHolder
 
     static HashMap selectedIconsMap = new HashMap();
     int selectedPosition = -1;
-    String selectedIconFontIs;
+    String selectedDrugIcon;
 
-    public IconsAdapter(Context context, HashMap hashMap, String selectedIconFontIs) {
+    public IconsAdapter(Context context, HashMap hashMap, String selectedDrugIcon) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.hashMap = hashMap;
-        this.selectedIconFontIs = selectedIconFontIs;
+        this.selectedDrugIcon = selectedDrugIcon;
     }
 
     @Override
@@ -49,11 +51,15 @@ public class IconsAdapter extends RecyclerView.Adapter<IconsAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView fontIcon;
+        ImageView tickIcon;
+        RelativeLayout circleLayout;
+        GradientDrawable circleLayoutBackg;
 
         public MyViewHolder(View view) {
             super(view);
-            fontIcon = (TextView) view.findViewById(R.id.font_icon);
+            circleLayout = (RelativeLayout) view.findViewById(R.id.circleLayout);
+            tickIcon = (ImageView) view.findViewById(R.id.tickIcon);
+            circleLayoutBackg = (GradientDrawable) circleLayout.getBackground();
 
         }
 
@@ -63,39 +69,36 @@ public class IconsAdapter extends RecyclerView.Adapter<IconsAdapter.MyViewHolder
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         try {
-            String value = hashMap.get(position).toString();
 
-            String val1 = "" + value.charAt(3) + value.charAt(4) + value.charAt(5) + value.charAt(6);
+            DrugModel drugModel = (DrugModel) hashMap.get(position);
 
-            new String(Character.toChars(Integer.parseInt(val1, 16)));
-            holder.fontIcon.setText(new String(Character.toChars(Integer.parseInt(val1, 16))));
+            holder.tickIcon.setBackgroundResource(0);
+            holder.tickIcon.setImageBitmap(null);
 
+            holder.tickIcon.setBackgroundResource(drugModel.DrugIcon);
 
             if (selectedPosition == position) {
-
-                Drawable drawable = holder.fontIcon.getBackground();
-                drawable.setColorFilter(Color.parseColor(new AddInventoryActivity().GetSelectedColor()), PorterDuff.Mode.SRC_ATOP);
-                holder.fontIcon.setTextColor(context.getResources().getColor(R.color.White));
-                // putColorIntoMap(value);
-
+                holder.circleLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+                holder.tickIcon.setColorFilter(ContextCompat.getColor(context, R.color.White), android.graphics.PorterDuff.Mode.MULTIPLY);
+                //holder.tickIcon.setColorFilter(context.getResources().getColor(R.color.White), PorterDuff.Mode.SRC_ATOP);
             } else {
-                Drawable drawable = holder.fontIcon.getBackground();
-                drawable.setColorFilter(context.getResources().getColor(R.color.White), PorterDuff.Mode.SRC_ATOP);
-                holder.fontIcon.setTextColor(context.getResources().getColor(R.color.main_color_grey_500));
+                holder.circleLayoutBackg.setColor(context.getResources().getColor(R.color.main_color_grey_400));
+                holder.tickIcon.setColorFilter(ContextCompat.getColor(context, R.color.White), android.graphics.PorterDuff.Mode.SRC_ATOP);
+                //holder.tickIcon.setColorFilter(context.getResources().getColor(R.color.main_color_grey_500), PorterDuff.Mode.SRC_ATOP);
+
             }
 
-            holder.fontIcon.setOnClickListener(new View.OnClickListener() {
+            holder.tickIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
-                        String value = hashMap.get(position).toString();
+                        DrugModel drugModelClicked = (DrugModel) hashMap.get(position);
 
-                        Drawable drawable = holder.fontIcon.getBackground();
-                        drawable.setColorFilter(Color.parseColor(new AddInventoryActivity().GetSelectedColor()), PorterDuff.Mode.SRC_ATOP);
-                        holder.fontIcon.setTextColor(context.getResources().getColor(R.color.White));
+                        holder.circleLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+                        holder.tickIcon.setColorFilter(context.getResources().getColor(R.color.White), PorterDuff.Mode.SRC_ATOP);
 
                         if (context instanceof AddInventoryActivity) {
-                            ((AddInventoryActivity) context).setIconFont(value);
+                            ((AddInventoryActivity) context).SetDrugIcon(drugModelClicked.DrugCategory);
                         }
 
                         selectedPosition = position;
@@ -108,12 +111,12 @@ public class IconsAdapter extends RecyclerView.Adapter<IconsAdapter.MyViewHolder
             });
 
             if (selectedPosition == -1) {
-                if (StringUtils.equalsIgnoreCase(selectedIconFontIs, value)) {
-                    Drawable drawable = holder.fontIcon.getBackground();
-                    drawable.setColorFilter(Color.parseColor(new AddInventoryActivity().GetSelectedColor()), PorterDuff.Mode.SRC_ATOP);
-                    holder.fontIcon.setTextColor(context.getResources().getColor(R.color.White));
+                if (StringUtils.equalsIgnoreCase(selectedDrugIcon, drugModel.DrugCategory)) {
+                    holder.circleLayoutBackg.setColor(Color.parseColor(MainActivity.GetThemeColor()));
+                    holder.tickIcon.setColorFilter(context.getResources().getColor(R.color.White), PorterDuff.Mode.SRC_ATOP);
                 }
             }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

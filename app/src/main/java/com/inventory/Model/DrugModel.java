@@ -14,7 +14,7 @@ public class DrugModel implements Serializable {
 
     public String DrugName;
 
-    public String DrugIcon;
+    public int DrugIcon;
 
     public String DrugCategory;
 

@@ -52,8 +52,7 @@
                         <android.support.design.widget.TextInputLayout
                             android:id="@+id/drugNameET_Hint"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColorHint="@color/colorPrimary">
+                            android:layout_height="wrap_content">
 
                             <EditText
                                 android:id="@+id/drugNameET"
@@ -67,7 +66,6 @@
                                 android:inputType="textCapCharacters|textAutoCorrect|textMultiLine"
                                 android:maxLines="2"
                                 android:singleLine="true"
-                                android:textAllCaps="true"
                                 android:textColor="@color/main_color_grey_900"
                                 android:textColorHint="@android:color/transparent"
                                 android:textSize="@dimen/body" />
@@ -87,8 +85,7 @@
                             android:id="@+id/mrpET_Hint"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColorHint="@color/colorPrimary">
+                            android:layout_weight="1">
 
                             <EditText
                                 android:id="@+id/mrpET"
@@ -110,8 +107,7 @@
                             android:id="@+id/quantityET_Hint"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColorHint="@color/colorPrimary">
+                            android:layout_weight="1">
 
                             <EditText
                                 android:id="@+id/quantityET"
@@ -144,8 +140,7 @@
                             android:id="@+id/discountET_Hint"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColorHint="@color/colorPrimary">
+                            android:layout_weight="1">
 
                             <EditText
                                 android:id="@+id/discountET"
@@ -182,8 +177,7 @@
                         android:id="@+id/manufacturerET_Hint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/discountLayout"
-                        android:textColorHint="@color/colorPrimary">
+                        android:layout_below="@+id/discountLayout">
 
                         <EditText
                             android:id="@+id/manufacturerET"
@@ -196,7 +190,6 @@
                             android:imeOptions="actionNext"
                             android:inputType="textCapCharacters|textAutoCorrect"
                             android:singleLine="true"
-                            android:textAllCaps="true"
                             android:textColor="@color/main_color_grey_900"
                             android:textColorHint="@android:color/transparent"
                             android:textSize="@dimen/body" />
@@ -215,8 +208,7 @@
                             android:id="@+id/batchNumberET_Hint"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:textColorHint="@color/colorPrimary">
+                            android:layout_weight="2">
 
                             <EditText
                                 android:id="@+id/batchNumberET"
@@ -317,9 +309,9 @@
                     <LinearLayout
                         android:id="@+id/drugIconLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_below="@+id/transactionDateLayout"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="12dp"
                         android:background="@color/White"
                         android:orientation="vertical"
                         android:visibility="visible">
@@ -329,10 +321,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:layout_marginTop="6dp"
+                            android:visibility="gone"
                             app:tabBackground="@drawable/viewpager_tab_selector"
                             app:tabGravity="center"
-                            app:tabIndicatorHeight="0dp"
-                            android:visibility="gone"/>
+                            app:tabIndicatorHeight="0dp" />
 
                         <android.support.v4.view.ViewPager
                             android:id="@+id/viewpager"

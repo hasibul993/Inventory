@@ -3,10 +3,7 @@ package com.inventory.Activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -28,11 +25,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.inventory.Adapter.CustomSpinnerAdapter;
 import com.inventory.Adapter.SearchDrugAdapter;
 import com.inventory.Adapter.SearchDrugManufacturerAdapter;
 import com.inventory.Fragments.FragmentForIcons;
@@ -87,8 +81,7 @@ public class AddInventoryActivity extends AppCompatActivity {
 
 
     /*Medicine icon*/
-    String iconFont = "", fromIconFont = "";
-    static String defaultColorCode = MainActivity.GetThemeColor();
+    String iconFont = "", fromDrugIcon = "";
 
     MyAdapter myAdapter;
 
@@ -106,9 +99,9 @@ public class AddInventoryActivity extends AppCompatActivity {
         isModify = (boolean) bundle.getSerializable(getString(R.string.isModify));
 
         if (editModel == null)
-            fromIconFont = AppConstants.DEFAULT_ITEM_FONT;
+            fromDrugIcon = getString(R.string.tablet);
         else
-            fromIconFont = editModel.DrugIcon;
+            fromDrugIcon = editModel.DrugCategory;
 
         RecreateLayout();
 
@@ -266,7 +259,7 @@ public class AddInventoryActivity extends AppCompatActivity {
                 MainActivity.ShowToast(AddInventoryActivity.this, getString(R.string.chooseExpiryDate));
                 return;
             } else {
-                boolean isDataOk = AddUpdateItem(stringHolderModel, editModel, fromIconFont, position);
+                boolean isDataOk = AddUpdateItem(stringHolderModel, editModel, fromDrugIcon, position);
                 if (isDataOk)
                     HomeActivity.GotoHomeActivity(AddInventoryActivity.this);
             }
@@ -335,7 +328,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
 
             MainActivity.getInstance().SupportActionBar(AddInventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.addMedicine), false);
-
+            toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
             utility.SetFabColor(AddInventoryActivity.this, floatActionButton);
             try {
                 final Drawable upArrow = getResources().getDrawable(R.drawable.vector_cross_white_icon);
@@ -631,7 +624,7 @@ public class AddInventoryActivity extends AppCompatActivity {
 
         public MyAdapter(FragmentManager fm) {
             super(fm);
-            mapList = utility.GetDrugIcon();
+            mapList = utility.GetDrugIcon(AddInventoryActivity.this);
         }
 
         @Override
@@ -639,10 +632,10 @@ public class AddInventoryActivity extends AppCompatActivity {
             for (int i = 0; i < mapList.size(); i++) {
                 HashMap hashMapsList = mapList.get(i);
                 if (i == position) {
-                    return FragmentForIcons.newInstance(hashMapsList, fromIconFont);
+                    return FragmentForIcons.newInstance(hashMapsList, fromDrugIcon);
                 }
             }
-            return FragmentForIcons.newInstance(null, fromIconFont);
+            return FragmentForIcons.newInstance(null, fromDrugIcon);
         }
 
         @Override
@@ -657,16 +650,11 @@ public class AddInventoryActivity extends AppCompatActivity {
         }
     }
 
-    public void setIconFont(String iconFont) {
+    public void SetDrugIcon(String iconFont) {
         this.iconFont = iconFont;
-        fromIconFont = iconFont;
+        fromDrugIcon = iconFont;
         Log.i("tag", "new iconfont" + iconFont);
     }
-
-    public String GetSelectedColor() {
-        return defaultColorCode;
-    }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         try {
