@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "341524641830",
+    "firebase_url": "https://inventory-9b3a8.firebaseio.com",
+    "project_id": "inventory-9b3a8",
+    "storage_bucket": "inventory-9b3a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341524641830:android:e9f766772e4b3895",
+        "android_client_info": {
+          "package_name": "com.inventory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341524641830-n83tqg4aleblml6344apukbo8nlq6gp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQMJSD8KOlIWls8cldDjmSJ2KYQvChVDo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

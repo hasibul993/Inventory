@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.inventory.Helper.Utility;
 
+import com.inventory.Login.AppSettings;
 import com.inventory.Model.SettingsModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.R;
@@ -46,10 +47,6 @@ public class SplashActivity extends AppCompatActivity {
 
         SupportActionBar(this);
 
-        if (!mainActivity.IsAnyMedicineExist(SplashActivity.this)) {
-            mainActivity.InsertDrugsFromRawDirectory(SplashActivity.this);
-        }
-
         startAnimating();
     }
 
@@ -71,7 +68,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (!StringUtils.isBlank(userKeyDetailsModel.PhoneNumber)) {
                         HomeActivity.GotoHomeActivity(SplashActivity.this);
                     } else {
-                        RegistrationActivity.GotoRegistrationActivity(SplashActivity.this);
+                        AppSettings.GotoAppSettings(SplashActivity.this);
                     }
                 }
 

@@ -72,7 +72,6 @@ public class MainActivity implements AppConstants {
         THEMECOLOR = color;
     }
 
-
     public static int GetThemeColorInt() {
         int colorInt = 0;
         try {
@@ -82,7 +81,6 @@ public class MainActivity implements AppConstants {
         }
         return colorInt;
     }
-
 
     /*Start - All DB Data insert update fetch*/
 
@@ -106,10 +104,38 @@ public class MainActivity implements AppConstants {
 
     }
 
-    public void InsertUpdateDrugs(Context context, DrugModel drugModel, boolean isModify) {
+    public SettingsModel GetSettings(Context context, String userID) {
+        databaseAccess = new DatabaseAccess(context);
+        SettingsModel settingsModel = new SettingsModel();
+        try {
+            settingsModel = databaseAccess.GetSettings(userID);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return settingsModel;
+
+    }
+
+    public UserKeyDetailsModel GetUserKeyDetails(Context context) {
+        databaseAccess = new DatabaseAccess(context);
+        UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
+        try {
+            userKeyDetailsModel = databaseAccess.GetUserKeyDetails();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return userKeyDetailsModel;
+
+    }
+
+
+    /*Below are drug insertion and fetching*/
+
+
+    public void InsertUpdateDrugsInInventoryDB(Context context, DrugModel drugModel, boolean isModify) {
         databaseAccess = new DatabaseAccess(context);
         try {
-            databaseAccess.InsertUpdateDrugs(drugModel, isModify);
+            databaseAccess.InsertUpdateDrugsInInventoryDB(drugModel, isModify);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -126,7 +152,6 @@ public class MainActivity implements AppConstants {
 
     }
 
-
     public void InsertDrugsInBatchInMasterDB(Context context, ArrayList<DrugModel> drugModelArrayList) {
         databaseAccess = new DatabaseAccess(context);
         try {
@@ -136,24 +161,34 @@ public class MainActivity implements AppConstants {
         }
     }
 
-    public void InsertDrugsInBatchInPharmacyDB(Context context, ArrayList<DrugModel> drugModelArrayList) {
-        databaseAccess = new DatabaseAccess(context);
-        try {
-            databaseAccess.InsertDrugsInBatchInPharmacyDB(drugModelArrayList);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void InsertDrugsInPharmacyDB(Context context, DrugModel drugModel) {
+    public void InsertDrugsInMasterDB(Context context, DrugModel drugModel) {
         try {
             ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
             drugModelArrayList.add(drugModel);
-            InsertDrugsInBatchInPharmacyDB(context, drugModelArrayList);
-            //InsertDrugsInBatchInMasterDB(drugModelArrayList);
+            InsertDrugsInBatchInMasterDB(context, drugModelArrayList);
         } catch (Exception ex) {
             ex.printStackTrace();
-            Log.i(TAG, " InsertPharmacyDBDrugs : " + ex.getMessage());
+            Log.i(TAG, " InsertDrugsInMasterDB : " + ex.getMessage());
+        }
+    }
+
+    public void InsertManufacturerInManufacturerDB(Context context, DrugModel drugModel) {
+        try {
+            ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+            drugModelArrayList.add(drugModel);
+            InsertManufacturerInBatchInManufacturerDB(context, drugModelArrayList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " InsertManufacturerInManufacturerDB : " + ex.getMessage());
+        }
+    }
+
+    public void InsertManufacturerInBatchInManufacturerDB(Context context, ArrayList<DrugModel> drugModelArrayList) {
+        databaseAccess = new DatabaseAccess(context);
+        try {
+            databaseAccess.InsertManufacturerInBatchInManufacturerDB(drugModelArrayList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -161,7 +196,7 @@ public class MainActivity implements AppConstants {
         databaseAccess = new DatabaseAccess(context);
         DrugModel drugModel = new DrugModel();
         try {
-            drugModel = databaseAccess.GetDrugDetails(drugBatchNo, drugID);
+            drugModel = databaseAccess.GetDrugDetailsFromInventoryDB(drugBatchNo, drugID);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -217,17 +252,86 @@ public class MainActivity implements AppConstants {
         return drugModelArrayList;
     }
 
-
-    public ArrayList<DrugModel> GetDrugManufacturerListFromMasterDB(Context context, String searchText) {
+    public ArrayList<DrugModel> GetDrugManufacturerListFromManufacturerDB(Context context, String searchText) {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            drugModelArrayList = databaseAccess.GetDrugManufacturerListFromMasterDB(searchText);
+            drugModelArrayList = databaseAccess.GetDrugManufacturerListFromManufacturerDB(searchText);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return drugModelArrayList;
     }
+
+    /*Bwlow are Order and Details insertion*/
+
+    public void InsertUpdateOrderInOrderDB(Context context, DrugModel drugModel) {
+        databaseAccess = new DatabaseAccess(context);
+        try {
+            databaseAccess.InsertUpdateOrderInOrderDB(drugModel);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void InsertOrderItemsInBatchInOrderItemsDB(Context context, ArrayList<DrugModel> drugModelArrayList) {
+        databaseAccess = new DatabaseAccess(context);
+        try {
+            databaseAccess.InsertOrderItemsInBatchInOrderItemsDB(drugModelArrayList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    public DrugModel GetOrderDetailsFromOrderDB(Context context, String orderNo) {
+        databaseAccess = new DatabaseAccess(context);
+        DrugModel drugModel = new DrugModel();
+        try {
+            drugModel = databaseAccess.GetOrderDetailsFromOrderDB(orderNo);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModel;
+    }
+
+    public ArrayList<DrugModel> GetOrderListFromOrderDB(Context context, String searchText) {
+        databaseAccess = new DatabaseAccess(context);
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        try {
+            drugModelArrayList = databaseAccess.GetOrderListFromOrderDB(searchText);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelArrayList;
+    }
+
+    public DrugModel GetOrderItemDetailsFromOrderItemDB(Context context, String orderNo, String drugID) {
+        databaseAccess = new DatabaseAccess(context);
+        DrugModel drugModel = new DrugModel();
+        try {
+            drugModel = databaseAccess.GetOrderItemDetailsFromOrderItemDB(orderNo, drugID);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModel;
+    }
+
+    public ArrayList<DrugModel> GetOrderItemListFromOrderItemDB(Context context, String searchText) {
+        databaseAccess = new DatabaseAccess(context);
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        try {
+            drugModelArrayList = databaseAccess.GetOrderItemListFromOrderItemDB(searchText);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelArrayList;
+    }
+
+
+    /*End - All DB Data insert update fetch*/
+
 
     public boolean IsAnyMedicineExist(Context context) {
         databaseAccess = new DatabaseAccess(context);
@@ -240,33 +344,6 @@ public class MainActivity implements AppConstants {
         return isExist;
     }
 
-
-    public SettingsModel GetSettings(Context context, String userID) {
-        databaseAccess = new DatabaseAccess(context);
-        SettingsModel settingsModel = new SettingsModel();
-        try {
-            settingsModel = databaseAccess.GetSettings(userID);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return settingsModel;
-
-    }
-
-    public UserKeyDetailsModel GetUserKeyDetails(Context context) {
-        databaseAccess = new DatabaseAccess(context);
-        UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
-        try {
-            userKeyDetailsModel = databaseAccess.GetUserKeyDetails();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return userKeyDetailsModel;
-
-    }
-
-   /*End - All DB Data insert update fetch*/
-
     public void SupportActionBar(Activity activity, android.support.v7.app.ActionBar actionBar, String color_primary, TextView toolbarTitleTV, String title, boolean isHomeActivity) {
         String color_dark;
         try {
@@ -277,7 +354,7 @@ public class MainActivity implements AppConstants {
             if (isHomeActivity) {
                 Typeface tfaerial = Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-MediumItalic.ttf");
                 toolbarTitleTV.setTypeface(tfaerial);
-                toolbarTitleTV.setText(activity.getString(R.string.app_name));
+                toolbarTitleTV.setText(title);
             } else {
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setHomeButtonEnabled(true);
@@ -317,7 +394,6 @@ public class MainActivity implements AppConstants {
             ex.printStackTrace();
         }
     }
-
 
     public int GetColorCodePosition(String colorcode, ArrayList colorslist) {
         int itemPosition = 1;
@@ -427,7 +503,6 @@ public class MainActivity implements AppConstants {
         return date;
     }
 
-
     public String GetUniqueKey(String drugID, String batchNumber) {
         String key = "";
         try {
@@ -480,6 +555,7 @@ public class MainActivity implements AppConstants {
             rawData = ReadFileFromRawDirectory(context);
             entityArrayList = GetDrugModelList(rawData);
             InsertDrugsInBatchInMasterDB(context, entityArrayList);
+            InsertManufacturerInBatchInManufacturerDB(context, entityArrayList);
             InsertUpdateDrugsInBatchInInventoryDB(context, entityArrayList, false);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -504,7 +580,6 @@ public class MainActivity implements AppConstants {
         return drugModelArrayList;
     }
 
-
     public HashMap<String, DrugModel> GetDrugHashMap(ArrayList<DrugModel> drugModelArrayList) {
 
         HashMap<String, DrugModel> drugModelHashMap = new HashMap<>();
@@ -527,7 +602,6 @@ public class MainActivity implements AppConstants {
 
         return drugModelHashMap;
     }
-
 
     public int GetHashMapPosition(HashMap<String, DrugModel> drugModelHashMap, String uniqueKey) {
         int position = -1;
@@ -554,25 +628,5 @@ public class MainActivity implements AppConstants {
         return -1;
     }
 
-   /* public String ReadFileFromRaw(Context context) {
-        InputStream iStream;
-        ByteArrayOutputStream byteStream = null;
-
-        try {
-            iStream = context.getResources().openRawResource(R.raw.team);
-            byte[] buffer = new byte[iStream.available()];
-            iStream.read(buffer);
-            byteStream = new ByteArrayOutputStream();
-            byteStream.write(buffer);
-            byteStream.close();
-            iStream.close();
-
-            Model model = new Gson().fromJson(byteStream.toString(), Model.class);
-            Log.i("", " onCreate : " + "");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return byteStream.toString();
-    }*/
 }
 

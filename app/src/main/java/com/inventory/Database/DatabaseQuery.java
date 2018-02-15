@@ -3,7 +3,6 @@ package com.inventory.Database;
 import android.content.Context;
 
 import com.inventory.Activities.MainActivity;
-import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -33,14 +32,17 @@ public class DatabaseQuery extends DatabaseHelper {
     public static String GetQueryForSettings(String userID) {
         String query = "";
         try {
-            query = SELECT_ALL + TABLE_SETTINGS_DB + WHERE + COLUMN_USERGUID + " = '" + userID + "'";
+            query = SELECT_ALL + TABLE_SETTINGS_DB + WHERE + COLUMN_PHARMACY_ID + " = '" + userID + "'";
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return query;
     }
 
-    public static String GetQueryForDrugDetails(String drugBatchNo, String drugID) {
+
+    /*Below are Drugs query*/
+
+    public static String GetQueryForDrugDetailsInInventoryDB(String drugBatchNo, String drugID) {
         String query = "";
         try {
             query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_BATCH_NUMBER + " = '"
@@ -84,15 +86,14 @@ public class DatabaseQuery extends DatabaseHelper {
         /*Like %text% will search string in whole name but like text% will start search from first letter*/
         try {
             if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_PHARMACY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
+                query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
             else
-                query = SELECT_ALL + TABLE_PHARMACY_DB + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
+                query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return query;
     }
-
 
     public static String GetQueryForSearchDrugManufacturerInMasterDB(String searchText) {
         String query = "";
@@ -110,14 +111,30 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
+    public static String GetQueryForManufacturerInManufacturerDB(String searchText) {
+        String query = "";
+        try {
+            if (!StringUtils.isBlank(searchText))
+                query = SELECT_ALL + TABLE_MANUFACTURER_DB + WHERE + COLUMN_DRUG_MANUFACTURER + " like '"
+                        + searchText + "%' " + LIMIT_8;
+            else
+                query = SELECT_ALL + TABLE_MANUFACTURER_DB + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
     public static String GetQueryForSearchDrugManufacturerInPharmacyDB(String searchText) {
         String query = "";
         try {
             if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_PHARMACY_DB + WHERE + COLUMN_DRUG_MANUFACTURER + " like '"
+                query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_DRUG_MANUFACTURER + " like '"
                         + searchText + "%' " + LIMIT_8;
             else
-                query = SELECT_ALL + TABLE_PHARMACY_DB + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
+                query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
 
 
         } catch (Exception ex) {
@@ -132,10 +149,10 @@ public class DatabaseQuery extends DatabaseHelper {
 
             if (!StringUtils.isBlank(searchText)) {
                 query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' AND "
-                        + COLUMN_EXPIRY_DATE_IN_MILLISECOND + " BETWEEN " + startInMilliSecond + " AND "
+                        + COLUMN_DATE_IN_MILLISECOND + " BETWEEN " + startInMilliSecond + " AND "
                         + endInMilliSecond + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
             } else
-                query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_EXPIRY_DATE_IN_MILLISECOND + " BETWEEN "
+                query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DATE_IN_MILLISECOND + " BETWEEN "
                         + startInMilliSecond + " AND " + endInMilliSecond + ORDER_BY + COLUMN_DRUG_NAME
                         + ALPHABETICAL_OREDER;
         } catch (Exception ex) {
@@ -149,10 +166,10 @@ public class DatabaseQuery extends DatabaseHelper {
         try {
             if (!StringUtils.isBlank(searchText))
                 query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' AND "
-                        + COLUMN_EXPIRY_DATE_IN_MILLISECOND + "<=" + today + ORDER_BY + COLUMN_DRUG_NAME
+                        + COLUMN_DATE_IN_MILLISECOND + "<=" + today + ORDER_BY + COLUMN_DRUG_NAME
                         + ALPHABETICAL_OREDER;
             else
-                query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_EXPIRY_DATE_IN_MILLISECOND + "<=" + today
+                query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DATE_IN_MILLISECOND + "<=" + today
                         + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
 
 
@@ -168,6 +185,55 @@ public class DatabaseQuery extends DatabaseHelper {
             query = "UPDATE " + TABLE_INVENTORY_DB + " SET " + COLUMN_DRUG_QUANTITY + "="
                     + COLUMN_DRUG_QUANTITY + "+" + incrementValue + WHERE + COLUMN_BATCH_NUMBER + "= '"
                     + drugBatchNo + "' AND " + COLUMN_DRUG_ID + "= '" + drugID + "'";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+
+    /*Below are Orders query*/
+
+    public static String GetQueryForOrderDetailsInOrderDB(String orderNo) {
+        String query = "";
+        try {
+            query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_ORDER_NO + " = '" + orderNo + "'";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForOrderItemDetailsInOrderItemsDB(String orderNo, String drugID) {
+        String query = "";
+        try {
+            query = SELECT_ALL + TABLE_ORDERS_ITEMS_DB + WHERE + COLUMN_ORDER_NO + " = '"
+                    + orderNo + "' AND " + COLUMN_DRUG_ID + " = '" + drugID + "'";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForSearchOrderInOrderDB(String searchText) {
+        String query = "";
+        /*Like %text% will search string in whole name but like text% will start search from first letter*/
+        try {
+            if (!StringUtils.isBlank(searchText))
+                query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_ORDER_NO + " like '" + searchText + "%' ";
+            else
+                query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_DATE_IN_MILLISECOND + ALPHABETICAL_OREDER;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
+    public static String GetQueryForOrderItemInOrderItemDB(String orderNo) {
+        String query = "";
+        /*Like %text% will search string in whole name but like text% will start search from first letter*/
+        try {
+            query = SELECT_ALL + TABLE_ORDERS_ITEMS_DB + WHERE + COLUMN_ORDER_NO + " = '" + orderNo + "'";
         } catch (Exception ex) {
             ex.printStackTrace();
         }

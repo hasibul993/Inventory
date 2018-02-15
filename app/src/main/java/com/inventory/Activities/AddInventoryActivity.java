@@ -436,16 +436,17 @@ public class AddInventoryActivity extends AppCompatActivity {
             }
 
             drugModel.DrugExpiryDate = stringHolderModel.drugExpiryDate;
-            drugModel.ExpiryDateInMilliSecond = mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate);
+            drugModel.DateInMilliSecond = mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate);
             drugModel.DrugTransactionDate = stringHolderModel.drugTransactionDate;
             drugModel.DrugManufacturer = stringHolderModel.drugManufacturer;
             drugModel.BatchNumber = stringHolderModel.batchNumber;
             drugModel.DrugCategory = fromIconFont;
 
-            mainActivity.InsertUpdateDrugs(AddInventoryActivity.this, drugModel, isModify);
+            mainActivity.InsertUpdateDrugsInInventoryDB(AddInventoryActivity.this, drugModel, isModify);
 
             if (searchDrugModel == null && !isModify) {
-                mainActivity.InsertDrugsInPharmacyDB(AddInventoryActivity.this, drugModel);
+                drugModel.IsNeedSync = true;
+                mainActivity.InsertDrugsInMasterDB(AddInventoryActivity.this, drugModel);
             }
 
             searchDrugModel = null;
@@ -532,7 +533,7 @@ public class AddInventoryActivity extends AppCompatActivity {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
 
-            drugModelArrayList = mainActivity.GetDrugManufacturerListFromMasterDB(AddInventoryActivity.this, searchText);
+            drugModelArrayList = mainActivity.GetDrugManufacturerListFromManufacturerDB(AddInventoryActivity.this, searchText);
 
             if (drugModelArrayList.size() > 0) {
                 viewIDModel.DrugManufacturerRecyclerViewLayout.setVisibility(View.VISIBLE);

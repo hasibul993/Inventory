@@ -152,7 +152,7 @@ public class SearchDrugAdapter extends RecyclerView.Adapter<SearchDrugAdapter.Vi
     private void OnClickScreenTransition(String drugID, int position) {
         try {
             if (!StringUtils.isBlank(drugID)) {
-                //DrugModel drugModel = mainActivity.GetDrugDetails(context, drugID);
+                //DrugModel drugModel = mainActivity.GetDrugDetailsFromInventoryDB(context, drugID);
                 //InventoryFragment.inventoryFragment.ShowDialogAddUpdateDrug(getItem(position), position);
             }
         } catch (Exception ex) {

@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class DrugModel implements Serializable {
 
+    public String PharmacyID;
+
     public String BatchNumber;
 
     public String DrugID;
@@ -22,9 +24,13 @@ public class DrugModel implements Serializable {
 
     public double DrugMRP;
 
-    public long ExpiryDateInMilliSecond;
-
     public String DrugMRPString;
+
+    public double OrderTotal;
+
+    public String OrderTotalString;
+
+    public long DateInMilliSecond;
 
     public String TimeStamp;
 
@@ -37,5 +43,16 @@ public class DrugModel implements Serializable {
     public String DrugDiscountString;
 
     public String DrugTransactionDate;
+
+    public String OrderNo;
+
+    public String OrderCreatedOn;
+
+    public String CustomerMobile;
+
+    public String CustomerName;
+
+    public boolean IsNeedSync;
+
 
 }

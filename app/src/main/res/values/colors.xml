@@ -146,6 +146,11 @@
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
 
+    <color name="underline_default_color">#00acee</color>
+    <color name="underline_selected_color">#127aa3</color>
+
+    <color name="hintColor">#CCCCCC</color>
+
     <color name="bg_action_mode">#757575</color>
     <color name="transparent">#66000000</color>
     <color name="transparentFullWhite">#00FFFFFF</color>

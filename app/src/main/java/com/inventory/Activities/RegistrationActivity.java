@@ -68,6 +68,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 MainActivity.ShowToast(this, getString(R.string.enterMobileNoTenDigit));
                 return;
             } else {
+
                 UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
 
                 userKeyDetailsModel.UserGuid = UUID.randomUUID().toString();
@@ -79,7 +80,12 @@ public class RegistrationActivity extends AppCompatActivity {
                 settingsModel.UserGuid = userKeyDetailsModel.UserGuid;
                 settingsModel.IsDefaultTheme = true;
                 settingsModel.ThemeColorCode = MainActivity.GetThemeColor();
+
                 mainActivity.InsertUpdateSettings(this, settingsModel);
+
+                if (!mainActivity.IsAnyMedicineExist(RegistrationActivity.this)) {
+                    mainActivity.InsertDrugsFromRawDirectory(RegistrationActivity.this);
+                }
 
                 HomeActivity.GotoHomeActivity(RegistrationActivity.this);
             }
