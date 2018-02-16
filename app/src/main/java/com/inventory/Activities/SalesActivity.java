@@ -3,22 +3,13 @@ package com.inventory.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.inventory.Model.SettingsModel;
-import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.R;
-
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.UUID;
 
 /**
  * Created by BookMEds on 05-02-2018.
@@ -126,7 +117,7 @@ public class SalesActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         try {
-            HomeActivity.GotoHomeActivity(SalesActivity.this);
+            InventoryActivity.GotoInventoryActivity(SalesActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

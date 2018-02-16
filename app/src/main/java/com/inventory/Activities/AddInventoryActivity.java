@@ -249,7 +249,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             } else {
                 boolean isDataOk = AddUpdateItem(stringHolderModel, editModel, fromDrugIcon, position);
                 if (isDataOk)
-                    HomeActivity.GotoHomeActivity(AddInventoryActivity.this);
+                    InventoryActivity.GotoInventoryActivity(AddInventoryActivity.this);
             }
 
         } catch (Exception ex) {
@@ -681,7 +681,7 @@ public class AddInventoryActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         try {
-            HomeActivity.GotoHomeActivity(AddInventoryActivity.this);
+            InventoryActivity.GotoInventoryActivity(AddInventoryActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

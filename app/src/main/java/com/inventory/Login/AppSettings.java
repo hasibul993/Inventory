@@ -1,14 +1,10 @@
 package com.inventory.Login;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,10 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
-import com.inventory.Activities.HomeActivity;
 import com.inventory.Activities.MainActivity;
-import com.inventory.Activities.ProfileEditActivity;
-import com.inventory.Activities.SettingActivity;
 import com.inventory.Helper.AppConstants;
 import com.inventory.MediaPermission.PermissionsChecker;
 import com.inventory.MediaPermission.PickMediaActivity;
@@ -53,6 +46,8 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
             FirebaseApp.initializeApp(this);
 
             InitializeIDS();
+
+            SetPagerAdapter();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -139,8 +134,6 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
             if (!checker.lacksPermissions(PERMISSIONS_PHONE_STATE)) {
                 pickMediaActivity.SetToSharePreference(AppSettings.this, getString(R.string.phoneStateNeverAskAgain), false);
             }
-
-            SetPagerAdapter();
 
             // isNeverAskedAgain = pickMediaActivity.IsNeverAskAgainPermission(AppSettings.this, getString(R.string.phoneStateNeverAskAgain));
             // if (!isNeverAskedAgain)

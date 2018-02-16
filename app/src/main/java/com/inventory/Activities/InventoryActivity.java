@@ -33,8 +33,8 @@ import com.inventory.Adapter.SliderMenuAdapter;
 import com.inventory.Adapter.ViewPagerAdapter;
 import com.inventory.Database.AndroidDatabaseViewer;
 import com.inventory.Fragments.ExpiredDurationFragment;
-import com.inventory.Fragments.ExpiredFragment;
 import com.inventory.Fragments.InventoryFragment;
+import com.inventory.Fragments.ExpiredFragment;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
 import com.inventory.Helper.ViewImageCircle;
@@ -51,11 +51,7 @@ import java.util.ArrayList;
 
 import static android.view.View.VISIBLE;
 
-/**
- * Created by BookMEds on 05-02-2018.
- */
-
-public class HomeActivity extends AppCompatActivity implements AppConstants {
+public class InventoryActivity extends AppCompatActivity implements AppConstants {
 
     public static TabLayout tabLayout;
     CharSequence mDrawerTitle;
@@ -84,35 +80,36 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_activity);
+        try {
+            setContentView(R.layout.inventory_activity);
 
-        InitializeIDS();
+            InitializeIDS();
 
-        //Configuration config = getResources().getConfiguration();
-        //int size=config.smallestScreenWidthDp;
+            //Configuration config = getResources().getConfiguration();
+            //int size=config.smallestScreenWidthDp;
 
-        Intent intent = getIntent();
-        tabPosition = intent.getIntExtra(getString(R.string.tabPosition), 0);
+            Intent intent = getIntent();
+            tabPosition = intent.getIntExtra(getString(R.string.tabPosition), 0);
 
-        mainActivity = MainActivity.getInstance();
-        userKeyDetailsModel = mainActivity.GetUserKeyDetails(HomeActivity.this);
+            mainActivity = MainActivity.getInstance();
+            userKeyDetailsModel = mainActivity.GetUserKeyDetails(InventoryActivity.this);
 
-        SetDrawerToggleAction();
+            SetDrawerToggleAction();
 
-        SetSliderMenuHeaderData();
+            SetSliderMenuHeaderData();
 
-        SetAdapterSliderMenu();
+            SetAdapterSliderMenu();
 
-        SetViewPagerAdapter(viewPager, null);
+            SetViewPagerAdapter(viewPager, null);
 
-        floatActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int index = -1;
-                Fragment currentFragment;
-                try {
+            floatActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int index = -1;
+                    Fragment currentFragment;
+                    try {
 
-                    AddInventoryActivity.GotoAddInventoryActivity(HomeActivity.this, null, false);
+                        AddInventoryActivity.GotoAddInventoryActivity(InventoryActivity.this, null, false);
 
                         /*index = viewPager.getCurrentItem();
                         viewPagerAdapter = ((ViewPagerAdapter) viewPager.getAdapter());
@@ -126,38 +123,32 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                         } else if (currentFragment instanceof ExpiredFragment) {
                             //SalesActivity.GotoSalesActivity(InventoryActivity.this);
                         }*/
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
 
-        sliderHeaderLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    ProfileActivity.GotoProfileActivity(HomeActivity.this);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+            sliderHeaderLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        ProfileActivity.GotoProfileActivity(InventoryActivity.this);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        });
-
-
-    }
-
-    private void OnSubmitPressed() {
-
-        try {
+            });
 
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }
 
-
     private void InitializeIDS() {
+
         try {
             // SLider header ids
             header_UserIcon = (ImageView) findViewById(R.id.header_navigation_drawer_image);
@@ -182,7 +173,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             recyclerView.setBackgroundColor(getResources().getColor(R.color.White));
 
 
-            utility.SetFabColor(HomeActivity.this, floatActionButton);
+            utility.SetFabColor(InventoryActivity.this, floatActionButton);
 
             if (Build.VERSION.SDK_INT <= 22) {
                 floatActionButton.getBackground().setColorFilter(Color.parseColor(MainActivity.GetThemeColor()), PorterDuff.Mode.SRC_ATOP);
@@ -198,12 +189,13 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
         }
     }
 
+
     private void SetDrawerToggleAction() {
         try {
 
             setSupportActionBar(toolbar);
 
-            MainActivity.getInstance().SupportActionBar(HomeActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.app_name), true);
+            MainActivity.getInstance().SupportActionBar(InventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.app_name), true);
 
             mTitle = mDrawerTitle = getTitle();
 
@@ -247,7 +239,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             header_mobileTV.setText(userKeyDetailsModel.PhoneNumber);
 
             if (!StringUtils.isBlank(userKeyDetailsModel.ProfilePicture)) {
-                viewImageCircle.SetProfileIconProfileView(HomeActivity.this, header_UserIcon, userKeyDetailsModel.ProfilePicture, true);
+                viewImageCircle.SetProfileIconProfileView(InventoryActivity.this, header_UserIcon, userKeyDetailsModel.ProfilePicture, true);
             }
 
         } catch (Exception ex) {
@@ -261,9 +253,9 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
         try {
 
 
-            sliderMenuModels = utility.GetSliderMenuList(HomeActivity.this);
+            sliderMenuModels = utility.GetSliderMenuList(InventoryActivity.this);
 
-            sliderMenuAdapter = new SliderMenuAdapter(HomeActivity.this, sliderMenuModels);
+            sliderMenuAdapter = new SliderMenuAdapter(InventoryActivity.this, sliderMenuModels);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             //recyclerView.addItemDecoration(new DividerItemDecoration(InventoryActivity.this, LinearLayoutManager.VERTICAL, 0, 1));
             recyclerView.addItemDecoration(new DividerItemDecoration(this));
@@ -310,7 +302,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
         getSupportActionBar().setTitle(Html.fromHtml(coloredName));
     }
 
-    public static void GotoHomeActivity(Context context) {
+    public static void GotoInventoryActivity(Context context) {
         try {
             Intent intent = new Intent(context, InventoryActivity.class);
             context.startActivity(intent);
@@ -387,20 +379,20 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                 onBackPressed();
                 return true;
             case R.id.viewDataBase:
-                AndroidDatabaseViewer.GotoAndroidDatabaseViewer(HomeActivity.this);
+                AndroidDatabaseViewer.GotoAndroidDatabaseViewer(InventoryActivity.this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
     public void onBackPressed() {
         try {
-            MainActivity.MinimizeActivity(HomeActivity.this);
+            MainActivity.MinimizeActivity(InventoryActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
 
 
     public void SyncMasterDB() {
@@ -431,5 +423,8 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             ex.printStackTrace();
         }
     }
+
+
+
 
 }

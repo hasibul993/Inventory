@@ -35,6 +35,12 @@
 
 
         <activity
+            android:name=".Activities.InventoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.HomeNoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".Activities.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.HomeNoActionBar"

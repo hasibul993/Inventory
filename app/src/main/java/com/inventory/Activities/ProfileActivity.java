@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,23 +19,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.inventory.Helper.Utility;
 import com.inventory.Helper.ViewImageCircle;
-import com.inventory.MediaPermission.PermissionsChecker;
-import com.inventory.MediaPermission.PickMediaActivity;
-import com.inventory.Model.SettingsModel;
 import com.inventory.Model.UserKeyDetailsModel;
-import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.UUID;
 
 /**
  * Created by BookMEds on 12-02-2018.
@@ -245,7 +236,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         try {
-            HomeActivity.GotoHomeActivity(ProfileActivity.this);
+            InventoryActivity.GotoInventoryActivity(ProfileActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -3,7 +3,6 @@ package com.inventory.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -14,8 +13,6 @@ import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.R;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.UUID;
 
 /**
  * Created by BookMEds on 05-02-2018.
