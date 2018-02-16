@@ -437,6 +437,19 @@ public class MainActivity implements AppConstants {
         }
     }
 
+    public static void MinimizeActivity(Context context) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
     public String GetCurrentDate() {
         String strDate = "";
         try {

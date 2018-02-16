@@ -741,7 +741,7 @@ public class PickMediaActivity extends AppCompatActivity implements AppConstants
     }
 
 
-    private boolean IsNeverAskAgainPermission(Context context, String key) {
+    public boolean IsNeverAskAgainPermission(Context context, String key) {
         boolean isTrue = false;
         try {
             app_preference = context.getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);

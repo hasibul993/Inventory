@@ -7,18 +7,24 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
+import com.inventory.Activities.HomeActivity;
 import com.inventory.Activities.MainActivity;
 import com.inventory.Activities.ProfileEditActivity;
+import com.inventory.Activities.SettingActivity;
 import com.inventory.Helper.AppConstants;
+import com.inventory.MediaPermission.PermissionsChecker;
 import com.inventory.MediaPermission.PickMediaActivity;
 import com.inventory.R;
 
@@ -47,8 +53,6 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
             FirebaseApp.initializeApp(this);
 
             InitializeIDS();
-
-            SetPagerAdapter();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -128,11 +132,21 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
 
     @Override
     protected void onResume() {
+        boolean isGranted = false, isNeverAskedAgain = false;
         try {
 
-            boolean isGranted=pickMediaActivity.checkPermission(AppSettings.this, PERMISSIONS_PHONE_STATE, getString(R.string.phoneStateNeverAskAgain));
+            PermissionsChecker checker = new PermissionsChecker(AppSettings.this);
+            if (!checker.lacksPermissions(PERMISSIONS_PHONE_STATE)) {
+                pickMediaActivity.SetToSharePreference(AppSettings.this, getString(R.string.phoneStateNeverAskAgain), false);
+            }
 
-            if(isGranted){
+            SetPagerAdapter();
+
+            // isNeverAskedAgain = pickMediaActivity.IsNeverAskAgainPermission(AppSettings.this, getString(R.string.phoneStateNeverAskAgain));
+            // if (!isNeverAskedAgain)
+            isGranted = pickMediaActivity.checkPermission(AppSettings.this, PERMISSIONS_PHONE_STATE, getString(R.string.phoneStateNeverAskAgain));
+
+            if (isGranted) {
                 bar1.setVisibility(View.VISIBLE);
                 pager.postDelayed(new Runnable() {
 
@@ -141,7 +155,7 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
                         pager.setCurrentItem(0);
                     }
                 }, 100);
-            }else{
+            } else {
                 pager.postDelayed(new Runnable() {
 
                     @Override
@@ -149,7 +163,7 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
                         if (pager.getCurrentItem() == 2) {
 
                         } else {
-                            pager.setCurrentItem(1);
+                            pager.setCurrentItem(0);
                         }
 
                     }
@@ -175,4 +189,53 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
         }
 
     }
+
+    ///this for marshmallow permission
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        try {
+
+            pickMediaActivity.activityPermissionsResult(AppSettings.this, requestCode, permissions, grantResults);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        try {
+            getMenuInflater().inflate(R.menu.menu_setting_activity, menu);
+            MenuItem moreIcon = menu.findItem(R.id.menu_more);
+            moreIcon.setVisible(false);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    public void onBackPressed() {
+        try {
+            MainActivity.MinimizeActivity(AppSettings.this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
 }

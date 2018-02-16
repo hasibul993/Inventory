@@ -329,13 +329,13 @@ public class AddInventoryActivity extends AppCompatActivity {
 
             if (editModel != null) {
                 isModify = true;
-                viewIDModel.DrugNameEditText.setText(editModel.DrugName);
+                viewIDModel.DrugNameEditText.setText(editModel.DrugName.toUpperCase());
                 viewIDModel.DrugNameEditText.setSelection(viewIDModel.DrugNameEditText.length());
                 viewIDModel.MrpEditText.setText(editModel.DrugMRPString);
                 viewIDModel.QuantityEditText.setText(editModel.DrugQuantity + "");
                 viewIDModel.DiscountEditText.setText(editModel.DrugDiscountString);
                 viewIDModel.ExpiryDateTextView.setText(editModel.DrugExpiryDate);
-                viewIDModel.ManufacturerEditText.setText(editModel.DrugManufacturer);
+                viewIDModel.ManufacturerEditText.setText(editModel.DrugManufacturer.toUpperCase());
                 viewIDModel.BatchNumberEditText.setText(editModel.BatchNumber);
                 prevDrugCategory = editModel.DrugCategory;
 
@@ -400,12 +400,17 @@ public class AddInventoryActivity extends AppCompatActivity {
 
             }
 
-            drugModel.DrugName = stringHolderModel.drugName;
+            drugModel.DrugName = stringHolderModel.drugName.toUpperCase();
             drugModel.DrugMRP = Double.parseDouble(stringHolderModel.drugMRP);
             drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
 
             try {
                 drugModel.DrugQuantity = Integer.parseInt(stringHolderModel.drugQuantity);
+                if (drugModel.DrugQuantity == 0) {
+                    MainActivity.ShowToast(AddInventoryActivity.this, getString(R.string.enterValidQuantity));
+                    return false;
+                }
+
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
                 MainActivity.ShowToast(AddInventoryActivity.this, getString(R.string.enterValidQuantity));
@@ -426,7 +431,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             drugModel.DrugExpiryDate = stringHolderModel.drugExpiryDate;
             drugModel.DateInMilliSecond = mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate);
             drugModel.DrugTransactionDate = stringHolderModel.drugTransactionDate;
-            drugModel.DrugManufacturer = stringHolderModel.drugManufacturer;
+            drugModel.DrugManufacturer = stringHolderModel.drugManufacturer.toUpperCase();
             drugModel.BatchNumber = stringHolderModel.batchNumber;
             drugModel.DrugCategory = fromIconFont;
 
@@ -564,14 +569,18 @@ public class AddInventoryActivity extends AppCompatActivity {
 
     private void SetSearchedDrugDetails(DrugModel drugModel, ViewIDModel viewIDModel) {
         try {
-            viewIDModel.DrugNameEditText.setText(drugModel.DrugName);
+            viewIDModel.DrugNameEditText.setText(drugModel.DrugName.toUpperCase());
             viewIDModel.DrugNameEditText.setSelection(viewIDModel.DrugNameEditText.length());
-            viewIDModel.ManufacturerEditText.setText(drugModel.DrugManufacturer);
-            viewIDModel.MrpEditText.setText(drugModel.DrugMRPString);
+            viewIDModel.ManufacturerEditText.setText(drugModel.DrugManufacturer.toUpperCase());
+            //viewIDModel.MrpEditText.setText(drugModel.DrugMRPString);
             viewIDModel.DiscountEditText.setText(drugModel.DrugDiscountString);
 
             viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate());
             // viewIDModel.SpinnerCategory.setSelection(drugCategories.indexOf(drugModel.DrugCategory));
+
+            fromDrugIcon = drugModel.DrugCategory;
+            SetDrugIconAdapter();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

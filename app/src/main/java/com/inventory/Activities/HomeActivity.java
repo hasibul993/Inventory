@@ -38,6 +38,7 @@ import com.inventory.Fragments.ExpiredFragment;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
 import com.inventory.Helper.ViewImageCircle;
+import com.inventory.Login.AppSettings;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.NewUi.DividerItemDecoration;
@@ -385,6 +386,15 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                 return super.onOptionsItemSelected(item);
         }
     }
+    public void onBackPressed() {
+        try {
+            MainActivity.MinimizeActivity(HomeActivity.this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
 
     public void SyncMasterDB() {
 
@@ -414,6 +424,8 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             ex.printStackTrace();
         }
     }
+
+
 
 
 }

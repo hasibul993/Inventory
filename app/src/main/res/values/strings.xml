@@ -34,7 +34,7 @@
     <string name="enterMobileNoTenDigit">Enter last 10 digits og mobile no</string>
     <string name="enterNickName">Enter your name</string>
     <string name="enterValidEmail">Enter a valid email</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Done</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="mobile">Mobile</string>
