@@ -12,7 +12,7 @@
     <string name="login">Login</string>
     <string name="resend_otp"><u>Didn\'t get otp? Resend</u></string>
     <string name="verify_otp">Verify your number</string>
-    <string name="verify_number_text">Please verify your number so that your collegues, friends and family can find you on Xampr.</string>
+    <string name="verify_number_text">Please verify your number</string>
     <string name="verify_otp_text">OTP has been sent to your number. Please check your message box and submit.</string>
     <string name="verify_number">Enter OTP</string>
 
@@ -119,6 +119,7 @@
     <string name="remove">Remove</string>
     <string name="selectImageToUpload">Select picture to upload</string>
     <string name="cameraNeverAskAgain">CameraNeverAskAgain</string>
+    <string name="phoneStateNeverAskAgain">PhoneStateAskAgain</string>
     <string name="gpsNeverAskAgain">GPSNeverAskAgain</string>
     <string name="writeExternalStorageNeverAskAgain">WriteExternalStorageNeverAskAgain</string>
     <string name="internal_error">Internal error</string>
@@ -143,6 +144,7 @@
 
 
     <string-array name="country_code">
+        <item>India (+91)</item>
         <item>Afghanistan (+93)</item>
         <item>Albania (+355)</item>
         <item>Algeria (+213)</item>
@@ -237,7 +239,7 @@
         <item>Hong Kong (+852)</item>
         <item>Hungary (+36)</item>
         <item>Iceland (+354)</item>
-        <item>India (+91)</item>
+       <!-- <item>India (+91)</item>-->
         <item>Indonesia (+62)</item>
         <item>Iran (+98)</item>
         <item>Iraq (+964)</item>

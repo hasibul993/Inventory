@@ -50,8 +50,12 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.inventory.Activities.MainActivity;
+import com.inventory.Activities.RegistrationActivity;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
+import com.inventory.MediaPermission.PickMediaActivity;
+import com.inventory.Model.SettingsModel;
+import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.Operation.Post;
 import com.inventory.R;
 
@@ -59,6 +63,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -99,6 +104,7 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
 
     Utility utility = Utility.getInstance();
 
+
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -117,15 +123,14 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_authentication, container, false);
 
         InitializeIDS(view);
 
         SetSimCardNo();
 
-        ChangeUIIfSimNoAvailable();
+        ChangeUIIfSimNoAvailable(enter_phone_number.getText().toString().trim());
 
         SetCountrySpinner();
 
@@ -180,23 +185,8 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (editable.toString().length() > 3) {
-                    right_image_icon.setBackgroundResource(R.drawable.vector_check_right_white_icon);
-                    right_image_icon.getBackground().setColorFilter(Color.parseColor("#1f8005"), PorterDuff.Mode.SRC_ATOP);
-                    right_image.setClickable(true);
-                    right_image.setEnabled(true);
-                    bottom_bar_textview.setEnabled(true);
-                    bottom_bar_textview.setTextColor(getResources().getColor(R.color.White));
-                    bottom_bar_textview.setClickable(true);
-                } else {
-                    right_image_icon.setBackgroundResource(R.drawable.vector_check_right_white_icon);
-                    right_image_icon.getBackground().setColorFilter(Color.parseColor("#33000000"), PorterDuff.Mode.SRC_ATOP);
-                    right_image.setClickable(false);
-                    bottom_bar_textview.setClickable(false);
-                    right_image.setEnabled(false);
-                    bottom_bar_textview.setEnabled(false);
-                    bottom_bar_textview.setTextColor(getResources().getColor(R.color.White));
-                }
+                String phoneNo = editable.toString().trim();
+                ChangeUIIfSimNoAvailable(phoneNo);
 
             }
         });
@@ -431,11 +421,11 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
         }
     }
 
-    private void ChangeUIIfSimNoAvailable() {
+    private void ChangeUIIfSimNoAvailable(String phoneNo) {
         try {
-            if (enter_phone_number.getText().toString().length() > 3) {
+            if (phoneNo.length() > 3) {
                 right_image_icon.setBackgroundResource(R.drawable.vector_check_right_white_icon);
-                right_image_icon.getBackground().setColorFilter(Color.parseColor("#1f8005"), PorterDuff.Mode.SRC_ATOP);
+                right_image_icon.getBackground().setColorFilter(Color.parseColor(MainActivity.GetThemeColor()), PorterDuff.Mode.SRC_ATOP);
                 right_image.setClickable(true);
                 right_image.setEnabled(true);
                 bottom_bar_textview.setEnabled(true);
@@ -443,14 +433,13 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
                 bottom_bar_textview.setClickable(true);
             } else {
                 right_image_icon.setBackgroundResource(R.drawable.vector_check_right_white_icon);
-                right_image_icon.getBackground().setColorFilter(Color.parseColor("#33000000"), PorterDuff.Mode.SRC_ATOP);
+                right_image_icon.getBackground().setColorFilter(getResources().getColor(R.color.black_34), PorterDuff.Mode.SRC_ATOP);
                 right_image.setClickable(false);
                 bottom_bar_textview.setClickable(false);
                 right_image.setEnabled(false);
                 bottom_bar_textview.setEnabled(false);
                 bottom_bar_textview.setTextColor(getResources().getColor(R.color.White));
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -595,7 +584,8 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
             final_phone_number = enter_phone_number.getText().toString();
             phone_number_tv.setText(final_phone_number);
             if (isValidPhoneNumber(final_phone_number)) {
-                befoeStartPhoneNumberFirebaseVerification(final_phone_number);
+                startPhoneNumberVerification(final_phone_number);
+                //befoeStartPhoneNumberFirebaseVerification(final_phone_number);
             } else {
                 phoneNumberInValid("Invalid Phone Number");
             }
@@ -606,7 +596,8 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
                 boolean status = validateUsing_libphonenumber(code1[0], enter_phone_number.getText().toString());
                 if (status) {
                     enter_phone_number.setError(null);
-                    befoeStartPhoneNumberFirebaseVerification(final_phone_number);
+                    startPhoneNumberVerification(final_phone_number);
+                    // befoeStartPhoneNumberFirebaseVerification(final_phone_number);
                 } else {
                     phoneNumberInValid("Invalid Phone Number");
                 }
@@ -896,7 +887,8 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
                     return networkCountry.toLowerCase(Locale.US);
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return null;
     }
@@ -915,10 +907,27 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
 
 
     private void registerInBackground() {
-
+        SaveUserDetails();
         if (utility.IsInternetConnected(getContext()))
             Log.i(TAG, " registerInBackground" + "");
         //new LongRunningGetIO().execute();
+    }
+
+    private void SaveUserDetails() {
+        try {
+            UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
+
+            userKeyDetailsModel.UserGuid = UUID.randomUUID().toString();
+            userKeyDetailsModel.NickName = null;
+            userKeyDetailsModel.PhoneNumber = _phoneNumber;
+            userKeyDetailsModel.DeviceUniqueID = deviceUniqueID;
+            mainActivity.InsertUpdateUserKeyDetails(getActivity(), userKeyDetailsModel);
+
+            RegistrationActivity.GotoRegistrationActivity(getActivity());
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 

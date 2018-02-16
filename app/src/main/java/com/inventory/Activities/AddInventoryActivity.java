@@ -191,18 +191,6 @@ public class AddInventoryActivity extends AppCompatActivity {
             }
         });
 
-       /* viewIDModel.CancelTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    HomeActivity.GotoHomeActivity(AddInventoryActivity.this);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
-            }
-        });*/
-
         viewIDModel.DeleteIconDrugNameRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

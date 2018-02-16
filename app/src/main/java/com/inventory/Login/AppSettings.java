@@ -17,12 +17,15 @@ import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
 import com.inventory.Activities.MainActivity;
+import com.inventory.Activities.ProfileEditActivity;
+import com.inventory.Helper.AppConstants;
+import com.inventory.MediaPermission.PickMediaActivity;
 import com.inventory.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppSettings extends AppCompatActivity {
+public class AppSettings extends AppCompatActivity implements AppConstants {
 
     public static Button bar1, bar2, bar3, bar4;
     public static LockableViewPager pager;
@@ -32,6 +35,8 @@ public class AppSettings extends AppCompatActivity {
 
     private Toolbar toolbar;
     TextView toolbar_title;
+
+    PickMediaActivity pickMediaActivity = PickMediaActivity.getInstance();
 
 
     @Override
@@ -64,13 +69,13 @@ public class AppSettings extends AppCompatActivity {
             toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
             setSupportActionBar(toolbar);
 
-            MainActivity.getInstance().SupportActionBar(AppSettings.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.login), false);
+            MainActivity.getInstance().SupportActionBar(AppSettings.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.login), true);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void SetPagerAdapter(){
+    private void SetPagerAdapter() {
         try {
             List<Fragment> fragments = getFragments();
             pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
@@ -124,12 +129,10 @@ public class AppSettings extends AppCompatActivity {
     @Override
     protected void onResume() {
         try {
-            if (Build.VERSION.SDK_INT >= 23 && ActivityCompat.checkSelfPermission(AppSettings.this, Manifest.permission.READ_CONTACTS)
-                    != PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT >= 23 && ActivityCompat.checkSelfPermission(AppSettings.this, Manifest.permission.READ_PHONE_STATE)
-                    != PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT >= 23 && ActivityCompat.checkSelfPermission(AppSettings.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT >= 23 && ActivityCompat.checkSelfPermission(AppSettings.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED
-                    ) {
+
+            boolean isGranted=pickMediaActivity.checkPermission(AppSettings.this, PERMISSIONS_PHONE_STATE, getString(R.string.phoneStateNeverAskAgain));
+
+            if(isGranted){
                 bar1.setVisibility(View.VISIBLE);
                 pager.postDelayed(new Runnable() {
 
@@ -138,8 +141,7 @@ public class AppSettings extends AppCompatActivity {
                         pager.setCurrentItem(0);
                     }
                 }, 100);
-
-            } else {
+            }else{
                 pager.postDelayed(new Runnable() {
 
                     @Override
@@ -156,8 +158,8 @@ public class AppSettings extends AppCompatActivity {
 
                 bar1.setVisibility(View.GONE);
                 bar2.getBackground().setColorFilter(getResources().getColor(R.color.main_color_grey_500), PorterDuff.Mode.SRC_ATOP);
-
             }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

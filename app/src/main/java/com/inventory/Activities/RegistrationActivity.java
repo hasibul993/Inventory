@@ -23,11 +23,12 @@ import java.util.UUID;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    TextInputLayout enterNameET_Hint, enterMobileET_Hint;
 
-    EditText enterNameET, enterMobileET;
+    EditText enterNameET;
 
     TextView submitTV;
+
+    UserKeyDetailsModel userKeyDetailsModel;
 
     MainActivity mainActivity = MainActivity.getInstance();
 
@@ -37,6 +38,8 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.registration_activity);
 
         InitializeIDS();
+
+        userKeyDetailsModel=mainActivity.GetUserKeyDetails(RegistrationActivity.this);
 
         submitTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,28 +55,17 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void OnSubmitPressed() {
-        String nickName, mobileNo;
+        String nickName;
         try {
 
             nickName = enterNameET.getText().toString().trim();
-            mobileNo = enterMobileET.getText().toString().trim();
 
             if (StringUtils.isBlank(nickName)) {
                 MainActivity.ShowToast(this, getString(R.string.enterNickName));
                 return;
-            } else if (StringUtils.isBlank(mobileNo)) {
-                MainActivity.ShowToast(this, getString(R.string.enterMobileNo));
-                return;
-            } else if (mobileNo.length() != 10) {
-                MainActivity.ShowToast(this, getString(R.string.enterMobileNoTenDigit));
-                return;
-            } else {
+            }  else {
 
-                UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
-
-                userKeyDetailsModel.UserGuid = UUID.randomUUID().toString();
                 userKeyDetailsModel.NickName = nickName;
-                userKeyDetailsModel.PhoneNumber = mobileNo;
                 mainActivity.InsertUpdateUserKeyDetails(this, userKeyDetailsModel);
 
                 SettingsModel settingsModel = new SettingsModel();
@@ -98,16 +90,10 @@ public class RegistrationActivity extends AppCompatActivity {
     private void InitializeIDS() {
         try {
 
-            enterNameET_Hint = (TextInputLayout) findViewById(R.id.enterNameET_Hint);
-            enterMobileET_Hint = (TextInputLayout) findViewById(R.id.enterMobileET_Hint);
-
             enterNameET = (EditText) findViewById(R.id.enterNameET);
-            enterMobileET = (EditText) findViewById(R.id.enterMobileET);
 
             submitTV = (TextView) findViewById(R.id.submitTV);
 
-            //enterNameET.setHint(getString(R.string.enterNickName));
-            //enterMobileET.setHint(getString(R.string.enterMobileNo));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

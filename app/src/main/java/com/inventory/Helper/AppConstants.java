@@ -39,4 +39,6 @@ public interface AppConstants {
 
     public static String[] PERMISSIONS_CAMERA = {android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+    public static String[] PERMISSIONS_PHONE_STATE = {Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_CONTACTS, android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
 }

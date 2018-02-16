@@ -17,7 +17,7 @@
         android:weightSum="3">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center"
@@ -32,18 +32,19 @@
             android:gravity="center_vertical"
             android:text="@string/verify_number_text"
             android:textColor="@color/Black"
-            android:textSize="@dimen/body" />
+            android:textSize="@dimen/body"
+            android:visibility="gone" />
 
         <Spinner
             android:id="@+id/simpleSpinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp" />
+            android:layout_marginTop="50dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="30dp">
 
             <EditText
                 android:id="@+id/enter_phone_number"
@@ -180,7 +181,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/main_color_grey_500">
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/bottom_bar_textview"

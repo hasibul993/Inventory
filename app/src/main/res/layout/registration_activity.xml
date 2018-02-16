@@ -46,29 +46,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/enterMobileET_Hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/enterMobileET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:cursorVisible="true"
-                    android:drawableBottom="@android:color/transparent"
-                    android:ellipsize="end"
-                    android:ems="10"
-                    android:hint="@string/mobile"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:textColor="@color/Black"
-                    android:textColorHint="@color/colorPrimary"
-                    android:textSize="@dimen/body" />
-
-            </android.support.design.widget.TextInputLayout>
-
 
             <com.inventory.NewUi.RobotoTextView
                 android:id="@+id/submitTV"

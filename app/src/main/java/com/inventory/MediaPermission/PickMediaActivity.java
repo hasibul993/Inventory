@@ -671,6 +671,16 @@ public class PickMediaActivity extends AppCompatActivity implements AppConstants
                         SetToSharePreference(activity, activity.getString(R.string.cameraNeverAskAgain), true);
                     }
                     break;
+                case Manifest.permission.READ_EXTERNAL_STORAGE:
+                    showRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);
+                    if (!showRationale) {
+                        // user also CHECKED "never ask again"
+                        // you can either enable some fall back,
+                        // again the permission and directing to
+                        // the app setting
+                        SetToSharePreference(activity, activity.getString(R.string.cameraNeverAskAgain), true);
+                    }
+                    break;
                 case Manifest.permission.ACCESS_COARSE_LOCATION:
                     showRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);
                     if (!showRationale) {
@@ -689,6 +699,26 @@ public class PickMediaActivity extends AppCompatActivity implements AppConstants
                         // again the permission and directing to
                         // the app setting
                         SetToSharePreference(activity, activity.getString(R.string.gpsNeverAskAgain), true);
+                    }
+                    break;
+                case Manifest.permission.READ_PHONE_STATE:
+                    showRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);
+                    if (!showRationale) {
+                        // user also CHECKED "never ask again"
+                        // you can either enable some fall back,
+                        // again the permission and directing to
+                        // the app setting
+                        SetToSharePreference(activity, activity.getString(R.string.phoneStateNeverAskAgain), true);
+                    }
+                    break;
+                case Manifest.permission.READ_CONTACTS:
+                    showRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);
+                    if (!showRationale) {
+                        // user also CHECKED "never ask again"
+                        // you can either enable some fall back,
+                        // again the permission and directing to
+                        // the app setting
+                        SetToSharePreference(activity, activity.getString(R.string.phoneStateNeverAskAgain), true);
                     }
                     break;
                 default:
