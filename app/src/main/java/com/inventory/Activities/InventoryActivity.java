@@ -3,30 +3,21 @@ package com.inventory.Activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.inventory.Adapter.SliderMenuAdapter;
@@ -41,7 +32,6 @@ import com.inventory.Helper.ViewImageCircle;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.NewUi.DividerItemDecoration;
-import com.inventory.NewUi.RobotoTextView;
 import com.inventory.Operation.Post;
 import com.inventory.R;
 
@@ -54,25 +44,16 @@ import static android.view.View.VISIBLE;
 public class InventoryActivity extends AppCompatActivity implements AppConstants {
 
     public static TabLayout tabLayout;
-    CharSequence mDrawerTitle;
     Toolbar toolbar;
     TextView toolbar_title;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mTitle;
+
     private ViewPager viewPager;
 
-    RecyclerView recyclerView;
     FloatingActionButton floatActionButton;
-
-    SliderMenuAdapter sliderMenuAdapter;
 
     int tabPosition = 0;
     ViewPagerAdapter viewPagerAdapter;
 
-    View sliderHeaderLayout;
-    ImageView header_UserIcon;
-    RobotoTextView header_usernameTV, header_mobileTV, header_emailTV;
     UserKeyDetailsModel userKeyDetailsModel = new UserKeyDetailsModel();
     MainActivity mainActivity;
     Utility utility = Utility.getInstance();
@@ -94,11 +75,7 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
             mainActivity = MainActivity.getInstance();
             userKeyDetailsModel = mainActivity.GetUserKeyDetails(InventoryActivity.this);
 
-            SetDrawerToggleAction();
-
-            SetSliderMenuHeaderData();
-
-            SetAdapterSliderMenu();
+            SetToolbar();
 
             SetViewPagerAdapter(viewPager, null);
 
@@ -129,17 +106,6 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
                 }
             });
 
-            sliderHeaderLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        ProfileActivity.GotoProfileActivity(InventoryActivity.this);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            });
-
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -150,12 +116,6 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
     private void InitializeIDS() {
 
         try {
-            // SLider header ids
-            header_UserIcon = (ImageView) findViewById(R.id.header_navigation_drawer_image);
-            header_usernameTV = (RobotoTextView) findViewById(R.id.header_usernameTV);
-            header_mobileTV = (RobotoTextView) findViewById(R.id.header_mobileTV);
-            header_emailTV = (RobotoTextView) findViewById(R.id.header_emailTV);
-
 
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
@@ -166,22 +126,8 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
 
             floatActionButton = (FloatingActionButton) findViewById(R.id.floatActionButton);
 
-            sliderHeaderLayout = (View) findViewById(R.id.drawerHeaderLayout);
-
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-            recyclerView.setBackgroundColor(getResources().getColor(R.color.White));
-
-
             utility.SetFabColor(InventoryActivity.this, floatActionButton);
 
-            if (Build.VERSION.SDK_INT <= 22) {
-                floatActionButton.getBackground().setColorFilter(Color.parseColor(MainActivity.GetThemeColor()), PorterDuff.Mode.SRC_ATOP);
-            } else {
-                floatActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(MainActivity.GetThemeColor())));
-            }
-
-            sliderHeaderLayout.setBackgroundColor(Color.parseColor(MainActivity.GetThemeColor()));
             tabLayout.setBackgroundColor(Color.parseColor(MainActivity.GetThemeColor()));
 
         } catch (Exception ex) {
@@ -190,76 +136,12 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
     }
 
 
-    private void SetDrawerToggleAction() {
+    private void SetToolbar() {
         try {
 
             setSupportActionBar(toolbar);
 
-            MainActivity.getInstance().SupportActionBar(InventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.app_name), true);
-
-            mTitle = mDrawerTitle = getTitle();
-
-            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
-                    R.string.drawer_open, R.string.drawer_close) {
-                public void onDrawerClosed(View view) {
-                    invalidateOptionsMenu();
-                }
-
-                public void onDrawerOpened(View drawerView) {
-                    tabLayout.requestDisallowInterceptTouchEvent(true);
-                    invalidateOptionsMenu();
-                }
-            };
-            mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                        mDrawerLayout.closeDrawer(GravityCompat.START);
-                    } else {
-                        mDrawerLayout.openDrawer(GravityCompat.START);
-                    }
-                }
-            });
-
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-            mDrawerLayout.setDrawerListener(mDrawerToggle);
-            mDrawerToggle.syncState();
-            mDrawerToggle.setDrawerIndicatorEnabled(true);//if set true it will show default hamburger icon with spinner action when opne/close.
-//        mDrawerToggle.setHomeAsUpIndicator(getToolbarBackButtonDrawble(HomeScreenActivity.this, R.drawable.hamburger_icon));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void SetSliderMenuHeaderData() {
-        ViewImageCircle viewImageCircle = ViewImageCircle.getInstance();
-        try {
-            header_usernameTV.setText(userKeyDetailsModel.NickName);
-            header_mobileTV.setText(userKeyDetailsModel.PhoneNumber);
-
-            if (!StringUtils.isBlank(userKeyDetailsModel.ProfilePicture)) {
-                viewImageCircle.SetProfileIconProfileView(InventoryActivity.this, header_UserIcon, userKeyDetailsModel.ProfilePicture, true);
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void SetAdapterSliderMenu() {
-        ArrayList<SliderMenuModel> sliderMenuModels = new ArrayList<>();
-
-        try {
-
-
-            sliderMenuModels = utility.GetSliderMenuList(InventoryActivity.this);
-
-            sliderMenuAdapter = new SliderMenuAdapter(InventoryActivity.this, sliderMenuModels);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            //recyclerView.addItemDecoration(new DividerItemDecoration(InventoryActivity.this, LinearLayoutManager.VERTICAL, 0, 1));
-            recyclerView.addItemDecoration(new DividerItemDecoration(this));
-            recyclerView.setAdapter(sliderMenuAdapter);
+            MainActivity.getInstance().SupportActionBar(InventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.app_name), false);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -286,22 +168,6 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
     }
 
 
-    @Override
-    public void setTitle(int titleId) {
-        setTitle(getString(titleId));
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        try {
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        mTitle = title;
-        String coloredName = "<font color=" + getResources().getColor(R.color.colorPrimary) + ">" + mTitle + "</font>";
-        getSupportActionBar().setTitle(Html.fromHtml(coloredName));
-    }
-
     public static void GotoInventoryActivity(Context context) {
         try {
             Intent intent = new Intent(context, InventoryActivity.class);
@@ -311,7 +177,6 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
         }
 
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         try {
@@ -385,6 +250,7 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
                 return super.onOptionsItemSelected(item);
         }
     }
+
     public void onBackPressed() {
         try {
             MainActivity.MinimizeActivity(InventoryActivity.this);
@@ -392,7 +258,6 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
             ex.printStackTrace();
         }
     }
-
 
 
     public void SyncMasterDB() {
@@ -423,8 +288,6 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
             ex.printStackTrace();
         }
     }
-
-
 
 
 }
