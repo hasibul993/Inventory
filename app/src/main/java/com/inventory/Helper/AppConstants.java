@@ -32,6 +32,9 @@ public interface AppConstants {
 
     public static String SIMPLE_DATE_FORMAT = "dd-MM-yyyy";
 
+
+    public static String SHARE_TITLE = "Hey! Check out this free app that I'm using to organise my pharmacy inventory! https://play.google.com/store/apps/details?id=com.xampr&hl=en";
+
     public final String DEFAULT_ITEM_FONT = "&#xE8FD;";
 
     public static DecimalFormat decimalFormatTwoPlace = new DecimalFormat("######.##");
@@ -40,6 +43,6 @@ public interface AppConstants {
 
     public static String[] PERMISSIONS_CAMERA = {android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-    public static String[] PERMISSIONS_PHONE_STATE = {Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_CONTACTS, android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    public static String[] PERMISSIONS_PHONE_STATE = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS, android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 }

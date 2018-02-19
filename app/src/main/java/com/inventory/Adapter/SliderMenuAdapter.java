@@ -17,6 +17,7 @@ import com.inventory.Activities.InventoryActivity;
 import com.inventory.Activities.MainActivity;
 import com.inventory.Activities.SalesActivity;
 import com.inventory.Activities.SettingActivity;
+import com.inventory.Helper.AppConstants;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
@@ -123,13 +124,11 @@ public class SliderMenuAdapter extends RecyclerView.Adapter<SliderMenuAdapter.Vi
         try {
             if (StringUtils.equalsIgnoreCase(title, context.getString(R.string.settings))) {
                 SettingActivity.GotoSettingActivity(context);
-            } else if (StringUtils.equalsIgnoreCase(title, context.getString(R.string.sale))) {
-                SalesActivity.GotoSalesActivity(context);
             } else if (StringUtils.equalsIgnoreCase(title, context.getString(R.string.share))) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Hey! Check out this free app that I'm using to organise my pharmacy inventory! https://play.google.com/store/apps/details?id=com.xampr&hl=en");
-                context.startActivity(Intent.createChooser(intent, "Share via"));
+                intent.putExtra(Intent.EXTRA_TEXT, AppConstants.SHARE_TITLE);
+                context.startActivity(Intent.createChooser(intent, context.getString(R.string.sharevia)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

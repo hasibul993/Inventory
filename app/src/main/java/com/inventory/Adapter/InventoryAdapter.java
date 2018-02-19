@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 
 import com.inventory.Activities.AddInventoryActivity;
 import com.inventory.Activities.MainActivity;
-import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Model.DrugModel;
 import com.inventory.NewUi.RobotoTextView;
@@ -28,7 +27,7 @@ import java.util.ArrayList;
  */
 
 
-public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.ViewHolder> implements AppConstants {
+public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> implements AppConstants {
 
 
     Context context;
@@ -36,7 +35,7 @@ public class ProcurementAdapter extends RecyclerView.Adapter<ProcurementAdapter.
     MainActivity mainActivity;
     boolean isAllInventory;
 
-    public ProcurementAdapter(Context context, ArrayList<DrugModel> modelArrayList, boolean isAllInventory) {
+    public InventoryAdapter(Context context, ArrayList<DrugModel> modelArrayList, boolean isAllInventory) {
         this.context = context;
         this.modelArrayList = modelArrayList;
         this.isAllInventory = isAllInventory;

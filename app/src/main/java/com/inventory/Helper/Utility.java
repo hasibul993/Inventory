@@ -18,8 +18,10 @@ import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.inventory.Activities.HomeActivity;
 import com.inventory.Activities.MainActivity;
 import com.inventory.Model.DrugModel;
+import com.inventory.Model.HomeModel;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Operation.LoadBitmapFromURL;
 import com.inventory.R;
@@ -258,11 +260,6 @@ public class Utility {
             sliderMenuModels.add(sliderMenuModel);
 
             sliderMenuModel = new SliderMenuModel();
-            sliderMenuModel.Title = context.getString(R.string.sale);
-            sliderMenuModel.drawableInt = R.drawable.sale_black_24dp;
-            sliderMenuModels.add(sliderMenuModel);
-
-            sliderMenuModel = new SliderMenuModel();
             sliderMenuModel.Title = context.getString(R.string.settings);
             sliderMenuModel.drawableInt = R.drawable.settings_black_24dp;
             sliderMenuModels.add(sliderMenuModel);
@@ -276,6 +273,29 @@ public class Utility {
             ex.printStackTrace();
         }
         return sliderMenuModels;
+    }
+
+    public static ArrayList<HomeModel> GetHomeMenuList(Context context) {
+        ArrayList<HomeModel> homeModelArrayList = new ArrayList();
+        HomeModel homeModel;
+        try {
+            homeModel = new HomeModel();
+            homeModel.Title = context.getString(R.string.inventory);
+            homeModelArrayList.add(homeModel);
+
+            homeModel = new HomeModel();
+            homeModel.Title = context.getString(R.string.pos);
+            homeModelArrayList.add(homeModel);
+
+            homeModel = new HomeModel();
+            homeModel.Title = context.getString(R.string.orders);
+            homeModelArrayList.add(homeModel);
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return homeModelArrayList;
     }
 
     public ArrayList<HashMap> GetDrugIcon(Context context) {

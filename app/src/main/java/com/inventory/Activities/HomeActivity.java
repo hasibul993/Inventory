@@ -2,7 +2,9 @@ package com.inventory.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -10,10 +12,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,11 +26,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.inventory.Adapter.HomeGridAdapter;
 import com.inventory.Adapter.SliderMenuAdapter;
 import com.inventory.Database.AndroidDatabaseViewer;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
 import com.inventory.Helper.ViewImageCircle;
+import com.inventory.Model.HomeModel;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.NewUi.DividerItemDecoration;
@@ -51,10 +58,9 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
     private CharSequence mTitle;
 
     RecyclerView recyclerViewMenu, recyclerView;
-    FloatingActionButton floatActionButton;
 
     SliderMenuAdapter sliderMenuAdapter;
-
+    HomeGridAdapter homeGridAdapter;
 
     View sliderHeaderLayout;
     ImageView header_UserIcon;
@@ -84,33 +90,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
 
         SetAdapterSliderMenu();
 
-
-        floatActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int index = -1;
-                Fragment currentFragment;
-                try {
-
-                    InventoryActivity.GotoInventoryActivity(HomeActivity.this);
-
-                        /*index = viewPager.getCurrentItem();
-                        viewPagerAdapter = ((ViewPagerAdapter) viewPager.getAdapter());
-                        currentFragment = viewPagerAdapter.getItem(index);
-                        if (currentFragment instanceof ExpiredDurationFragment) {
-                            ExpiredDurationFragment expiredDurationFragment = (ExpiredDurationFragment) currentFragment;
-                        } else if (currentFragment instanceof InventoryFragment) {
-                            *//*InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
-                            inventoryFragment.ShowDialogAddUpdateDrug(null, -1);*//*
-                            //AddInventoryActivity.GotoAddInventoryActivity(InventoryActivity.this, null, false);
-                        } else if (currentFragment instanceof ExpiredFragment) {
-                            //SalesActivity.GotoSalesActivity(InventoryActivity.this);
-                        }*/
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+        SetAdapter();
 
         sliderHeaderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +119,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
 
     private void InitializeIDS() {
         try {
-            // SLider header ids
+            // Slider header ids
             header_UserIcon = (ImageView) findViewById(R.id.header_navigation_drawer_image);
             header_usernameTV = (RobotoTextView) findViewById(R.id.header_usernameTV);
             header_mobileTV = (RobotoTextView) findViewById(R.id.header_mobileTV);
@@ -149,18 +129,12 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
 
-
-            floatActionButton = (FloatingActionButton) findViewById(R.id.floatActionButton);
-
             sliderHeaderLayout = (View) findViewById(R.id.drawerHeaderLayout);
 
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             recyclerViewMenu = (RecyclerView) findViewById(R.id.recyclerViewMenu);
             recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-            //recyclerViewMenu.setBackgroundColor(getResources().getColor(R.color.White));
-
-
-            utility.SetFabColor(HomeActivity.this, floatActionButton);
+            recyclerViewMenu.setBackgroundColor(getResources().getColor(R.color.White));
 
             sliderHeaderLayout.setBackgroundColor(Color.parseColor(MainActivity.GetThemeColor()));
 
@@ -244,6 +218,28 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
         }
     }
 
+    private void SetAdapter() {
+        ArrayList<HomeModel> homeModels = new ArrayList<>();
+
+        try {
+
+            homeModels = utility.GetHomeMenuList(HomeActivity.this);
+
+            StaggeredGridLayoutManager mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            GridSpacingItemDecoration decoration = new GridSpacingItemDecoration(1, dpToPx(0), true);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.addItemDecoration(decoration);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setNestedScrollingEnabled(false);
+
+            homeGridAdapter = new HomeGridAdapter(HomeActivity.this, homeModels);
+            recyclerView.setAdapter(homeGridAdapter);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     @Override
     public void setTitle(int titleId) {
@@ -306,6 +302,52 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int position = parent.getChildAdapterPosition(view); // item position
+            int column = position % spanCount; // item column
+
+            if (includeEdge) {
+                //outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                outRect.left = 0;
+                //outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+                outRect.right = 0;
+                if (position < spanCount) { // top edge
+                    //outRect.top = spacing;
+                    outRect.top = 0;
+                }
+                //outRect.bottom = spacing; // item bottom
+                outRect.bottom = 0;
+            } else {
+                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
+                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing; // item top
+                }
+            }
+        }
+    }
+
+    /**
+     * Converting dp to pixel
+     */
+    private int dpToPx(int dp) {
+        Resources r = getResources();
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
 

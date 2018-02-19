@@ -1,54 +1,32 @@
 package com.inventory.Fragments;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 
 import com.inventory.Activities.MainActivity;
-import com.inventory.Adapter.CustomSpinnerAdapter;
-import com.inventory.Adapter.ProcurementAdapter;
+import com.inventory.Adapter.InventoryAdapter;
 import com.inventory.Adapter.SearchDrugAdapter;
 import com.inventory.Adapter.SearchDrugManufacturerAdapter;
-import com.inventory.Helper.AppConstants;
-import com.inventory.Helper.RecyclerItemClickListener;
 import com.inventory.Helper.Utility;
 import com.inventory.Model.DrugModel;
-import com.inventory.Model.StringHolderModel;
-import com.inventory.Model.ViewIDModel;
 import com.inventory.NewUi.DividerItemDecoration;
-import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class InventoryFragment extends Fragment {
 
     private static final String TAG = "InventoryFragment";
     View rootView;
     RecyclerView recyclerView;
-    ProcurementAdapter procurementAdapter;
+    InventoryAdapter inventoryAdapter;
     MainActivity mainActivity;
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
     HashMap<String, DrugModel> drugModelHashMap = new HashMap<>();
@@ -117,11 +95,11 @@ public class InventoryFragment extends Fragment {
 
     private void SetAdapter(ArrayList<DrugModel> drugModelArrayList) {
         try {
-            procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList, true);
+            inventoryAdapter = new InventoryAdapter(getActivity(), drugModelArrayList, true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-            recyclerView.setAdapter(procurementAdapter);
-            procurementAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(inventoryAdapter);
+            inventoryAdapter.notifyDataSetChanged();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

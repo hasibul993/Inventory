@@ -172,7 +172,7 @@ public class SalesActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         try {
-            InventoryActivity.GotoInventoryActivity(SalesActivity.this);
+            HomeActivity.GotoHomeActivity(SalesActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

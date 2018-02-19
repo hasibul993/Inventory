@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.inventory.Activities.MainActivity;
-import com.inventory.Adapter.ProcurementAdapter;
+import com.inventory.Adapter.InventoryAdapter;
 import com.inventory.Model.DrugModel;
 import com.inventory.NewUi.DividerItemDecoration;
 import com.inventory.R;
@@ -23,7 +23,7 @@ public class ExpiredDurationFragment extends Fragment {
 
     public static ExpiredDurationFragment expiredDurationFragment;
     RecyclerView recyclerView;
-    ProcurementAdapter procurementAdapter;
+    InventoryAdapter inventoryAdapter;
     MainActivity mainActivity;
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
     boolean isOncreateCalled = false;
@@ -94,11 +94,11 @@ public class ExpiredDurationFragment extends Fragment {
 
     private void SetAdapter(ArrayList<DrugModel> drugModelArrayList) {
         try {
-            procurementAdapter = new ProcurementAdapter(getActivity(), drugModelArrayList,false);
+            inventoryAdapter = new InventoryAdapter(getActivity(), drugModelArrayList,false);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-            recyclerView.setAdapter(procurementAdapter);
-            procurementAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(inventoryAdapter);
+            inventoryAdapter.notifyDataSetChanged();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

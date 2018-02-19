@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Inventory</string>
 
+    <!--Home-->
+    <string name="inventory">Inventory</string>
+    <string name="pos">POS</string>
+    <string name="orders">Orders</string>
+
+    <!--Inventory-->
     <string name="tabPosition">TabPosition</string>
     <string name="expiredDuration">Expired(1 month)</string>
     <string name="inventoryAll">All</string>
@@ -144,6 +150,8 @@
     <string name="age">Age (Optional)</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+
+    <string name="sharevia">Share via</string>
 
 
     <!--Country code-->
