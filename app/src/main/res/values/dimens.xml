@@ -21,9 +21,9 @@
 
     <dimen name="cicle_width_50dp">50dp</dimen>
 
+    <dimen name="divider_height">0.4dp</dimen>
+
     <!--login-->
-
-
     <dimen name="underline_stroke_width">2.0dip</dimen>
     <dimen name="underline_width">40.0dip</dimen>
     <dimen name="section_reduction">5.0dip</dimen>

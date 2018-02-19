@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.inventory.Activities.InventoryActivity;
 import com.inventory.Activities.MainActivity;
 import com.inventory.Activities.SalesActivity;
 import com.inventory.Activities.SettingActivity;

@@ -1,25 +1,17 @@
 package com.inventory.Activities;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
@@ -30,11 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.inventory.Adapter.SliderMenuAdapter;
-import com.inventory.Adapter.ViewPagerAdapter;
 import com.inventory.Database.AndroidDatabaseViewer;
-import com.inventory.Fragments.ExpiredDurationFragment;
-import com.inventory.Fragments.ExpiredFragment;
-import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
 import com.inventory.Helper.ViewImageCircle;
@@ -49,30 +37,24 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
-import static android.view.View.VISIBLE;
-
 /**
  * Created by BookMEds on 05-02-2018.
  */
 
 public class HomeActivity extends AppCompatActivity implements AppConstants {
 
-    public static TabLayout tabLayout;
     CharSequence mDrawerTitle;
     Toolbar toolbar;
     TextView toolbar_title;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mTitle;
-    private ViewPager viewPager;
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerViewMenu, recyclerView;
     FloatingActionButton floatActionButton;
 
     SliderMenuAdapter sliderMenuAdapter;
 
-    int tabPosition = 0;
-    ViewPagerAdapter viewPagerAdapter;
 
     View sliderHeaderLayout;
     ImageView header_UserIcon;
@@ -92,7 +74,6 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
         //int size=config.smallestScreenWidthDp;
 
         Intent intent = getIntent();
-        tabPosition = intent.getIntExtra(getString(R.string.tabPosition), 0);
 
         mainActivity = MainActivity.getInstance();
         userKeyDetailsModel = mainActivity.GetUserKeyDetails(HomeActivity.this);
@@ -103,7 +84,6 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
 
         SetAdapterSliderMenu();
 
-        SetViewPagerAdapter(viewPager, null);
 
         floatActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +92,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                 Fragment currentFragment;
                 try {
 
-                    AddInventoryActivity.GotoAddInventoryActivity(HomeActivity.this, null, false);
+                    InventoryActivity.GotoInventoryActivity(HomeActivity.this);
 
                         /*index = viewPager.getCurrentItem();
                         viewPagerAdapter = ((ViewPagerAdapter) viewPager.getAdapter());
@@ -169,29 +149,20 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
 
-            viewPager = (ViewPager) findViewById(R.id.viewpager);
-            tabLayout = (TabLayout) findViewById(R.id.tabs);
-            tabLayout.setVisibility(VISIBLE);
 
             floatActionButton = (FloatingActionButton) findViewById(R.id.floatActionButton);
 
             sliderHeaderLayout = (View) findViewById(R.id.drawerHeaderLayout);
 
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            recyclerViewMenu = (RecyclerView) findViewById(R.id.recyclerViewMenu);
             recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-            recyclerView.setBackgroundColor(getResources().getColor(R.color.White));
+            //recyclerViewMenu.setBackgroundColor(getResources().getColor(R.color.White));
 
 
             utility.SetFabColor(HomeActivity.this, floatActionButton);
 
-            if (Build.VERSION.SDK_INT <= 22) {
-                floatActionButton.getBackground().setColorFilter(Color.parseColor(MainActivity.GetThemeColor()), PorterDuff.Mode.SRC_ATOP);
-            } else {
-                floatActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(MainActivity.GetThemeColor())));
-            }
-
             sliderHeaderLayout.setBackgroundColor(Color.parseColor(MainActivity.GetThemeColor()));
-            tabLayout.setBackgroundColor(Color.parseColor(MainActivity.GetThemeColor()));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -214,7 +185,6 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
                 }
 
                 public void onDrawerOpened(View drawerView) {
-                    tabLayout.requestDisallowInterceptTouchEvent(true);
                     invalidateOptionsMenu();
                 }
             };
@@ -264,30 +234,11 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             sliderMenuModels = utility.GetSliderMenuList(HomeActivity.this);
 
             sliderMenuAdapter = new SliderMenuAdapter(HomeActivity.this, sliderMenuModels);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            //recyclerView.addItemDecoration(new DividerItemDecoration(InventoryActivity.this, LinearLayoutManager.VERTICAL, 0, 1));
-            recyclerView.addItemDecoration(new DividerItemDecoration(this));
-            recyclerView.setAdapter(sliderMenuAdapter);
+            recyclerViewMenu.setLayoutManager(new LinearLayoutManager(this));
+            //recyclerViewMenu.addItemDecoration(new DividerItemDecoration(InventoryActivity.this, LinearLayoutManager.VERTICAL, 0, 1));
+            recyclerViewMenu.addItemDecoration(new DividerItemDecoration(this));
+            recyclerViewMenu.setAdapter(sliderMenuAdapter);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
-    private void SetViewPagerAdapter(ViewPager viewPager, String searchedText) {
-        try {
-            viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-            viewPagerAdapter.addFragment(new InventoryFragment(), getString(R.string.inventoryAll));
-            viewPagerAdapter.addFragment(new ExpiredDurationFragment(), getString(R.string.expiredDuration));
-            viewPagerAdapter.addFragment(new ExpiredFragment(), getString(R.string.expired));
-            tabLayout.setTabMode(TabLayout.MODE_FIXED);
-            viewPager.setAdapter(null);
-            viewPager.setAdapter(viewPagerAdapter);
-            viewPager.setCurrentItem(tabPosition);
-            viewPager.getAdapter().notifyDataSetChanged();
-
-            tabLayout.setupWithViewPager(viewPager);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -312,7 +263,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
 
     public static void GotoHomeActivity(Context context) {
         try {
-            Intent intent = new Intent(context, InventoryActivity.class);
+            Intent intent = new Intent(context, HomeActivity.class);
             context.startActivity(intent);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -326,51 +277,6 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             getMenuInflater().inflate(R.menu.menu_home_activity, menu);
             MenuItem moreIcon = menu.findItem(R.id.menu_more);
             moreIcon.setVisible(true);
-
-            SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-            SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    int index = -1;
-                    Fragment currentFragment;
-                    try {
-                        index = viewPager.getCurrentItem();
-                        viewPagerAdapter = ((ViewPagerAdapter) viewPager.getAdapter());
-                        currentFragment = viewPagerAdapter.getItem(index);
-                        if (currentFragment instanceof InventoryFragment) {
-                            InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
-                            inventoryFragment.GetDrugsLocally(newText);
-                        }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                    return true;
-                }
-
-            });
-
-            MenuItem item = menu.findItem(R.id.action_search);
-            MenuItemCompat.setOnActionExpandListener(item, new MenuItemCompat.OnActionExpandListener() {
-                @Override
-                public boolean onMenuItemActionExpand(MenuItem menuItem) {
-                    tabLayout.setVisibility(View.GONE);
-                    return false;
-                }
-
-                @Override
-                public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                    tabLayout.setVisibility(View.VISIBLE);
-                    return false;
-                }
-            });
 
         } catch (Exception ex) {
             ex.printStackTrace();

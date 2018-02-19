@@ -76,6 +76,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_CUSTOMER_MOBILE = "CustomerMobile";
     protected static final String COLUMN_CUSTOMER_NAME = "CustomerName";
     protected static final String COLUMN_ORDER_TOTAL = "OrderTotal";
+    protected static final String COLUMN_GENDER = "Gender";
+    protected static final String COLUMN_PATIENT_NAME = "PatientName";
+    protected static final String COLUMN_AGE = "Age";
 
 
     public DatabaseHelper(Context context) {
@@ -230,6 +233,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ORDER_CREATED_ON + "  TEXT,"
                 + COLUMN_CUSTOMER_NAME + " TEXT,"
                 + COLUMN_CUSTOMER_MOBILE + " TEXT ,"
+                + COLUMN_PATIENT_NAME + " TEXT ,"
+                + COLUMN_GENDER + " TEXT ,"
+                + COLUMN_AGE + " TEXT ,"
                 + COLUMN_ORDER_TOTAL + " REAL,"
                 + COLUMN_DATE_IN_MILLISECOND + " INTEGER,"
                 + "PRIMARY KEY (" + COLUMN_ORDER_NO + "))";

@@ -52,6 +52,12 @@ public class DrugModel implements Serializable {
 
     public String CustomerName;
 
+    public String PatientName;
+
+    public String Gender;
+
+    public String Age;
+
     public boolean IsNeedSync;
 
 

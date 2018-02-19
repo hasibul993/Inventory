@@ -363,6 +363,15 @@ public class DatabaseAccess extends DatabaseHelper {
             if (drugModel.CustomerName != null)
                 values.put(COLUMN_CUSTOMER_NAME, drugModel.CustomerName);
 
+            if (drugModel.PatientName != null)
+                values.put(COLUMN_PATIENT_NAME, drugModel.PatientName);
+
+            if (drugModel.Gender != null)
+                values.put(COLUMN_GENDER, drugModel.Gender);
+
+            if (drugModel.Age != null)
+                values.put(COLUMN_AGE, drugModel.Age);
+
             values.put(COLUMN_ORDER_TOTAL, drugModel.OrderTotal);
 
 
@@ -903,9 +912,11 @@ public class DatabaseAccess extends DatabaseHelper {
 
             drugModel.CustomerName = cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_NAME));
             drugModel.CustomerMobile = cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_MOBILE));
+            drugModel.PatientName = cursor.getString(cursor.getColumnIndex(COLUMN_PATIENT_NAME));
+            drugModel.Gender = cursor.getString(cursor.getColumnIndex(COLUMN_GENDER));
+            drugModel.Age = cursor.getString(cursor.getColumnIndex(COLUMN_AGE));
 
             drugModel.OrderTotal = cursor.getDouble(cursor.getColumnIndex(COLUMN_ORDER_TOTAL));
-
             drugModel.OrderTotalString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotal);
 
             drugModel.DateInMilliSecond = cursor.getLong(cursor.getColumnIndex(COLUMN_DATE_IN_MILLISECOND));

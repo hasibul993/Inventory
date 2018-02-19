@@ -17,7 +17,6 @@
     <string name="verify_number">Enter OTP</string>
 
 
-
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
@@ -138,11 +137,16 @@
 
     <!--Sales-->
     <string name="searchMedicine">Search medicine</string>
+    <string name="customerName">Customer Name</string>
+    <string name="customerMobile">Customer Mobile</string>
+    <string name="patientName">Patient Name (Optional)</string>
+    <string name="gender">Gender (Optional)</string>
+    <string name="age">Age (Optional)</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
 
-
-
-
+    <!--Country code-->
     <string-array name="country_code">
         <item>India (+91)</item>
         <item>Afghanistan (+93)</item>
@@ -239,7 +243,7 @@
         <item>Hong Kong (+852)</item>
         <item>Hungary (+36)</item>
         <item>Iceland (+354)</item>
-       <!-- <item>India (+91)</item>-->
+        <!-- <item>India (+91)</item>-->
         <item>Indonesia (+62)</item>
         <item>Iran (+98)</item>
         <item>Iraq (+964)</item>

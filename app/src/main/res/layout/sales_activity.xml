@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/com.zibmi"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,15 +13,221 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/cutomerNameET_Hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/cutomerNameET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:drawableBottom="@android:color/transparent"
+                        android:ellipsize="end"
+                        android:ems="10"
+                        android:hint="@string/customerName"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords|textAutoComplete"
+                        android:singleLine="true"
+                        android:textColor="@color/Black"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="@dimen/body" />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/cutomerMobileET_Hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cutomerNameET_Hint">
+
+                    <EditText
+                        android:id="@+id/cutomerMobileET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:drawableBottom="@android:color/transparent"
+                        android:ellipsize="end"
+                        android:ems="10"
+                        android:hint="@string/customerMobile"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords|textAutoComplete"
+                        android:singleLine="true"
+                        android:textColor="@color/Black"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="@dimen/body" />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/patientNameET_Hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cutomerMobileET_Hint">
+
+                    <EditText
+                        android:id="@+id/patientNameET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:drawableBottom="@android:color/transparent"
+                        android:ellipsize="end"
+                        android:ems="10"
+                        android:hint="@string/patientName"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords|textAutoComplete"
+                        android:singleLine="true"
+                        android:textColor="@color/Black"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="@dimen/body" />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/ageET_Hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/patientNameET_Hint">
+
+                    <EditText
+                        android:id="@+id/ageET"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="true"
+                        android:drawableBottom="@android:color/transparent"
+                        android:ellipsize="end"
+                        android:ems="10"
+                        android:hint="@string/age"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords|textAutoComplete"
+                        android:singleLine="true"
+                        android:textColor="@color/Black"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="@dimen/body" />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+                <RelativeLayout
+                    android:id="@+id/genderLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ageET_Hint"
+                    android:layout_marginTop="10dp">
+
+                    <com.inventory.NewUi.RobotoTextView
+                        android:id="@+id/genderTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/gender"
+                        android:textColor="@color/main_color_grey_600"
+                        android:textSize="@dimen/body"
+                        app:typeface="robotoRegular" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@+id/genderTV"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/maleRadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/White"
+                            android:checked="false"
+                            android:paddingLeft="5dp"
+                            android:text="@string/male"
+                            android:textColor="@color/Black" />
+
+                        <RadioButton
+                            android:id="@+id/femaleRadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:background="@color/White"
+                            android:checked="false"
+                            android:paddingLeft="5dp"
+                            android:text="@string/female"
+                            android:textColor="@color/Black" />
+                    </RadioGroup>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/view_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_below="@+id/genderLayout"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/hintColor"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+            <include
+                layout="@layout/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatActionButton"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/header"
+        android:src="@drawable/vector_plus_white_icon"
+        app:backgroundTint="@color/colorPrimary" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone">
+
+        <!--Search layout-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/searchLayout"

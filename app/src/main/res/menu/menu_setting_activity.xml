@@ -1,21 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <item
         android:id="@+id/menu_more"
         android:icon="@drawable/vector_more_vert_white"
         android:orderInCategory="11111"
         android:title="More"
+        android:visible="false"
         app:showAsAction="always">
-
-        <menu>
-            <!-- Help -->
-            <item
-                android:id="@+id/viewDataBase"
-                android:title="View Database"
-                app:showAsAction="always" />
-        </menu>
 
     </item>
 

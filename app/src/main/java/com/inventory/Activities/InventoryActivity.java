@@ -143,6 +143,7 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
 
             MainActivity.getInstance().SupportActionBar(InventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.app_name), false);
 
+            toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -180,9 +181,7 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
 
     public boolean onCreateOptionsMenu(Menu menu) {
         try {
-            getMenuInflater().inflate(R.menu.menu_home_activity, menu);
-            MenuItem moreIcon = menu.findItem(R.id.menu_more);
-            moreIcon.setVisible(true);
+            getMenuInflater().inflate(R.menu.menu_inventory_activity, menu);
 
             SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
             SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
@@ -253,37 +252,7 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
 
     public void onBackPressed() {
         try {
-            MainActivity.MinimizeActivity(InventoryActivity.this);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
-    public void SyncMasterDB() {
-
-        String url = "", json = "";
-        try {
-            if (utility.IsInternetConnected(this)) {
-                new Post(this, url, json, false) {
-                    @Override
-                    public void onResponseReceived(String response) {
-                        try {
-                            if (response.contains(SOCKET_TIMEOUT)) {
-                                String messageBody = getString(R.string.internet_slow);
-                            } else if (response.contains(INVALID_HOSTNAME) || response.contains(CONNECTION_GONE)) {
-                                String messageBody = getString(R.string.internet_gone);
-
-                            } else {
-
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }.execute();
-            } else
-                MainActivity.ShowToast(this, getString(R.string.check_internet));
+            HomeActivity.GotoHomeActivity(InventoryActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
