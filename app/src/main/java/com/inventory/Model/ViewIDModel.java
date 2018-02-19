@@ -19,13 +19,6 @@ import com.inventory.NewUi.RobotoTextView;
 
 public class ViewIDModel {
 
-    public TextInputLayout DrugNameEditTextTHint;
-    public TextInputLayout MrpEditTextTHint;
-    public TextInputLayout QuantityEditTextTHint;
-    public TextInputLayout DiscountEditTextTHint;
-    public TextInputLayout ManufacturerEditTextTHint;
-    public TextInputLayout BatchNumberEditTextTHint;
-
     public EditText DrugNameEditText;
     public EditText MrpEditText;
     public EditText QuantityEditText;
@@ -45,6 +38,8 @@ public class ViewIDModel {
 
     public ImageView DeleteIconManufacturerRecyclerView;
 
+
+    public RobotoTextView QtyAvailableTV;
 
     public RobotoTextView OkTextView;
     public RobotoTextView CancelTextView;

@@ -32,6 +32,9 @@ public interface AppConstants {
 
     public static String SIMPLE_DATE_FORMAT = "dd-MM-yyyy";
 
+   /*Fonts*/
+    public static String ROBOTO_MEDIUM = "fonts/Roboto-Medium.ttf";
+
 
     public static String SHARE_TITLE = "Hey! Check out this free app that I'm using to organise my pharmacy inventory! https://play.google.com/store/apps/details?id=com.xampr&hl=en";
 

@@ -83,7 +83,7 @@ public class InventoryFragment extends Fragment {
     public void GetDrugsLocally(String searchedText) {
         try {
 
-            drugModelArrayList = mainActivity.GetInventoryListFromInventoryDB(getActivity(), searchedText);
+            drugModelArrayList = mainActivity.GetInventoryListFromInventoryDB(getActivity(), searchedText,false);
 
             SetAdapter(drugModelArrayList);
 

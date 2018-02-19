@@ -22,6 +22,10 @@ public class DrugModel implements Serializable {
 
     public String DrugManufacturer;
 
+    public double DrugTotalMRP;
+
+    public String DrugTotalMRPString;
+
     public double DrugMRP;
 
     public String DrugMRPString;

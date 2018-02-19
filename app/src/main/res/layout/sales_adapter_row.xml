@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/com.zibmi"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/parentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/slNoTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:text="@string/slNo"
+                android:textColor="@color/main_color_grey_700"
+                android:textSize="@dimen/text"
+                app:typeface="robotoRegular" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/drugNameTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.2"
+                android:gravity="center"
+                android:text="@string/drugName"
+                android:textColor="@color/main_color_grey_700"
+                android:textSize="@dimen/text"
+                app:typeface="robotoRegular" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/drugQuantityTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/quantity"
+                android:textColor="@color/main_color_grey_700"
+                android:textSize="@dimen/text"
+                app:typeface="robotoRegular" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/drugMRPTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:gravity="center"
+                android:text="@string/drugMRP"
+                android:textColor="@color/main_color_grey_700"
+                android:textSize="@dimen/text"
+                app:typeface="robotoRegular" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/drugDiscountTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/disCount"
+                android:textColor="@color/main_color_grey_700"
+                android:textSize="@dimen/text"
+                app:typeface="robotoRegular" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/drugTotalTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/total"
+                android:textColor="@color/main_color_grey_700"
+                android:textSize="@dimen/text"
+                app:typeface="robotoRegular" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view_row"
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_below="@+id/parentLayout"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/hintColor"
+        android:visibility="visible" />
+</RelativeLayout>

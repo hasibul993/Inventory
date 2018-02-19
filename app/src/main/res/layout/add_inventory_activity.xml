@@ -217,7 +217,7 @@
                                 android:cursorVisible="true"
                                 android:drawableBottom="@android:color/transparent"
                                 android:ems="10"
-                                android:hint="@string/drugDiscount"
+                                android:hint="@string/batchNumber"
                                 android:imeOptions="actionDone"
                                 android:inputType="textCapWords|textAutoCorrect"
                                 android:singleLine="true"

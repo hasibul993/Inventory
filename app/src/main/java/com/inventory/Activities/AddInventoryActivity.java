@@ -267,12 +267,6 @@ public class AddInventoryActivity extends AppCompatActivity {
             floatActionButton = (FloatingActionButton) findViewById(R.id.floatActionButton);
 
             //product ids
-            viewIDModel.DrugNameEditTextTHint = (TextInputLayout) findViewById(R.id.drugNameET_Hint);
-            viewIDModel.MrpEditTextTHint = (TextInputLayout) findViewById(R.id.mrpET_Hint);
-            viewIDModel.QuantityEditTextTHint = (TextInputLayout) findViewById(R.id.quantityET_Hint);
-            viewIDModel.DiscountEditTextTHint = (TextInputLayout) findViewById(R.id.discountET_Hint);
-            viewIDModel.ManufacturerEditTextTHint = (TextInputLayout) findViewById(R.id.manufacturerET_Hint);
-            viewIDModel.BatchNumberEditTextTHint = (TextInputLayout) findViewById(R.id.batchNumberET_Hint);
 
             viewIDModel.viewPager = (ViewPager) findViewById(R.id.viewpager);
             viewIDModel.tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -325,7 +319,7 @@ public class AddInventoryActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            SetHintText(viewIDModel);
+            viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate());
 
             if (editModel != null) {
                 isModify = true;
@@ -363,24 +357,6 @@ public class AddInventoryActivity extends AppCompatActivity {
         }
     }
 
-    private void SetHintText(ViewIDModel viewIDModel) {
-        try {
-            viewIDModel.DrugNameEditTextTHint.setHint(getString(R.string.drugName));
-            viewIDModel.MrpEditTextTHint.setHint(getString(R.string.drugMRP));
-            viewIDModel.QuantityEditTextTHint.setHint(getString(R.string.drugQuantity));
-            viewIDModel.DiscountEditTextTHint.setHint(getString(R.string.drugDiscount));
-            viewIDModel.ManufacturerEditTextTHint.setHint(getString(R.string.drugManufacturer));
-            viewIDModel.BatchNumberEditTextTHint.setHint(getString(R.string.batchNumber));
-
-            //viewIDModel.OkTextView.setTextColor(getResources().getColor(R.color.White));
-            // viewIDModel.CancelTextView.setTextColor(getResources().getColor(R.color.White));
-
-            viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate());
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
     private boolean AddUpdateItem(StringHolderModel stringHolderModel, DrugModel editModel, String fromIconFont, int position) {
         try {

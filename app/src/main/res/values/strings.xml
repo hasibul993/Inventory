@@ -151,6 +151,12 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
 
+    <string name="slNo">S/N</string>
+    <string name="quantity">Qty</string>
+    <string name="disCount">Disc</string>
+    <string name="subTotal">Sub Total</string>
+    <string name="total">Total</string>
+
     <string name="sharevia">Share via</string>
 
 

@@ -553,14 +553,14 @@ public class DatabaseAccess extends DatabaseHelper {
         return drugModel;
     }
 
-    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(String searchText) {
+    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(String searchText,boolean isLimit) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
 
         try {
 
-            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInInventoryDB(searchText), null);
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInInventoryDB(searchText,isLimit), null);
 
             if (cursor.getCount() > 0)
                 drugModelArrayList = GetDrugList(cursor);
@@ -695,10 +695,6 @@ public class DatabaseAccess extends DatabaseHelper {
         try {
 
             cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInMasterDB(searchText), null);
-
-            if (cursor.getCount() == 0)
-                cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInPharmacyDB(searchText), null);
-
 
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
@@ -998,7 +994,7 @@ public class DatabaseAccess extends DatabaseHelper {
         Cursor cursor = null;
         boolean isExist = false;
         try {
-            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInInventoryDB(null), null);
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInInventoryDB(null,false), null);
             if (cursor.getCount() > 1)
                 isExist = true;
         } catch (Exception ex) {

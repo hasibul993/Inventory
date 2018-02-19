@@ -183,22 +183,27 @@
 
                 </RelativeLayout>
 
-                <View
-                    android:id="@+id/view_row"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_below="@+id/genderLayout"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/hintColor"
-                    android:visibility="visible" />
-
             </RelativeLayout>
+
+            <View
+                android:id="@+id/view_row"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_below="@+id/genderLayout"
+                android:layout_marginTop="15dp"
+                android:background="@color/hintColor"
+                android:visibility="visible" />
+
+            <include
+                android:id="@+id/recyclerViewHeaderID"
+                layout="@layout/sales_adapter_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <include
                 layout="@layout/recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

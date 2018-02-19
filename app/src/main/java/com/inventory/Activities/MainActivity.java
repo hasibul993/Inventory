@@ -203,11 +203,11 @@ public class MainActivity implements AppConstants {
         return drugModel;
     }
 
-    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(Context context, String searchText) {
+    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(Context context, String searchText,boolean isLimit) {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            drugModelArrayList = databaseAccess.GetInventoryListFromInventoryDB(searchText);
+            drugModelArrayList = databaseAccess.GetInventoryListFromInventoryDB(searchText,isLimit);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

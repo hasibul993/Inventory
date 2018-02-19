@@ -53,13 +53,16 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
-    public static String GetQueryForSearchDrugInInventoryDB(String searchText) {
+    public static String GetQueryForSearchDrugInInventoryDB(String searchText, boolean isLimit) {
         String query = "";
         /*Like %text% will search string in whole name but like text% will start search from first letter*/
         try {
-            if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' ";
-            else
+            if (!StringUtils.isBlank(searchText)) {
+                if (isLimit)
+                    query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
+                else
+                    query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' ";
+            } else
                 query = SELECT_ALL + TABLE_INVENTORY_DB + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -75,20 +78,6 @@ public class DatabaseQuery extends DatabaseHelper {
                 query = SELECT_ALL + TABLE_MASTER_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
             else
                 query = SELECT_ALL + TABLE_MASTER_DB + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return query;
-    }
-
-    public static String GetQueryForSearchDrugInPharmacyDB(String searchText) {
-        String query = "";
-        /*Like %text% will search string in whole name but like text% will start search from first letter*/
-        try {
-            if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
-            else
-                query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_DRUG_NAME + ALPHABETICAL_OREDER;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
