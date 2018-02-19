@@ -618,7 +618,37 @@ public class SalesActivity extends AppCompatActivity {
     }
 
     private void OnDonePressed() {
+        String customerName, customerMobile, patientName, gender = "", age;
         try {
+            customerName = cutomerNameET.getText().toString().trim();
+            customerMobile = cutomerMobileET.getText().toString().trim();
+            patientName = patientNameET.getText().toString().trim();
+            age = ageET.getText().toString().trim();
+
+            if (maleRadioButton.isChecked())
+                gender = getString(R.string.male);
+            else if (femaleRadioButton.isChecked())
+                gender = getString(R.string.female);
+
+            if (StringUtils.isBlank(customerName)) {
+                MainActivity.ShowToast(SalesActivity.this, getString(R.string.enterCustomerName));
+                return;
+            } else if (StringUtils.isBlank(customerMobile)) {
+                MainActivity.ShowToast(SalesActivity.this, getString(R.string.enterCustomerMobile));
+                return;
+            } else if (salesAdapter.getItemCount() == 0) {
+                MainActivity.ShowToast(SalesActivity.this, getString(R.string.addDrugToList));
+                return;
+            } else {
+                DrugModel drugModel = new DrugModel();
+
+                drugModel.OrderNo = "123456";
+                drugModel.CustomerName = customerName;
+                drugModel.CustomerMobile = customerMobile;
+                drugModel.PatientName = patientName;
+                drugModel.Age = age;
+                drugModel.Gender = gender;
+            }
 
         } catch (Exception ex) {
             ex.printStackTrace();

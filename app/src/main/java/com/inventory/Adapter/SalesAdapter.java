@@ -118,6 +118,11 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder> 
         return modelArrayList.get(position);
     }
 
+    public ArrayList<DrugModel> getDrugList(int position) {
+        // TODO Auto-generated method stub
+        return modelArrayList;
+    }
+
 
     public void AddItem(DrugModel drugModel) {
         int position = 0;

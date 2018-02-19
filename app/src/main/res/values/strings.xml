@@ -151,6 +151,10 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
 
+    <string name="enterCustomerName">Enter customer name</string>
+    <string name="enterCustomerMobile">Enter customer mobile no</string>
+    <string name="addDrugToList">Please add medicine first</string>
+
     <string name="slNo">S/N</string>
     <string name="quantity">Qty</string>
     <string name="disCount">Disc</string>
