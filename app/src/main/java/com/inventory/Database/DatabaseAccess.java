@@ -141,7 +141,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
             if (drugModel.DrugExpiryDate != null) {
                 values.put(COLUMN_DRUG_EXPIRY_DATE, drugModel.DrugExpiryDate);
-                values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate));
+                values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate, false));
             }
 
 
@@ -260,7 +260,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
                     if (drugModel.DrugExpiryDate != null) {
                         values.put(COLUMN_DRUG_EXPIRY_DATE, drugModel.DrugExpiryDate);
-                        values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate));
+                        values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate, false));
                     }
 
                     if (drugModel.DrugTransactionDate != null)
@@ -351,7 +351,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
             if (drugModel.OrderCreatedOn != null) {
                 values.put(COLUMN_ORDER_CREATED_ON, drugModel.OrderCreatedOn);
-                values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate));
+                values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate, true));
             }
 
             if (drugModel.CustomerName != null)
@@ -374,6 +374,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
             values.put(COLUMN_ORDER_TOTAL, drugModel.OrderTotal);
 
+            values.put(COLUMN_ORDER_TOTAL_DISCOUNT, drugModel.OrderTotalDiscount);
 
             long _id = db.insertWithOnConflict(TABLE_ORDERS_DB, null,
                     values, SQLiteDatabase.CONFLICT_IGNORE);
@@ -436,7 +437,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
                     if (drugModel.DrugExpiryDate != null) {
                         values.put(COLUMN_DRUG_EXPIRY_DATE, drugModel.DrugExpiryDate);
-                        values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate));
+                        values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate, false));
                     }
 
                     long _id = db.insertWithOnConflict(TABLE_ORDERS_ITEMS_DB, null,
@@ -553,14 +554,14 @@ public class DatabaseAccess extends DatabaseHelper {
         return drugModel;
     }
 
-    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(String searchText,boolean isLimit) {
+    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(String searchText, boolean isLimit) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
 
         try {
 
-            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInInventoryDB(searchText,isLimit), null);
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInInventoryDB(searchText, isLimit), null);
 
             if (cursor.getCount() > 0)
                 drugModelArrayList = GetDrugList(cursor);
@@ -582,8 +583,8 @@ public class DatabaseAccess extends DatabaseHelper {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         long startInMilliSecond, endInMilliSecond;
         try {
-            startInMilliSecond = mainActivity.GetMilliSecondsFromDate(startDate);
-            endInMilliSecond = mainActivity.GetMilliSecondsFromDate(endDate);
+            startInMilliSecond = mainActivity.GetMilliSecondsFromDate(startDate, false);
+            endInMilliSecond = mainActivity.GetMilliSecondsFromDate(endDate, false);
 
             cursor = db.rawQuery(DatabaseQuery.GetQueryForDrugBetweenDatesInInventoryDB(searchText, startInMilliSecond, endInMilliSecond), null);
 
@@ -607,7 +608,7 @@ public class DatabaseAccess extends DatabaseHelper {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
 
         try {
-            long milliSeconds = mainActivity.GetMilliSecondsFromDate(startDate);
+            long milliSeconds = mainActivity.GetMilliSecondsFromDate(startDate, false);
             cursor = db.rawQuery(DatabaseQuery.GetQueryForExpiredDrugInInventoryDB(searchText, milliSeconds), null);
 
             if (cursor.getCount() > 0)
@@ -915,6 +916,9 @@ public class DatabaseAccess extends DatabaseHelper {
             drugModel.OrderTotal = cursor.getDouble(cursor.getColumnIndex(COLUMN_ORDER_TOTAL));
             drugModel.OrderTotalString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotal);
 
+            drugModel.OrderTotalDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_ORDER_TOTAL_DISCOUNT));
+            drugModel.OrderTotalDiscountString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotalDiscount);
+
             drugModel.DateInMilliSecond = cursor.getLong(cursor.getColumnIndex(COLUMN_DATE_IN_MILLISECOND));
 
         } catch (Exception ex) {
@@ -994,7 +998,7 @@ public class DatabaseAccess extends DatabaseHelper {
         Cursor cursor = null;
         boolean isExist = false;
         try {
-            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInInventoryDB(null,false), null);
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchDrugInInventoryDB(null, false), null);
             if (cursor.getCount() > 1)
                 isExist = true;
         } catch (Exception ex) {

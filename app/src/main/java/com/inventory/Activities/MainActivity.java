@@ -203,11 +203,11 @@ public class MainActivity implements AppConstants {
         return drugModel;
     }
 
-    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(Context context, String searchText,boolean isLimit) {
+    public ArrayList<DrugModel> GetInventoryListFromInventoryDB(Context context, String searchText, boolean isLimit) {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            drugModelArrayList = databaseAccess.GetInventoryListFromInventoryDB(searchText,isLimit);
+            drugModelArrayList = databaseAccess.GetInventoryListFromInventoryDB(searchText, isLimit);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -219,7 +219,7 @@ public class MainActivity implements AppConstants {
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         String startDate, endDate;
         try {
-            startDate = GetCurrentDate();
+            startDate = GetCurrentDate(AppConstants.SIMPLE_DATE_FORMAT);
             endDate = GetDatePlusOneMonth(month);
 
             drugModelArrayList = databaseAccess.GetExpiredDurationInventoryFromInventoryDB(searchText, startDate, endDate);
@@ -233,7 +233,7 @@ public class MainActivity implements AppConstants {
         databaseAccess = new DatabaseAccess(context);
         ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
         try {
-            String startDate = GetCurrentDate();
+            String startDate = GetCurrentDate(AppConstants.SIMPLE_DATE_FORMAT);
             drugModelArrayList = databaseAccess.GetExpiredInventoryFromInventoryDB(searchText, startDate);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -450,7 +450,7 @@ public class MainActivity implements AppConstants {
 
     }
 
-    public String GetCurrentDate() {
+    public String GetCurrentDate(String SIMPLE_DATE_FORMAT) {
         String strDate = "";
         try {
             SimpleDateFormat sdfDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.ENGLISH);//dd/MM/yyyy
@@ -480,11 +480,14 @@ public class MainActivity implements AppConstants {
         return newDate;
     }
 
-    public static long GetMilliSecondsFromDate(String date) {
+    public static long GetMilliSecondsFromDate(String date, boolean isDateTime) {
         long timeInMilliseconds = 0;
+        SimpleDateFormat sdfDate;
         try {
-
-            SimpleDateFormat sdfDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.ENGLISH);//dd/MM/yyyy
+            if (isDateTime)
+                sdfDate = new SimpleDateFormat(SIMPLE_DATE_TIME_FORMAT, Locale.ENGLISH);//dd-MM-yyyy , h:mm a
+            else
+                sdfDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.ENGLISH);//dd/MM/yyyy
 
             try {
                 Date mDate = sdfDate.parse(date);

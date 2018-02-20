@@ -32,7 +32,9 @@ public interface AppConstants {
 
     public static String SIMPLE_DATE_FORMAT = "dd-MM-yyyy";
 
-   /*Fonts*/
+    public static String SIMPLE_DATE_TIME_FORMAT = "dd-MM-yyyy , h:mm a";
+
+    /*Fonts*/
     public static String ROBOTO_MEDIUM = "fonts/Roboto-Medium.ttf";
 
 

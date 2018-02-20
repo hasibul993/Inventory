@@ -319,7 +319,7 @@ public class AddInventoryActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate());
+            viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate(AppConstants.SIMPLE_DATE_FORMAT));
 
             if (editModel != null) {
                 isModify = true;
@@ -405,7 +405,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             }
 
             drugModel.DrugExpiryDate = stringHolderModel.drugExpiryDate;
-            drugModel.DateInMilliSecond = mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate);
+            drugModel.DateInMilliSecond = mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate,false);
             drugModel.DrugTransactionDate = stringHolderModel.drugTransactionDate;
             drugModel.DrugManufacturer = stringHolderModel.drugManufacturer.toUpperCase();
             drugModel.BatchNumber = stringHolderModel.batchNumber;
@@ -551,7 +551,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             //viewIDModel.MrpEditText.setText(drugModel.DrugMRPString);
             viewIDModel.DiscountEditText.setText(drugModel.DrugDiscountString);
 
-            viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate());
+            viewIDModel.TransactionDateTextView.setText(mainActivity.GetCurrentDate(AppConstants.SIMPLE_DATE_FORMAT));
             // viewIDModel.SpinnerCategory.setSelection(drugCategories.indexOf(drugModel.DrugCategory));
 
             fromDrugIcon = drugModel.DrugCategory;

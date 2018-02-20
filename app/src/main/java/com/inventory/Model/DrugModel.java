@@ -22,6 +22,8 @@ public class DrugModel implements Serializable {
 
     public String DrugManufacturer;
 
+    public double DrugTotalMRPWithoutDisc;
+
     public double DrugTotalMRP;
 
     public String DrugTotalMRPString;
@@ -41,6 +43,10 @@ public class DrugModel implements Serializable {
     public int DrugQuantity;
 
     public String DrugExpiryDate;
+
+    public float OrderTotalDiscount;
+
+    public String OrderTotalDiscountString;
 
     public float DrugDiscount;
 

@@ -121,7 +121,7 @@
                         android:ems="10"
                         android:hint="@string/age"
                         android:imeOptions="actionNext"
-                        android:inputType="textCapWords|textAutoComplete"
+                        android:inputType="numberDecimal"
                         android:singleLine="true"
                         android:textColor="@color/Black"
                         android:textColorHint="@color/colorPrimary"

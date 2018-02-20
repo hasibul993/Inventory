@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -345,6 +346,23 @@ public class Utility {
     public String CreateID() throws Exception {
         return UUID.randomUUID().toString();
         //return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+    }
+
+    public String CreateOrderID() throws Exception {
+        String orderID = "";
+        int digits = 7;// it will create a 7 digits no
+        try {
+            int max = (int) Math.pow(10, (digits)) - 1; //for digits =7, max will be 9999999
+            int min = (int) Math.pow(10, digits - 1); //for digits = 7, min will be 1000000
+            int range = max - min; //This is 8999999
+            Random r = new Random();
+            int x = r.nextInt(range);// This will generate random integers in range 0 - 8999999
+            int nDigitRandomNo = x + min; //Our random rumber will be any random number x + min
+            orderID = String.valueOf(nDigitRandomNo);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return orderID;
     }
 
 

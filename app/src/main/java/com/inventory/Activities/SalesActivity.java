@@ -38,6 +38,7 @@ import com.inventory.Helper.RecyclerItemClickListener;
 import com.inventory.Helper.Utility;
 import com.inventory.Model.DrugModel;
 import com.inventory.Model.StringHolderModel;
+import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.Model.ViewIDModel;
 import com.inventory.NewUi.DividerItemDecoration;
 import com.inventory.NewUi.RobotoTextView;
@@ -86,6 +87,8 @@ public class SalesActivity extends AppCompatActivity {
     DrugModel searchDrugModel = null;
     private Timer timer;
 
+    UserKeyDetailsModel userKeyDetailsModel;
+
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
 
     @Override
@@ -94,6 +97,8 @@ public class SalesActivity extends AppCompatActivity {
         setContentView(R.layout.sales_activity);
 
         InitializeIDS();
+
+        userKeyDetailsModel = mainActivity.GetUserKeyDetails(SalesActivity.this);
 
         RecreateLayout();
 
@@ -415,6 +420,7 @@ public class SalesActivity extends AppCompatActivity {
             try {
                 Double totalPrice = drugModel.DrugMRP * drugModel.DrugQuantity;
                 Double discount_for_each_product = totalPrice * (Double.valueOf(drugModel.DrugDiscount) / 100);
+                drugModel.DrugTotalMRPWithoutDisc = totalPrice;
                 drugModel.DrugTotalMRP = totalPrice - discount_for_each_product;
                 drugModel.DrugTotalMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugTotalMRP);
             } catch (NumberFormatException ex) {
@@ -443,17 +449,7 @@ public class SalesActivity extends AppCompatActivity {
 
             }
 
-
             //mainActivity.InsertUpdateDrugsInInventoryDB(SalesActivity.this, drugModel, isModify);
-
-            if (searchDrugModel == null && !isModify) {
-                drugModel.IsNeedSync = true;
-                // mainActivity.InsertDrugsInMasterDB(SalesActivity.this, drugModel);
-            } else {
-                drugModel.DateInMilliSecond = mainActivity.GetMilliSecondsFromDate(searchDrugModel.DrugExpiryDate);
-                drugModel.DrugManufacturer = searchDrugModel.DrugManufacturer.toUpperCase();
-                drugModel.BatchNumber = searchDrugModel.BatchNumber;
-            }
 
             searchDrugModel = null;
         } catch (Exception ex) {
@@ -619,6 +615,7 @@ public class SalesActivity extends AppCompatActivity {
 
     private void OnDonePressed() {
         String customerName, customerMobile, patientName, gender = "", age;
+
         try {
             customerName = cutomerNameET.getText().toString().trim();
             customerMobile = cutomerMobileET.getText().toString().trim();
@@ -640,21 +637,51 @@ public class SalesActivity extends AppCompatActivity {
                 MainActivity.ShowToast(SalesActivity.this, getString(R.string.addDrugToList));
                 return;
             } else {
-                DrugModel drugModel = new DrugModel();
-
-                drugModel.OrderNo = "123456";
-                drugModel.CustomerName = customerName;
-                drugModel.CustomerMobile = customerMobile;
-                drugModel.PatientName = patientName;
-                drugModel.Age = age;
-                drugModel.Gender = gender;
+                InsertUpdateOrder(customerName, customerMobile, patientName, age, gender);
             }
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }
 
+    private void InsertUpdateOrder(String customerName, String customerMobile, String patientName, String age, String gender) {
+        ArrayList<DrugModel> drugModelList = new ArrayList<>();
+        double overAllPrice = 0, overAllPriceWithoutDisc = 0;
+        try {
+            DrugModel drugModel = new DrugModel();
+
+            drugModel.OrderNo = utility.CreateOrderID();
+            drugModel.CustomerName = customerName;
+            drugModel.CustomerMobile = customerMobile;
+            drugModel.PatientName = patientName;
+            drugModel.Age = age;
+            drugModel.Gender = gender;
+            drugModel.PharmacyID = userKeyDetailsModel.UserGuid;
+            drugModel.OrderCreatedOn = mainActivity.GetCurrentDate(AppConstants.SIMPLE_DATE_TIME_FORMAT);
+
+            drugModelList = salesAdapter.getDrugList();
+            for (DrugModel drug : drugModelList) {
+                try {
+                    overAllPrice = overAllPrice + drug.DrugTotalMRP;
+                    overAllPriceWithoutDisc = overAllPriceWithoutDisc + drug.DrugTotalMRPWithoutDisc;
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            drugModel.OrderTotal = overAllPrice;
+            drugModel.OrderTotalString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotal);
+
+            drugModel.OrderTotalDiscount = (float) (((overAllPriceWithoutDisc - overAllPrice) / 100) * 100);
+            drugModel.OrderTotalDiscountString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotalDiscount);
+
+            mainActivity.InsertUpdateOrderInOrderDB(SalesActivity.this, drugModel);
+            mainActivity.InsertOrderItemsInBatchInOrderItemsDB(SalesActivity.this, drugModelList);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public void onBackPressed() {
         try {
