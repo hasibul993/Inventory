@@ -825,7 +825,10 @@ public class SalesActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         try {
-            HomeActivity.GotoHomeActivity(SalesActivity.this);
+            if (isNotEditable)
+                OrdersActivity.GotoOrdersActivity(SalesActivity.this);
+            else
+                HomeActivity.GotoHomeActivity(SalesActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
