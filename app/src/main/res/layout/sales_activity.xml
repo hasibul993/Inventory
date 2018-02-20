@@ -190,7 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider_height"
                 android:layout_below="@+id/genderLayout"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/hintColor"
                 android:visibility="visible" />
 
@@ -202,6 +202,12 @@
 
             <include
                 layout="@layout/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/bottomOrderTotalLayout"
+                layout="@layout/order_total_list_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

@@ -157,6 +157,9 @@
 
     <string name="orderNo">Order No</string>
     <string name="createdOn">Created on</string>
+    <string name="orderTotal">Order Total</string>
+    <string name="orderTotalActual">Order Total Actual</string>
+    <string name="orderTotalDiscount">Order Total Discount</string>
 
     <string name="slNo">SN</string>
     <string name="quantity">Qty</string>
@@ -167,6 +170,7 @@
     <string name="semicolon">:</string>
 
     <string name="sharevia">Share via</string>
+    <string name="isNotEdiatable">IsNotEdiatable</string>
 
 
     <!--Country code-->

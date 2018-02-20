@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/com.zibmi"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_marginRight="1dp"
+        android:background="@color/hintColor"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/orderTotalLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp">
+
+        <RelativeLayout
+            android:id="@+id/orderTotalMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="2dp"
+                android:text="@string/subTotal"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/text"
+                app:typeface="robotoMedium" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:padding="2dp"
+                android:text="OrderNo"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/text"
+                app:typeface="robotoMedium" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_below="@+id/orderTotalLayout"
+        android:layout_marginRight="1dp"
+        android:background="@color/hintColor"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/orderTotalActualMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider2"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp">
+
+        <RelativeLayout
+            android:id="@+id/orderActualTotalLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalActualTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="2dp"
+                android:text="@string/orderTotalActual"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/text"
+                app:typeface="robotoMedium" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalActualValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:padding="2dp"
+                android:text="OrderNo"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/text"
+                app:typeface="robotoMedium" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/orderTotalDiscLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orderActualTotalLayout"
+            android:layout_marginTop="5dp">
+
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalDiscTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="2dp"
+                android:text="@string/orderTotalDiscount"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/text"
+                app:typeface="robotoMedium" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalDiscValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:padding="2dp"
+                android:text="OrderNo"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/text"
+                app:typeface="robotoMedium" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_below="@+id/orderTotalDiscLayout"
+            android:layout_marginTop="5dp"
+            android:background="@color/main_color_grey_600"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:id="@+id/orderTotalFinalMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider3"
+            android:layout_marginTop="5dp">
+
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalFinalTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="2dp"
+                android:text="@string/orderTotal"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/text"
+                app:typeface="robotoMedium" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalFinalValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:padding="2dp"
+                android:text="OrderNo"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/text"
+                app:typeface="robotoMedium" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

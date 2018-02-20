@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,10 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.inventory.Adapter.InventoryAdapter;
 import com.inventory.Adapter.SalesAdapter;
 import com.inventory.Adapter.SearchDrugAdapter;
 import com.inventory.Helper.AppConstants;
@@ -61,13 +58,15 @@ public class SalesActivity extends AppCompatActivity {
     private Toolbar toolbar;
     TextView toolbar_title;
 
-    RobotoTextView slNoTV, drugNameTV, drugQuantityTV, drugMRPTV, drugDiscountTV, drugTotalTV;
+    RobotoTextView slNoTV, drugNameTV, drugQuantityTV, drugMRPTV, drugDiscountTV, drugTotalTV, orderTotalTV,
+            orderTotalValueTV, orderTotalActualTV, orderTotalActualValueTV, orderTotalDiscTV, orderTotalDiscValueTV,
+            orderTotalFinalTV, orderTotalFinalValueTV;
 
     EditText cutomerNameET, cutomerMobileET, patientNameET, ageET;
 
     RadioGroup radioGroup;
 
-    View recyclerViewHeaderID;
+    View recyclerViewHeaderID, bottomOrderTotalLayout;
 
     RadioButton maleRadioButton, femaleRadioButton;
 
@@ -91,6 +90,10 @@ public class SalesActivity extends AppCompatActivity {
 
     ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
 
+    String orderNo;
+
+    boolean isNotEditable = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,9 +103,21 @@ public class SalesActivity extends AppCompatActivity {
 
         userKeyDetailsModel = mainActivity.GetUserKeyDetails(SalesActivity.this);
 
-        RecreateLayout();
+        Intent intent = getIntent();
+        orderNo = intent.getStringExtra(getString(R.string.orderNo));
+        isNotEditable = intent.getBooleanExtra(getString(R.string.isNotEdiatable), false);
+
+        SetActionBar();
+
+        FillLayoutWithData();
+
+        DisableLayout();
 
         SetAdapter();
+
+        SetListHeaderBottomVisibility();
+
+        CalculateTotalCost();
 
         floatActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +140,7 @@ public class SalesActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void InitializeIDS() {
         try {
@@ -150,6 +166,17 @@ public class SalesActivity extends AppCompatActivity {
             drugDiscountTV = (RobotoTextView) findViewById(R.id.drugDiscountTV);
             drugTotalTV = (RobotoTextView) findViewById(R.id.drugTotalTV);
 
+            /*recyclerview bottom order total ids*/
+            bottomOrderTotalLayout = (View) findViewById(R.id.bottomOrderTotalLayout);
+            orderTotalTV = (RobotoTextView) findViewById(R.id.orderTotalTV);
+            orderTotalValueTV = (RobotoTextView) findViewById(R.id.orderTotalValueTV);
+            orderTotalActualTV = (RobotoTextView) findViewById(R.id.orderTotalActualTV);
+            orderTotalActualValueTV = (RobotoTextView) findViewById(R.id.orderTotalActualValueTV);
+            orderTotalDiscTV = (RobotoTextView) findViewById(R.id.orderTotalDiscTV);
+            orderTotalDiscValueTV = (RobotoTextView) findViewById(R.id.orderTotalDiscValueTV);
+            orderTotalFinalTV = (RobotoTextView) findViewById(R.id.orderTotalFinalTV);
+            orderTotalFinalValueTV = (RobotoTextView) findViewById(R.id.orderTotalFinalValueTV);
+
             recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
             floatActionButton = (FloatingActionButton) findViewById(R.id.floatActionButton);
@@ -159,7 +186,7 @@ public class SalesActivity extends AppCompatActivity {
         }
     }
 
-    private void RecreateLayout() {
+    private void SetActionBar() {
 
         try {
 
@@ -180,6 +207,50 @@ public class SalesActivity extends AppCompatActivity {
         }
     }
 
+    private void FillLayoutWithData() {
+        DrugModel drugModel = new DrugModel();
+        try {
+
+            if (!StringUtils.isBlank(orderNo)) {
+                drugModel = mainActivity.GetOrderDetailsFromOrderDB(SalesActivity.this, orderNo);
+                drugModelArrayList = mainActivity.GetOrderItemListFromOrderItemDB(SalesActivity.this, orderNo);
+
+                cutomerNameET.setText(drugModel.CustomerName);
+                cutomerNameET.setSelection(cutomerNameET.length());
+                cutomerMobileET.setText(drugModel.CustomerMobile);
+                patientNameET.setText(drugModel.PatientName);
+                ageET.setText(drugModel.Age);
+                if (StringUtils.equalsIgnoreCase(drugModel.Gender, getString(R.string.male)))
+                    maleRadioButton.setChecked(true);
+                else if (StringUtils.equalsIgnoreCase(drugModel.Gender, getString(R.string.male)))
+                    femaleRadioButton.setChecked(true);
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void DisableLayout() {
+        try {
+            if (isNotEditable) {
+                cutomerNameET.setEnabled(false);
+                cutomerMobileET.setEnabled(false);
+                patientNameET.setEnabled(false);
+                ageET.setEnabled(false);
+                maleRadioButton.setEnabled(false);
+                femaleRadioButton.setEnabled(false);
+
+                floatActionButton.setVisibility(View.GONE);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
     private void SetRecyclerViewHeaderBold() {
         try {
             Typeface tMedium = Typeface.createFromAsset(getAssets(), AppConstants.ROBOTO_MEDIUM);
@@ -189,6 +260,18 @@ public class SalesActivity extends AppCompatActivity {
             drugMRPTV.setTypeface(tMedium);
             drugDiscountTV.setTypeface(tMedium);
             drugTotalTV.setTypeface(tMedium);
+
+           /* orderTotalTV.setTypeface(tMedium);
+            orderTotalValueTV.setTypeface(tMedium);
+
+            orderTotalActualTV.setTypeface(tMedium);
+            orderTotalActualValueTV.setTypeface(tMedium);
+
+            orderTotalDiscTV.setTypeface(tMedium);
+            orderTotalDiscValueTV.setTypeface(tMedium);
+
+            orderTotalFinalTV.setTypeface(tMedium);
+            orderTotalFinalValueTV.setTypeface(tMedium);*/
 
             slNoTV.setTextColor(getResources().getColor(R.color.Black));
             drugNameTV.setTextColor(getResources().getColor(R.color.Black));
@@ -204,7 +287,7 @@ public class SalesActivity extends AppCompatActivity {
 
     private void SetAdapter() {
         try {
-            salesAdapter = new SalesAdapter(SalesActivity.this, drugModelArrayList);
+            salesAdapter = new SalesAdapter(SalesActivity.this, drugModelArrayList, isNotEditable);
             recyclerView.setLayoutManager(new LinearLayoutManager(SalesActivity.this));
             recyclerView.addItemDecoration(new DividerItemDecoration(SalesActivity.this));
             recyclerView.setAdapter(salesAdapter);
@@ -451,7 +534,8 @@ public class SalesActivity extends AppCompatActivity {
                 }
 
             }
-
+            SetListHeaderBottomVisibility();
+            CalculateTotalCost();
             //mainActivity.InsertUpdateDrugsInInventoryDB(SalesActivity.this, drugModel, isModify);
 
             searchDrugModel = null;
@@ -578,10 +662,61 @@ public class SalesActivity extends AppCompatActivity {
         }
     }
 
+    private void SetListHeaderBottomVisibility() {
+        try {
+            if (salesAdapter.getItemCount() > 0) {
+                recyclerViewHeaderID.setVisibility(View.VISIBLE);
+                bottomOrderTotalLayout.setVisibility(View.VISIBLE);
+            } else {
+                recyclerViewHeaderID.setVisibility(View.GONE);
+                bottomOrderTotalLayout.setVisibility(View.GONE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
-    public static void GotoSalesActivity(Context context) {
+    private void CalculateTotalCost() {
+        ArrayList<DrugModel> drugModelList = new ArrayList<>();
+        double overAllPrice = 0, overAllPriceWithoutDisc = 0, overAllDiscount;
+        String orderTotalString, overAllPriceWithoutDiscString, overAllDiscountString;
+        try {
+            drugModelList = salesAdapter.getDrugList();
+            for (DrugModel drug : drugModelList) {
+                try {
+                    overAllPrice = overAllPrice + drug.DrugTotalMRP;
+                    overAllPriceWithoutDisc = overAllPriceWithoutDisc + drug.DrugTotalMRPWithoutDisc;
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            overAllDiscount = overAllPriceWithoutDisc - overAllPrice;
+
+            overAllPriceWithoutDiscString = AppConstants.decimalFormatTwoPlace.format(overAllPriceWithoutDisc);
+            orderTotalString = AppConstants.decimalFormatTwoPlace.format(overAllPrice);
+            overAllDiscountString = AppConstants.decimalFormatTwoPlace.format(overAllDiscount);
+
+            orderTotalValueTV.setText(orderTotalString);
+
+            if (overAllDiscount > 0)
+                orderTotalDiscValueTV.setText(overAllDiscountString);
+            else
+                orderTotalDiscValueTV.setText("-");
+
+            orderTotalActualValueTV.setText(overAllPriceWithoutDiscString);
+            orderTotalFinalValueTV.setText(orderTotalString);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void GotoSalesActivity(Context context, String orderNo, boolean isNotEditable) {
         try {
             Intent intent = new Intent(context, SalesActivity.class);
+            intent.putExtra(context.getString(R.string.orderNo), orderNo);
+            intent.putExtra(context.getString(R.string.isNotEdiatable), isNotEditable);
             context.startActivity(intent);
         } catch (Exception ex) {
             ex.printStackTrace();

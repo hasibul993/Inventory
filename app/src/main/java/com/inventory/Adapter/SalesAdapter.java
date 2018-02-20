@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.inventory.Activities.MainActivity;
+import com.inventory.Activities.SalesActivity;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Model.DrugModel;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
@@ -29,9 +28,11 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder> 
     Context context;
     ArrayList<DrugModel> modelArrayList;
     MainActivity mainActivity;
+    boolean isNotEditable = false;
 
-    public SalesAdapter(Context context, ArrayList<DrugModel> modelArrayList) {
+    public SalesAdapter(Context context, ArrayList<DrugModel> modelArrayList, boolean isNotEditable) {
         this.context = context;
+        this.isNotEditable = isNotEditable;
         this.modelArrayList = modelArrayList;
         mainActivity = MainActivity.getInstance();
     }
@@ -48,11 +49,11 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         RobotoTextView slNoTV, drugNameTV, drugQuantityTV, drugMRPTV, drugDiscountTV, drugTotalTV;
-        RelativeLayout mainLayout;
+        RelativeLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mainLayout = (RelativeLayout) itemView.findViewById(R.id.mainLayout);
+            parentLayout = (RelativeLayout) itemView.findViewById(R.id.parentLayout);
             slNoTV = (RobotoTextView) itemView.findViewById(R.id.slNoTV);
             drugNameTV = (RobotoTextView) itemView.findViewById(R.id.drugNameTV);
             drugQuantityTV = (RobotoTextView) itemView.findViewById(R.id.drugQuantityTV);
@@ -89,11 +90,11 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder> 
 
             holder.drugTotalTV.setText(drugModel.DrugTotalMRPString);
 
-            holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     try {
-                        // OnClickScreenTransition(drugModel.DrugID, position);
+                        //SalesActivity.GotoSalesActivity(context, drugModel.OrderNo,true);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -156,17 +157,6 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder> 
             ex.printStackTrace();
         }
 
-    }
-
-
-    private void OnClickScreenTransition(String drugID, int position) {
-        try {
-            if (!StringUtils.isBlank(drugID)) {
-
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
 }

@@ -1,7 +1,6 @@
 package com.inventory.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.inventory.Activities.AddInventoryActivity;
 import com.inventory.Activities.MainActivity;
+import com.inventory.Activities.SalesActivity;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Model.DrugModel;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
@@ -55,13 +52,13 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         RobotoTextView orderNoTV, customerMobileTV, orderTimeTV;
-        RelativeLayout mainLayout, iconLayout;
+        RelativeLayout parentLayout, iconLayout;
         GradientDrawable iconLayoutBackg;
         ImageView iconImageV;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mainLayout = (RelativeLayout) itemView.findViewById(R.id.mainLayout);
+            parentLayout = (RelativeLayout) itemView.findViewById(R.id.parentLayout);
             iconLayout = (RelativeLayout) itemView.findViewById(R.id.iconLayout);
             orderNoTV = (RobotoTextView) itemView.findViewById(R.id.orderNoTV);
             customerMobileTV = (RobotoTextView) itemView.findViewById(R.id.customerMobileTV);
@@ -89,11 +86,11 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
             holder.iconLayoutBackg.setColor(MainActivity.GetThemeColorInt());
 
-            holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     try {
-                        OnClickScreenTransition(drugModel.DrugID, position);
+                        SalesActivity.GotoSalesActivity(context, drugModel.OrderNo, true);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -153,16 +150,5 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
     }
 
-
-    private void OnClickScreenTransition(String drugID, int position) {
-        try {
-            if (!StringUtils.isBlank(drugID)) {
-                if (isAllInventory)
-                    AddInventoryActivity.GotoAddInventoryActivity(context, getItem(position), true);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
 }

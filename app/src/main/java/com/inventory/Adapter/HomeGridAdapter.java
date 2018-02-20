@@ -132,7 +132,7 @@ public class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.MyView
             if (StringUtils.equalsIgnoreCase(homeModel.Title, context.getString(R.string.inventory))) {
                 InventoryActivity.GotoInventoryActivity(context);
             } else if (StringUtils.equalsIgnoreCase(homeModel.Title, context.getString(R.string.pos))) {
-                SalesActivity.GotoSalesActivity(context);
+                SalesActivity.GotoSalesActivity(context,null,false);
             } else if (StringUtils.equalsIgnoreCase(homeModel.Title, context.getString(R.string.orders))) {
                 OrdersActivity.GotoOrdersActivity(context);
             }
