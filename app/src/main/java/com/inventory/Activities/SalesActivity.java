@@ -306,7 +306,7 @@ public class SalesActivity extends AppCompatActivity {
 
             viewIDModel.OkTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     StringHolderModel stringHolderModel = new StringHolderModel();
                     try {
                         stringHolderModel.drugName = viewIDModel.DrugNameEditText.getText().toString().trim();
@@ -326,8 +326,11 @@ public class SalesActivity extends AppCompatActivity {
                             return;
                         } else {
                             boolean isDataOk = AddUpdateItem(stringHolderModel, editModel);
-                            if (isDataOk)
+                            if (isDataOk) {
                                 dialog.dismiss();
+                                utility.HideDialogSoftKeyboard(SalesActivity.this);
+                            }
+
                         }
 
                     } catch (Exception ex) {
@@ -392,7 +395,7 @@ public class SalesActivity extends AppCompatActivity {
             drugModel.DrugName = stringHolderModel.drugName.toUpperCase();
             drugModel.DrugMRP = Double.parseDouble(stringHolderModel.drugMRP);
             drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
-
+            drugModel.PharmacyID = userKeyDetailsModel.UserGuid;
             try {
                 drugModel.DrugQuantity = Integer.parseInt(stringHolderModel.drugQuantity);
                 if (drugModel.DrugQuantity == 0) {
@@ -556,8 +559,8 @@ public class SalesActivity extends AppCompatActivity {
             viewIDModel.MrpEditText.setText(drugModel.DrugMRPString);
             viewIDModel.DiscountEditText.setText(drugModel.DrugDiscountString);
 
-            viewIDModel.QtyAvailableTV.setText(getString(R.string.orders) + " " + drugModel.DrugQuantity);
-            viewIDModel.QtyAvailableTV.setTextColor(MainActivity.GetThemeColorInt());
+            viewIDModel.QtyAvailableTV.setText(getString(R.string.availableQuantity) + " " + getString(R.string.semicolon) + " " + drugModel.DrugQuantity);
+            viewIDModel.QtyAvailableTV.setTextColor(getResources().getColor(R.color.Crimson));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -664,6 +667,7 @@ public class SalesActivity extends AppCompatActivity {
             drugModelList = salesAdapter.getDrugList();
             for (DrugModel drug : drugModelList) {
                 try {
+                    drug.OrderNo = drugModel.OrderNo;
                     overAllPrice = overAllPrice + drug.DrugTotalMRP;
                     overAllPriceWithoutDisc = overAllPriceWithoutDisc + drug.DrugTotalMRPWithoutDisc;
                 } catch (Exception ex) {
@@ -673,11 +677,12 @@ public class SalesActivity extends AppCompatActivity {
             drugModel.OrderTotal = overAllPrice;
             drugModel.OrderTotalString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotal);
 
-            drugModel.OrderTotalDiscount = (float) (((overAllPriceWithoutDisc - overAllPrice) / 100) * 100);
+            drugModel.OrderTotalDiscount = (float) (((overAllPriceWithoutDisc - overAllPrice) / overAllPriceWithoutDisc) * 100);
             drugModel.OrderTotalDiscountString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotalDiscount);
 
             mainActivity.InsertUpdateOrderInOrderDB(SalesActivity.this, drugModel);
             mainActivity.InsertOrderItemsInBatchInOrderItemsDB(SalesActivity.this, drugModelList);
+            onBackPressed();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

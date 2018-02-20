@@ -207,7 +207,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
                         db.update(TABLE_MASTER_DB, values, COLUMN_DRUG_NAME + "= '"
                                 + drugModel.DrugName + "' AND " + COLUMN_DRUG_ID + " = '"
-                                + drugModel.DrugName + "'", null);
+                                + drugModel.DrugID + "'", null);
 
                     }
                 } catch (Exception ex) {
@@ -351,7 +351,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
             if (drugModel.OrderCreatedOn != null) {
                 values.put(COLUMN_ORDER_CREATED_ON, drugModel.OrderCreatedOn);
-                values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate, true));
+                values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.OrderCreatedOn, true));
             }
 
             if (drugModel.CustomerName != null)
@@ -429,7 +429,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
                     values.put(COLUMN_DRUG_MRP, drugModel.DrugMRP);
 
-                    values.put(COLUMN_ORDER_TOTAL, drugModel.OrderTotal);
+                    values.put(COLUMN_ORDER_TOTAL, drugModel.DrugTotalMRP);
 
                     values.put(COLUMN_DRUG_QUANTITY, drugModel.DrugQuantity);
 
@@ -447,7 +447,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
                         db.update(TABLE_ORDERS_ITEMS_DB, values, COLUMN_ORDER_NO + "= '"
                                 + drugModel.OrderNo + "' AND " + COLUMN_DRUG_ID + " = '"
-                                + drugModel.DrugName + "'", null);
+                                + drugModel.DrugID + "'", null);
 
                     }
                 } catch (Exception ex) {

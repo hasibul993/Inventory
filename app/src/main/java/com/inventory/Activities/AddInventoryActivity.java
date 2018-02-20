@@ -35,6 +35,7 @@ import com.inventory.Helper.RecyclerItemClickListener;
 import com.inventory.Helper.Utility;
 import com.inventory.Model.DrugModel;
 import com.inventory.Model.StringHolderModel;
+import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.Model.ViewIDModel;
 import com.inventory.NewUi.DividerItemDecoration;
 import com.inventory.NewUi.RobotoTextView;
@@ -71,6 +72,7 @@ public class AddInventoryActivity extends AppCompatActivity {
 
     MainActivity mainActivity = MainActivity.getInstance();
     Utility utility = Utility.getInstance();
+    UserKeyDetailsModel userKeyDetailsModel;
 
     ArrayList<String> drugCategories;
 
@@ -92,6 +94,8 @@ public class AddInventoryActivity extends AppCompatActivity {
         setContentView(R.layout.add_inventory_activity);
 
         InitializeIDS();
+
+        userKeyDetailsModel = mainActivity.GetUserKeyDetails(AddInventoryActivity.this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -379,7 +383,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             drugModel.DrugName = stringHolderModel.drugName.toUpperCase();
             drugModel.DrugMRP = Double.parseDouble(stringHolderModel.drugMRP);
             drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
-
+            drugModel.PharmacyID = userKeyDetailsModel.UserGuid;
             try {
                 drugModel.DrugQuantity = Integer.parseInt(stringHolderModel.drugQuantity);
                 if (drugModel.DrugQuantity == 0) {
@@ -405,7 +409,7 @@ public class AddInventoryActivity extends AppCompatActivity {
             }
 
             drugModel.DrugExpiryDate = stringHolderModel.drugExpiryDate;
-            drugModel.DateInMilliSecond = mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate,false);
+            drugModel.DateInMilliSecond = mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate, false);
             drugModel.DrugTransactionDate = stringHolderModel.drugTransactionDate;
             drugModel.DrugManufacturer = stringHolderModel.drugManufacturer.toUpperCase();
             drugModel.BatchNumber = stringHolderModel.batchNumber;

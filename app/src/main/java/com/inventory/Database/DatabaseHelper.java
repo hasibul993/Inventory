@@ -238,7 +238,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_GENDER + " TEXT ,"
                 + COLUMN_AGE + " TEXT ,"
                 + COLUMN_ORDER_TOTAL + " REAL,"
-                + COLUMN_ORDER_TOTAL_DISCOUNT + " REAL,"
+                + COLUMN_DRUG_DISCOUNT + " REAL,"
                 + COLUMN_DATE_IN_MILLISECOND + " INTEGER,"
                 + "PRIMARY KEY (" + COLUMN_ORDER_NO + "))";
         //+ "PRIMARY KEY (" + COLUMN_PHARMACY_ID + "," + KEY_USER_ID_TRIMMED + "))";

@@ -155,11 +155,13 @@
     <string name="enterCustomerMobile">Enter customer mobile no</string>
     <string name="addDrugToList">Please add medicine first</string>
 
-    <string name="slNo">S/N</string>
+    <string name="slNo">SN</string>
     <string name="quantity">Qty</string>
     <string name="disCount">Disc</string>
     <string name="subTotal">Sub Total</string>
     <string name="total">Total</string>
+    <string name="availableQuantity">Available Quantity</string>
+    <string name="semicolon">:</string>
 
     <string name="sharevia">Share via</string>
 
