@@ -117,7 +117,7 @@ public class SettingActivity extends AppCompatActivity implements AppConstants {
             setSupportActionBar(toolbar);
 
             MainActivity.getInstance().SupportActionBar(SettingActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.settings), false);
-
+            toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
             ChangeLayoutOnRadioButtonSelect(settingsModel.IsDefaultTheme);
 
         } catch (Exception ex) {

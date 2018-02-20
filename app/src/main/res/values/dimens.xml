@@ -21,6 +21,8 @@
 
     <dimen name="cicle_width_50dp">50dp</dimen>
 
+    <dimen name="item_image_height">46dp</dimen>
+
     <dimen name="divider_height">0.4dp</dimen>
 
     <!--login-->

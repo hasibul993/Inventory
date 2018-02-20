@@ -20,15 +20,15 @@ public interface AppConstants {
 
     public static final String MyPREFERENCES = "share_preference_key";
 
-    public static String THEMECOLOR = "#008B8B";
+    public static String THEMECOLOR = "#263238";
 
     /*Medicine icon colors*/
-    public static String TABLETS_THEMECOLOR = "#cccc99";
-    public static String INJECTION_THEMECOLOR = "#ecc6c6";
-    public static String CREAM_THEMECOLOR = "#e6b3cc";
-    public static String SYRUP_THEMECOLOR = "#ffcc99";
-    public static String CAPSULES_THEMECOLOR = "#c6d9ec";
-    public static String MISCELLANEOUS_THEMECOLOR = "#ffaa80";
+    public static String TABLETS_THEMECOLOR = "#009688";
+    public static String INJECTION_THEMECOLOR = "#ffa000";
+    public static String CREAM_THEMECOLOR = "#f43e38";
+    public static String SYRUP_THEMECOLOR = "#2196f3";
+    public static String CAPSULES_THEMECOLOR = "#d50000";
+    public static String MISCELLANEOUS_THEMECOLOR = "#896f08";
 
     public static String SIMPLE_DATE_FORMAT = "dd-MM-yyyy";
 
@@ -36,6 +36,8 @@ public interface AppConstants {
 
     /*Fonts*/
     public static String ROBOTO_MEDIUM = "fonts/Roboto-Medium.ttf";
+
+    public static String ROBOTO_ITALIC = "fonts/Roboto-Italic.ttf";
 
 
     public static String SHARE_TITLE = "Hey! Check out this free app that I'm using to organise my pharmacy inventory! https://play.google.com/store/apps/details?id=com.xampr&hl=en";

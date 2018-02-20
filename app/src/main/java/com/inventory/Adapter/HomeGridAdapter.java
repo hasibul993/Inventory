@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.inventory.Activities.InventoryActivity;
 import com.inventory.Activities.MainActivity;
+import com.inventory.Activities.OrdersActivity;
 import com.inventory.Activities.SalesActivity;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
@@ -133,7 +134,7 @@ public class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.MyView
             } else if (StringUtils.equalsIgnoreCase(homeModel.Title, context.getString(R.string.pos))) {
                 SalesActivity.GotoSalesActivity(context);
             } else if (StringUtils.equalsIgnoreCase(homeModel.Title, context.getString(R.string.orders))) {
-                // InventoryActivity.GotoInventoryActivity(context);
+                OrdersActivity.GotoOrdersActivity(context);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

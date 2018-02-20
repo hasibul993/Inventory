@@ -2,6 +2,7 @@ package com.inventory.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -73,7 +74,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             drugQuantityBackg = (GradientDrawable) drugQuantityTV.getBackground();
             drugBatchNumberBackg = (GradientDrawable) drugBatchNumberTV.getBackground();
             drugExpiryDateBackg = (GradientDrawable) drugExpiryDateTV.getBackground();
-
+            Typeface tMedium = Typeface.createFromAsset(context.getAssets(), AppConstants.ROBOTO_MEDIUM);
+            drugNameTV.setTypeface(tMedium);
         }
     }
 

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/com.zibmi"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/parentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/iconParentLayout"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:id="@+id/iconLayout"
+                    android:layout_width="@dimen/item_image_height"
+                    android:layout_height="@dimen/item_image_height"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:background="@drawable/rectangle_round_corner"
+                    android:gravity="center"
+                    android:transitionName="">
+
+                    <ImageView
+                        android:id="@+id/iconImageV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/cart_black_24dp"
+                        android:backgroundTint="@color/White" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/drugNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iconParentLayout"
+                android:orientation="vertical">
+
+                <com.inventory.NewUi.RobotoTextView
+                    android:id="@+id/orderNoHeaderTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/orderNo"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/header"
+                    app:typeface="robotoMedium" />
+
+                <com.inventory.NewUi.RobotoTextView
+                    android:id="@+id/orderNoTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/orderNoHeaderTV"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="OrderNo"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/header"
+                    app:typeface="robotoMedium" />
+
+                <com.inventory.NewUi.RobotoTextView
+                    android:id="@+id/customerMobileTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/orderNoTV"
+                    android:ellipsize="end"
+                    android:gravity="left"
+                    android:text="CustomerName"
+                    android:textColor="@color/main_color_grey_900"
+                    android:textSize="@dimen/body"
+                    app:typeface="robotoRegular" />
+
+                <com.inventory.NewUi.RobotoTextView
+                    android:id="@+id/orderTimeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/customerMobileTV"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
+                    android:text="Hasibul"
+                    android:textColor="@color/main_color_grey_700"
+                    android:textSize="@dimen/text"
+                    app:typeface="robotoRegular" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view_row"
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_below="@+id/parentLayout"
+        android:layout_marginRight="1dp"
+        android:background="@drawable/listview_divider"
+        android:visibility="visible" />
+</RelativeLayout>

@@ -46,6 +46,8 @@ public class RobotoTextView extends TextView {
 		setTypeface(getRoboto(typeface));
 	}*/
 
+
+
     private void parseAttributes(AttributeSet attrs) {
         int typeface;
         try {

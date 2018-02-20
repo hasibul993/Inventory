@@ -71,6 +71,12 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".Activities.OrdersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.HomeNoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".Activities.ProfileEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.HomeNoActionBar"

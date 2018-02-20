@@ -47,7 +47,7 @@ import java.util.Set;
 
 public class MainActivity implements AppConstants {
 
-    public static String THEMECOLOR = "#008B8B";
+    public static String THEMECOLOR = "#263238";
 
     private static String TAG = "MainActivity";
 

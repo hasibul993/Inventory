@@ -155,6 +155,9 @@
     <string name="enterCustomerMobile">Enter customer mobile no</string>
     <string name="addDrugToList">Please add medicine first</string>
 
+    <string name="orderNo">Order No</string>
+    <string name="createdOn">Created on</string>
+
     <string name="slNo">SN</string>
     <string name="quantity">Qty</string>
     <string name="disCount">Disc</string>
