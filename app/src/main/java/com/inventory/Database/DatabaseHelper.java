@@ -79,7 +79,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_GENDER = "Gender";
     protected static final String COLUMN_PATIENT_NAME = "PatientName";
     protected static final String COLUMN_AGE = "Age";
-    protected static final String COLUMN_ORDER_TOTAL_DISCOUNT = "OrderTotalDiscount";
 
 
     public DatabaseHelper(Context context) {
