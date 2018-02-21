@@ -94,7 +94,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     try {
-                        //SalesActivity.GotoSalesActivity(context, drugModel.OrderNo,true);
+                        ((SalesActivity) context).ShowDialogAddDrug(drugModel, position);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

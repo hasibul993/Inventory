@@ -72,6 +72,7 @@
     <string name="enterBatchNumber">Enter batch number</string>
     <string name="chooseExpiryDate">Choose expiry date</string>
     <string name="enterValidQuantity">Enter a valid quantity</string>
+    <string name="discountLimit100">Discount can not be more than 100%</string>
 
     <!--Drug category-->
     <string name="injection">Injection</string>

@@ -18,6 +18,7 @@ import com.inventory.Activities.MainActivity;
 import com.inventory.Activities.SalesActivity;
 import com.inventory.Activities.SettingActivity;
 import com.inventory.Helper.AppConstants;
+import com.inventory.Helper.Utility;
 import com.inventory.Model.SliderMenuModel;
 import com.inventory.NewUi.RobotoTextView;
 import com.inventory.R;
@@ -37,6 +38,7 @@ public class SliderMenuAdapter extends RecyclerView.Adapter<SliderMenuAdapter.Vi
 
     Context context;
     ArrayList<SliderMenuModel> modelArrayList;
+    Utility utility = Utility.getInstance();
 
     public SliderMenuAdapter(Context context, ArrayList<SliderMenuModel> modelArrayList) {
         this.context = context;
@@ -116,6 +118,9 @@ public class SliderMenuAdapter extends RecyclerView.Adapter<SliderMenuAdapter.Vi
             titleTV = (RobotoTextView) itemView.findViewById(R.id.titleTV);
             titleImageV = (ImageView) itemView.findViewById(R.id.titleImageV);
             syncImageV = (ImageView) itemView.findViewById(R.id.syncImageV);
+
+            utility.SetImageTint(titleImageV);
+            utility.SetImageTint(syncImageV);
 
         }
     }

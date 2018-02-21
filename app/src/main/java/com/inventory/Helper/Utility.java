@@ -17,6 +17,7 @@ import android.support.v4.widget.CompoundButtonCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -498,6 +499,16 @@ public class Utility {
 
     }
 
+    public void OpenDialogSoftKeyboard(Context context) {
+        try {
+            InputMethodManager inputManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
     public static final boolean isValidPhoneNumber(String phone) {
         try {
             if (phone.length() != 10) {
@@ -509,6 +520,18 @@ public class Utility {
             ex.printStackTrace();
         }
         return true;
+    }
+
+    public void SetImageTint(ImageView imageView) {
+        try {
+            if (Build.VERSION.SDK_INT <= 22) {
+                imageView.getBackground().setColorFilter(Color.parseColor(MainActivity.GetThemeColor()), PorterDuff.Mode.SRC_ATOP);
+            } else {
+                imageView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(MainActivity.GetThemeColor())));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

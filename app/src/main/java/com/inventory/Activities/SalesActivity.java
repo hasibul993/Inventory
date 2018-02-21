@@ -427,6 +427,7 @@ public class SalesActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     try {
                         dialog.dismiss();
+                        utility.HideDialogSoftKeyboard(SalesActivity.this);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -448,9 +449,9 @@ public class SalesActivity extends AppCompatActivity {
 
 
             dialog.show();
-
+            utility.OpenDialogSoftKeyboard(SalesActivity.this);
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
     }
 
@@ -498,6 +499,11 @@ public class SalesActivity extends AppCompatActivity {
                     drugModel.DrugDiscount = 0;
                 }
                 drugModel.DrugDiscountString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugDiscount);
+
+                if (drugModel.DrugDiscount > 100) {
+                    MainActivity.ShowToast(SalesActivity.this, getString(R.string.discountLimit100));
+                    return false;
+                }
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
             }
@@ -554,7 +560,8 @@ public class SalesActivity extends AppCompatActivity {
                 existDrugModel.DrugMRP = drugModel.DrugMRP;
                 existDrugModel.DrugMRPString = drugModel.DrugMRPString;
                 existDrugModel.DrugQuantity = drugModel.DrugQuantity;
-                existDrugModel.DrugQuantity = drugModel.DrugQuantity;
+                int netQty = existDrugModel.DrugQuantity + drugModel.DrugQuantity;
+                existDrugModel.DrugQuantity = netQty;
                 existDrugModel.DrugDiscount = drugModel.DrugDiscount;
                 existDrugModel.DrugDiscountString = drugModel.DrugDiscountString;
                 existDrugModel.DrugTotalMRP = drugModel.DrugTotalMRP;
@@ -778,7 +785,7 @@ public class SalesActivity extends AppCompatActivity {
                 MainActivity.ShowToast(SalesActivity.this, getString(R.string.addDrugToList));
                 return;
             } else {
-               // InsertUpdateOrder(customerName, customerMobile, patientName, age, gender);
+                InsertUpdateOrder(customerName, customerMobile, patientName, age, gender);
             }
 
         } catch (Exception ex) {
