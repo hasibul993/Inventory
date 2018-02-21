@@ -726,8 +726,9 @@ public class SalesActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         try {
             getMenuInflater().inflate(R.menu.menu_sales_activity, menu);
-            MenuItem moreIcon = menu.findItem(R.id.menu_more);
-            moreIcon.setVisible(false);
+            MenuItem moreIcon = menu.findItem(R.id.menu_save);
+            if (isNotEditable)
+                moreIcon.setVisible(false);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -770,11 +771,14 @@ public class SalesActivity extends AppCompatActivity {
             } else if (StringUtils.isBlank(customerMobile)) {
                 MainActivity.ShowToast(SalesActivity.this, getString(R.string.enterCustomerMobile));
                 return;
+            } else if (!utility.isValidPhoneNumber(customerMobile)) {
+                MainActivity.ShowToast(SalesActivity.this, getString(R.string.enterValidCustomerMobile));
+                return;
             } else if (salesAdapter.getItemCount() == 0) {
                 MainActivity.ShowToast(SalesActivity.this, getString(R.string.addDrugToList));
                 return;
             } else {
-                InsertUpdateOrder(customerName, customerMobile, patientName, age, gender);
+               // InsertUpdateOrder(customerName, customerMobile, patientName, age, gender);
             }
 
         } catch (Exception ex) {

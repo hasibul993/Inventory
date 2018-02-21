@@ -62,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     protected static final String COLUMN_DRUG_CATEGORY = "DrugCategory";
     protected static final String COLUMN_DRUG_TRANSACTION_DATE = "DrugTransactionDate";
     protected static final String COLUMN_DRUG_MRP = "DrugMRP";
+    protected static final String COLUMN_DRUG_MRP_TOTAL_WITHOUT_DISC = "DrugTotalMRPWithoutDisc";
     protected static final String COLUMN_DRUG_QUANTITY = "DrugQuantity";
     protected static final String COLUMN_DRUG_EXPIRY_DATE = "DrugExpiryDate";
     protected static final String COLUMN_DRUG_DISCOUNT = "DrugDiscount";
@@ -253,6 +254,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DRUG_CATEGORY + " TEXT ,"
                 + COLUMN_DRUG_MRP + " REAL,"
                 + COLUMN_ORDER_TOTAL + " REAL,"
+                + COLUMN_DRUG_MRP_TOTAL_WITHOUT_DISC + " REAL,"
                 + COLUMN_DRUG_QUANTITY + " TEXT,"
                 + COLUMN_DRUG_DISCOUNT + " REAL,"
                 + COLUMN_DRUG_MANUFACTURER + " TEXT,"

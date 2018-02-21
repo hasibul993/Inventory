@@ -431,6 +431,8 @@ public class DatabaseAccess extends DatabaseHelper {
 
                     values.put(COLUMN_ORDER_TOTAL, drugModel.DrugTotalMRP);
 
+                    values.put(COLUMN_DRUG_MRP_TOTAL_WITHOUT_DISC, drugModel.DrugTotalMRPWithoutDisc);
+
                     values.put(COLUMN_DRUG_QUANTITY, drugModel.DrugQuantity);
 
                     values.put(COLUMN_DRUG_DISCOUNT, drugModel.DrugDiscount);
@@ -974,8 +976,9 @@ public class DatabaseAccess extends DatabaseHelper {
             drugModel.DrugCategory = cursor.getString(cursor.getColumnIndex(COLUMN_DRUG_CATEGORY));
             drugModel.DrugMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP));
             drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
-            drugModel.OrderTotal = cursor.getDouble(cursor.getColumnIndex(COLUMN_ORDER_TOTAL));
-            drugModel.OrderTotalString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotal);
+            drugModel.DrugTotalMRP = cursor.getDouble(cursor.getColumnIndex(COLUMN_ORDER_TOTAL));
+            drugModel.DrugTotalMRPWithoutDisc = cursor.getDouble(cursor.getColumnIndex(COLUMN_DRUG_MRP_TOTAL_WITHOUT_DISC));
+            drugModel.DrugTotalMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugTotalMRP);
 
             drugModel.DrugQuantity = cursor.getInt(cursor.getColumnIndex(COLUMN_DRUG_QUANTITY));
             drugModel.DrugDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));

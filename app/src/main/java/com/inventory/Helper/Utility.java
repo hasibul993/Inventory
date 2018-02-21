@@ -498,4 +498,17 @@ public class Utility {
 
     }
 
+    public static final boolean isValidPhoneNumber(String phone) {
+        try {
+            if (phone.length() != 10) {
+                return false;
+            } else {
+                return android.util.Patterns.PHONE.matcher(phone).matches();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return true;
+    }
+
 }
