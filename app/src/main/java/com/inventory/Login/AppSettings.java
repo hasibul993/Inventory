@@ -47,6 +47,8 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
 
             InitializeIDS();
 
+            SetActionBar();
+
             SetPagerAdapter();
 
         } catch (Exception ex) {
@@ -54,6 +56,7 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
         }
 
     }
+
 
     private void InitializeIDS() {
         try {
@@ -66,9 +69,20 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
             toolbar = (Toolbar) findViewById(R.id.toolbarID);
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
             toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void SetActionBar() {
+        try {
+
             setSupportActionBar(toolbar);
 
             MainActivity.getInstance().SupportActionBar(AppSettings.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.login), true);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

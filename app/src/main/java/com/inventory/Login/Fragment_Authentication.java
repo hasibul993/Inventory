@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -104,7 +105,7 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
 
     Utility utility = Utility.getInstance();
 
-
+    GradientDrawable gradientDrawable;
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -331,6 +332,8 @@ public class Fragment_Authentication extends Fragment implements AdapterView.OnI
             otp_tv = (TextView) view.findViewById(R.id.otp_tv);
             cInput.setInputType(InputType.TYPE_CLASS_NUMBER);
 
+            gradientDrawable = (GradientDrawable) bottom_bar.getBackground();
+            gradientDrawable.setColor(MainActivity.GetThemeColorInt());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

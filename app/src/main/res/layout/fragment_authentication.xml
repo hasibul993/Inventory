@@ -181,7 +181,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/rectangle_sharp_corner">
 
         <TextView
             android:id="@+id/bottom_bar_textview"

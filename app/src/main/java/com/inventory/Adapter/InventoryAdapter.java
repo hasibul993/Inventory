@@ -74,8 +74,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             drugQuantityBackg = (GradientDrawable) drugQuantityTV.getBackground();
             drugBatchNumberBackg = (GradientDrawable) drugBatchNumberTV.getBackground();
             drugExpiryDateBackg = (GradientDrawable) drugExpiryDateTV.getBackground();
-            Typeface tMedium = Typeface.createFromAsset(context.getAssets(), AppConstants.ROBOTO_MEDIUM);
-            drugNameTV.setTypeface(tMedium);
+            //Typeface tMedium = Typeface.createFromAsset(context.getAssets(), AppConstants.ROBOTO_MEDIUM);
+            //drugNameTV.setTypeface(tMedium);
         }
     }
 

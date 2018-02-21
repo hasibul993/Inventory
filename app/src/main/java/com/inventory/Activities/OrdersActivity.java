@@ -77,8 +77,6 @@ public class OrdersActivity extends AppCompatActivity implements AppConstants {
 
             MainActivity.getInstance().SupportActionBar(OrdersActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.order), false);
 
-            toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }

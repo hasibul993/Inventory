@@ -143,7 +143,6 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
 
             MainActivity.getInstance().SupportActionBar(InventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.app_name), false);
 
-            toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -193,7 +193,6 @@ public class SalesActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
 
             MainActivity.getInstance().SupportActionBar(SalesActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.sale), false);
-            toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
 
             final Drawable upArrow = getResources().getDrawable(R.drawable.vector_cross_white_icon);
             getSupportActionBar().setHomeAsUpIndicator(upArrow);

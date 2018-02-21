@@ -72,36 +72,41 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_activity);
+        try {
+            setContentView(R.layout.home_activity);
 
-        InitializeIDS();
+            InitializeIDS();
 
-        //Configuration config = getResources().getConfiguration();
-        //int size=config.smallestScreenWidthDp;
+            //Configuration config = getResources().getConfiguration();
+            //int size=config.smallestScreenWidthDp;
 
-        Intent intent = getIntent();
+            Intent intent = getIntent();
 
-        mainActivity = MainActivity.getInstance();
-        userKeyDetailsModel = mainActivity.GetUserKeyDetails(HomeActivity.this);
+            mainActivity = MainActivity.getInstance();
+            userKeyDetailsModel = mainActivity.GetUserKeyDetails(HomeActivity.this);
 
-        SetDrawerToggleAction();
+            SetDrawerToggleAction();
 
-        SetSliderMenuHeaderData();
+            SetSliderMenuHeaderData();
 
-        SetAdapterSliderMenu();
+            SetAdapterSliderMenu();
 
-        SetAdapter();
+            SetAdapter();
 
-        sliderHeaderLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    ProfileActivity.GotoProfileActivity(HomeActivity.this);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+            sliderHeaderLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        ProfileActivity.GotoProfileActivity(HomeActivity.this);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
 
     }

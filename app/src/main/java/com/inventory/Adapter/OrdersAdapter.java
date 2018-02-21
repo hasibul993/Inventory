@@ -65,9 +65,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             orderTimeTV = (RobotoTextView) itemView.findViewById(R.id.orderTimeTV);
             iconImageV = (ImageView) itemView.findViewById(R.id.iconImageV);
             iconLayoutBackg = (GradientDrawable) iconLayout.getBackground();
-            Typeface tMedium = Typeface.createFromAsset(context.getAssets(), AppConstants.ROBOTO_MEDIUM);
+            //Typeface tMedium = Typeface.createFromAsset(context.getAssets(), AppConstants.ROBOTO_MEDIUM);
             Typeface tItalic = Typeface.createFromAsset(context.getAssets(), AppConstants.ROBOTO_ITALIC);
-            orderNoTV.setTypeface(tMedium);
+            //orderNoTV.setTypeface(tMedium);
             orderTimeTV.setTypeface(tItalic);
 
         }

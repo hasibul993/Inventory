@@ -359,7 +359,7 @@ public class MainActivity implements AppConstants {
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setHomeButtonEnabled(true);
                 actionBar.setElevation(0);
-                toolbarTitleTV.setTextSize(activity.getResources().getDimension(R.dimen.text));
+                toolbarTitleTV.setTextSize(activity.getResources().getDimension(R.dimen.toolbar_title_8sp));
                 try {
                     final Drawable upArrow = activity.getResources().getDrawable(R.drawable.vector_back_white_icon);
                     upArrow.setColorFilter(activity.getResources().getColor(R.color.White), PorterDuff.Mode.SRC_ATOP);

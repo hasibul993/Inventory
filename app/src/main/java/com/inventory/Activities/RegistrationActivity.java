@@ -2,12 +2,17 @@ package com.inventory.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.inventory.Helper.Utility;
 import com.inventory.Model.SettingsModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.R;
@@ -36,7 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         InitializeIDS();
 
-        userKeyDetailsModel=mainActivity.GetUserKeyDetails(RegistrationActivity.this);
+        userKeyDetailsModel = mainActivity.GetUserKeyDetails(RegistrationActivity.this);
 
         submitTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +65,7 @@ public class RegistrationActivity extends AppCompatActivity {
             if (StringUtils.isBlank(nickName)) {
                 MainActivity.ShowToast(this, getString(R.string.enterNickName));
                 return;
-            }  else {
+            } else {
 
                 userKeyDetailsModel.NickName = nickName;
                 mainActivity.InsertUpdateUserKeyDetails(this, userKeyDetailsModel);
@@ -85,11 +90,28 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     private void InitializeIDS() {
+        String color_dark;
         try {
+            color_dark = MainActivity.GetThemeColor();
 
             enterNameET = (EditText) findViewById(R.id.enterNameET);
 
             submitTV = (TextView) findViewById(R.id.submitTV);
+
+            submitTV.setBackgroundColor(MainActivity.GetThemeColorInt());
+
+            try {
+                int color = Utility.MergeColors(MainActivity.GetThemeColorInt(), Color.parseColor("#33000000"));
+                color_dark = String.format("#%06X", (0xFFFFFF & color));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.parseColor(color_dark));
+            }
+
 
         } catch (Exception ex) {
             ex.printStackTrace();

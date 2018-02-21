@@ -314,7 +314,6 @@ public class AddInventoryActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
 
             MainActivity.getInstance().SupportActionBar(AddInventoryActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.addMedicine), false);
-            toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
             utility.SetFabColor(AddInventoryActivity.this, floatActionButton);
             try {
                 final Drawable upArrow = getResources().getDrawable(R.drawable.vector_cross_white_icon);
