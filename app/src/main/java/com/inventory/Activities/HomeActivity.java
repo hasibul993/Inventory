@@ -183,7 +183,8 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
             mDrawerLayout.setDrawerListener(mDrawerToggle);
             mDrawerToggle.syncState();
             mDrawerToggle.setDrawerIndicatorEnabled(true);//if set true it will show default hamburger icon with spinner action when opne/close.
-//        mDrawerToggle.setHomeAsUpIndicator(getToolbarBackButtonDrawble(HomeScreenActivity.this, R.drawable.hamburger_icon));
+            //mDrawerToggle.setHomeAsUpIndicator(getToolbarBackButtonDrawble(HomeScreenActivity.this, R.drawable.hamburger_icon));
+            mDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.White));// will change hamburger icon color
         } catch (Exception ex) {
             ex.printStackTrace();
         }

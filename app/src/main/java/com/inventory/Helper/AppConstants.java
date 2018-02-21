@@ -25,9 +25,9 @@ public interface AppConstants {
     /*Medicine icon colors*/
     public static String TABLETS_THEMECOLOR = "#009688";
     public static String INJECTION_THEMECOLOR = "#ffa000";
-    public static String CREAM_THEMECOLOR = "#f43e38";
+    public static String CREAM_THEMECOLOR = "#c51162";
     public static String SYRUP_THEMECOLOR = "#2196f3";
-    public static String CAPSULES_THEMECOLOR = "#d50000";
+    public static String CAPSULES_THEMECOLOR = "#4caf50";
     public static String MISCELLANEOUS_THEMECOLOR = "#896f08";
 
     public static String SIMPLE_DATE_FORMAT = "dd-MM-yyyy";

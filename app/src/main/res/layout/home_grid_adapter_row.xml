@@ -24,7 +24,7 @@
             android:padding="5dp"
             android:text="@string/ok"
             android:textColor="@color/White"
-            android:textSize="@dimen/header_18sp"
+            android:textSize="@dimen/header"
             app:typeface="robotoMedium" />
     </RelativeLayout>
 
