@@ -36,8 +36,8 @@ public interface AppConstants {
 
     /*Fonts*/
     public static String ROBOTO_MEDIUM = "fonts/Roboto-Medium.ttf";
-
     public static String ROBOTO_ITALIC = "fonts/Roboto-Italic.ttf";
+    public static String ROBOTO_MEDIUM_ITALIC = "fonts/Roboto-MediumItalic.ttf";
 
 
     public static String SHARE_TITLE = "Hey! Check out this free app that I'm using to organise my pharmacy inventory! https://play.google.com/store/apps/details?id=com.xampr&hl=en";

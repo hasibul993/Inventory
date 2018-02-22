@@ -192,7 +192,7 @@ public class MainActivity implements AppConstants {
         }
     }
 
-    public DrugModel GetDrugDetails(Context context, String drugBatchNo, String drugID) {
+    public DrugModel GetDrugDetailsFromInventoryDB(Context context, String drugBatchNo, String drugID) {
         databaseAccess = new DatabaseAccess(context);
         DrugModel drugModel = new DrugModel();
         try {
@@ -201,6 +201,17 @@ public class MainActivity implements AppConstants {
             ex.printStackTrace();
         }
         return drugModel;
+    }
+
+    public int GetDrugQuantityFromInventoryDB(Context context, String drugBatchNo, String drugID) {
+        databaseAccess = new DatabaseAccess(context);
+        int qty = 0;
+        try {
+            qty = databaseAccess.GetDrugQuantityFromInventoryDB(drugBatchNo, drugID);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return qty;
     }
 
     public ArrayList<DrugModel> GetInventoryListFromInventoryDB(Context context, String searchText, boolean isLimit) {
@@ -352,14 +363,14 @@ public class MainActivity implements AppConstants {
             actionBar.setTitle("");
 
             if (isHomeActivity) {
-                Typeface tfaerial = Typeface.createFromAsset(activity.getAssets(), "fonts/Roboto-MediumItalic.ttf");
+                Typeface tfaerial = Typeface.createFromAsset(activity.getAssets(), AppConstants.ROBOTO_MEDIUM_ITALIC);
                 toolbarTitleTV.setTypeface(tfaerial);
                 toolbarTitleTV.setText(title);
             } else {
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setHomeButtonEnabled(true);
                 actionBar.setElevation(0);
-                toolbarTitleTV.setTextSize(activity.getResources().getDimension(R.dimen.toolbar_title_8sp));
+                toolbarTitleTV.setTextSize(activity.getResources().getDimension(R.dimen.body));
                 try {
                     final Drawable upArrow = activity.getResources().getDrawable(R.drawable.vector_back_white_icon);
                     upArrow.setColorFilter(activity.getResources().getColor(R.color.White), PorterDuff.Mode.SRC_ATOP);

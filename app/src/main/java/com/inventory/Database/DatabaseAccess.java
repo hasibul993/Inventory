@@ -556,6 +556,29 @@ public class DatabaseAccess extends DatabaseHelper {
         return drugModel;
     }
 
+    public int GetDrugQuantityFromInventoryDB(String drugBatchNo, String drugID) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        Cursor cursor = null;
+        DrugModel drugModel = new DrugModel();
+        int qty = 0;
+        try {
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForDrugDetailsInInventoryDB(drugBatchNo, drugID), null);
+
+            if (cursor.moveToFirst()) {
+                drugModel = GetDrugModel(cursor);
+                qty = drugModel.DrugQuantity;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " GetDrugQuantityFromInventoryDB() : " + ex.getMessage());
+        }
+        if (cursor != null)
+            cursor.close();
+        db.close();
+        return qty;
+    }
+
+
     public ArrayList<DrugModel> GetInventoryListFromInventoryDB(String searchText, boolean isLimit) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;

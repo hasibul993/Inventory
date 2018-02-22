@@ -326,6 +326,7 @@ public class SalesActivity extends AppCompatActivity {
             viewIDModel.MrpEditText = (EditText) dialog.findViewById(R.id.mrpET);
             viewIDModel.QuantityEditText = (EditText) dialog.findViewById(R.id.quantityET);
             viewIDModel.DiscountEditText = (EditText) dialog.findViewById(R.id.discountET);
+            viewIDModel.BatchNumberEditText = (EditText) dialog.findViewById(R.id.batchNumberET);
 
             viewIDModel.DrugNameRecyclerView = (RecyclerView) dialog.findViewById(R.id.drugNameRecyclerView);
             viewIDModel.DrugNameRecyclerViewLayout = (LinearLayout) dialog.findViewById(R.id.drugNameRecyclerViewLayout);
@@ -351,6 +352,7 @@ public class SalesActivity extends AppCompatActivity {
                 viewIDModel.MrpEditText.setText(editModel.DrugMRPString);
                 viewIDModel.QuantityEditText.setText(editModel.DrugQuantity + "");
                 viewIDModel.DiscountEditText.setText(editModel.DrugDiscountString);
+                viewIDModel.BatchNumberEditText.setText(editModel.BatchNumber);
             } else {
                 isModify = false;
             }
@@ -396,7 +398,7 @@ public class SalesActivity extends AppCompatActivity {
                         stringHolderModel.drugMRP = viewIDModel.MrpEditText.getText().toString().trim();
                         stringHolderModel.drugQuantity = viewIDModel.QuantityEditText.getText().toString().trim();
                         stringHolderModel.drugDiscount = viewIDModel.DiscountEditText.getText().toString().trim();
-                        stringHolderModel.drugStockQuantity = viewIDModel.QtyAvailableTV.getText().toString().trim();
+                        stringHolderModel.batchNumber = viewIDModel.BatchNumberEditText.getText().toString().trim();
 
                         if (StringUtils.isBlank(stringHolderModel.drugName)) {
                             MainActivity.ShowToast(SalesActivity.this, getString(R.string.enterDrugName));
@@ -478,20 +480,13 @@ public class SalesActivity extends AppCompatActivity {
             }
 
             drugModel.DrugName = stringHolderModel.drugName.toUpperCase();
+            if (!StringUtils.isBlank(stringHolderModel.drugName))
+                drugModel.BatchNumber = stringHolderModel.batchNumber;
             drugModel.DrugMRP = Double.parseDouble(stringHolderModel.drugMRP);
             drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
             drugModel.PharmacyID = userKeyDetailsModel.UserGuid;
 
-            try {
-                if (!StringUtils.isBlank(stringHolderModel.drugStockQuantity)) {
-                    String[] separated = stringHolderModel.drugStockQuantity.split(getString(R.string.splitterCharacter));
-                    String stockQtyString = separated[1].trim();
-                    stockQty = Integer.parseInt(stockQtyString);
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
+            stockQty = mainActivity.GetDrugQuantityFromInventoryDB(SalesActivity.this, drugModel.BatchNumber, drugModel.DrugID);
 
             try {
                 drugModel.DrugQuantity = Integer.parseInt(stringHolderModel.drugQuantity);
@@ -595,13 +590,13 @@ public class SalesActivity extends AppCompatActivity {
             if (itemIndex >= 0) {
                 DrugModel existDrugModel = salesAdapter.getItem(itemIndex);
                 existDrugModel.DrugName = drugModel.DrugName;
-                existDrugModel.DrugMRP = drugModel.DrugMRP;
+                existDrugModel.DrugMRP = existDrugModel.DrugMRP + drugModel.DrugMRP;
                 existDrugModel.DrugMRPString = drugModel.DrugMRPString;
                 int netQty = existDrugModel.DrugQuantity + drugModel.DrugQuantity;
                 existDrugModel.DrugQuantity = netQty;
                 existDrugModel.DrugDiscount = drugModel.DrugDiscount;
                 existDrugModel.DrugDiscountString = drugModel.DrugDiscountString;
-                existDrugModel.DrugTotalMRP = drugModel.DrugTotalMRP;
+                existDrugModel.DrugTotalMRP = existDrugModel.DrugTotalMRP + drugModel.DrugTotalMRP;
                 existDrugModel.DrugTotalMRPString = drugModel.DrugTotalMRPString;
                 salesAdapter.notifyItemChanged(itemIndex);
                 // procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
@@ -685,6 +680,7 @@ public class SalesActivity extends AppCompatActivity {
             viewIDModel.DrugNameEditText.setSelection(viewIDModel.DrugNameEditText.length());
             viewIDModel.MrpEditText.setText(drugModel.DrugMRPString);
             viewIDModel.DiscountEditText.setText(drugModel.DrugDiscountString);
+            viewIDModel.BatchNumberEditText.setText(drugModel.BatchNumber);
 
             viewIDModel.QtyAvailableTV.setText(getString(R.string.availableQuantity) + " " + getString(R.string.semicolon) + " " + drugModel.DrugQuantity);
             viewIDModel.QtyAvailableTV.setTextColor(getResources().getColor(R.color.Crimson));
