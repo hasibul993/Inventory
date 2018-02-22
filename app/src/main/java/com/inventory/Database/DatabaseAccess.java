@@ -442,6 +442,12 @@ public class DatabaseAccess extends DatabaseHelper {
                         values.put(COLUMN_DATE_IN_MILLISECOND, mainActivity.GetMilliSecondsFromDate(drugModel.DrugExpiryDate, false));
                     }
 
+                    try {
+                        db.execSQL(DatabaseQuery.GetQueryForDecrement(drugModel.BatchNumber, drugModel.DrugID, drugModel.DrugQuantity));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
                     long _id = db.insertWithOnConflict(TABLE_ORDERS_ITEMS_DB, null,
                             values, SQLiteDatabase.CONFLICT_IGNORE);
 
