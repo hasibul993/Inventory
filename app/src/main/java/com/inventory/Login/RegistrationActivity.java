@@ -1,4 +1,4 @@
-package com.inventory.Activities;
+package com.inventory.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.inventory.Activities.HomeActivity;
+import com.inventory.Activities.MainActivity;
 import com.inventory.Helper.Utility;
 import com.inventory.Model.SettingsModel;
 import com.inventory.Model.UserKeyDetailsModel;

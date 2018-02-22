@@ -153,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
 
             setSupportActionBar(toolbar);
 
-            MainActivity.getInstance().SupportActionBar(HomeActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.app_name), true);
+            MainActivity.getInstance().SupportActionBar(HomeActivity.this, getSupportActionBar(), MainActivity.GetThemeColor(), toolbar_title, getString(R.string.homeTitle), true);
 
             mTitle = mDrawerTitle = getTitle();
 

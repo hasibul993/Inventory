@@ -20,11 +20,13 @@ public class StringHolderModel {
 
     public String drugQuantity;
 
+    public String drugStockQuantity;
+
     public String drugExpiryDate;
 
     public String drugDiscount;
 
-    public String drugDiscountString;
+
 
     public String drugTransactionDate;
 

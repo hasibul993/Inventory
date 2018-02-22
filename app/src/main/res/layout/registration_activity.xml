@@ -36,7 +36,7 @@
                     android:ellipsize="end"
                     android:ems="10"
                     android:hint="@string/name"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="textCapWords|textAutoComplete"
                     android:singleLine="true"
                     android:textColor="@color/Black"

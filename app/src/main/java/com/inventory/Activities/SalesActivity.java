@@ -363,6 +363,7 @@ public class SalesActivity extends AppCompatActivity {
 
                         if (!isSearchMedClicked && (searchText.length() >= 2)) {
                             viewIDModel.ResultOfTextViewDrugNameRecyclerView.setText(getString(R.string.resultOf) + " '" + searchText + "'");
+                            viewIDModel.QtyAvailableTV.setText("");
                             EditTypeStop(viewIDModel, searchText, 400);
                         } else {
                             SetRecyclerViewVisibility(viewIDModel);
@@ -395,7 +396,7 @@ public class SalesActivity extends AppCompatActivity {
                         stringHolderModel.drugMRP = viewIDModel.MrpEditText.getText().toString().trim();
                         stringHolderModel.drugQuantity = viewIDModel.QuantityEditText.getText().toString().trim();
                         stringHolderModel.drugDiscount = viewIDModel.DiscountEditText.getText().toString().trim();
-
+                        stringHolderModel.drugStockQuantity = viewIDModel.QtyAvailableTV.getText().toString().trim();
 
                         if (StringUtils.isBlank(stringHolderModel.drugName)) {
                             MainActivity.ShowToast(SalesActivity.this, getString(R.string.enterDrugName));
@@ -456,6 +457,7 @@ public class SalesActivity extends AppCompatActivity {
     }
 
     private boolean AddUpdateItem(StringHolderModel stringHolderModel, DrugModel editModel) {
+        int stockQty = 0;
         try {
             DrugModel drugModel = new DrugModel();
 
@@ -479,10 +481,29 @@ public class SalesActivity extends AppCompatActivity {
             drugModel.DrugMRP = Double.parseDouble(stringHolderModel.drugMRP);
             drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
             drugModel.PharmacyID = userKeyDetailsModel.UserGuid;
+
+            try {
+                if (!StringUtils.isBlank(stringHolderModel.drugStockQuantity)) {
+                    String[] separated = stringHolderModel.drugStockQuantity.split(getString(R.string.splitterCharacter));
+                    String stockQtyString = separated[1].trim();
+                    stockQty = Integer.parseInt(stockQtyString);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+
             try {
                 drugModel.DrugQuantity = Integer.parseInt(stringHolderModel.drugQuantity);
+
                 if (drugModel.DrugQuantity == 0) {
                     MainActivity.ShowToast(SalesActivity.this, getString(R.string.enterValidQuantity));
+                    return false;
+                } else if (stockQty == 0) {
+                    MainActivity.ShowToast(SalesActivity.this, drugModel.DrugName + " " + getString(R.string.itemOutOfStock));
+                    return false;
+                } else if (drugModel.DrugQuantity > stockQty) {
+                    MainActivity.ShowToast(SalesActivity.this, getString(R.string.quantityStockLimit));
                     return false;
                 }
 
@@ -520,7 +541,16 @@ public class SalesActivity extends AppCompatActivity {
 
             if (isModify) {
                 if (StringUtils.equalsIgnoreCase(stringHolderModel.drugName, editModel.DrugName)) {
-                    UpdateItem(drugModel);
+                    int itemIndex = mainActivity.GetItemPosition(drugModelArrayList, drugModel.DrugID, drugModel.BatchNumber);
+                    if (itemIndex >= 0) {
+                        DrugModel existDrugModel = salesAdapter.getItem(itemIndex);
+                        int netQty = existDrugModel.DrugQuantity + drugModel.DrugQuantity;
+                        if (netQty > stockQty) {
+                            MainActivity.ShowToast(SalesActivity.this, stringHolderModel.drugName + " " + getString(R.string.itemExistInList));
+                            return false;
+                        }
+                    }
+                    UpdateItem(itemIndex, drugModel);
                 } else {
                     salesAdapter.AddItem(drugModel);
                     recyclerView.scrollToPosition(0);
@@ -531,7 +561,16 @@ public class SalesActivity extends AppCompatActivity {
                     recyclerView.scrollToPosition(0);
                 } else {
                     if (StringUtils.equalsIgnoreCase(stringHolderModel.drugName, searchDrugModel.DrugName)) {
-                        UpdateItem(drugModel);
+                        int itemIndex = mainActivity.GetItemPosition(drugModelArrayList, drugModel.DrugID, drugModel.BatchNumber);
+                        if (itemIndex >= 0) {
+                            DrugModel existDrugModel = salesAdapter.getItem(itemIndex);
+                            int netQty = existDrugModel.DrugQuantity + drugModel.DrugQuantity;
+                            if (netQty > stockQty) {
+                                MainActivity.ShowToast(SalesActivity.this, stringHolderModel.drugName + " " + getString(R.string.itemExistInList));
+                                return false;
+                            }
+                        }
+                        UpdateItem(itemIndex, drugModel);
                     } else {
                         salesAdapter.AddItem(drugModel);
                         recyclerView.scrollToPosition(0);
@@ -551,15 +590,13 @@ public class SalesActivity extends AppCompatActivity {
         return true;
     }
 
-    private void UpdateItem(DrugModel drugModel) {
+    private void UpdateItem(int itemIndex, DrugModel drugModel) {
         try {
-            int itemIndex = mainActivity.GetItemPosition(drugModelArrayList, drugModel.DrugID, drugModel.BatchNumber);
             if (itemIndex >= 0) {
                 DrugModel existDrugModel = salesAdapter.getItem(itemIndex);
                 existDrugModel.DrugName = drugModel.DrugName;
                 existDrugModel.DrugMRP = drugModel.DrugMRP;
                 existDrugModel.DrugMRPString = drugModel.DrugMRPString;
-                existDrugModel.DrugQuantity = drugModel.DrugQuantity;
                 int netQty = existDrugModel.DrugQuantity + drugModel.DrugQuantity;
                 existDrugModel.DrugQuantity = netQty;
                 existDrugModel.DrugDiscount = drugModel.DrugDiscount;

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Inventory</string>
 
+
     <!--Home-->
+    <string name="homeTitle">Home</string>
     <string name="inventory">Inventory</string>
     <string name="pos">POS</string>
     <string name="orders">Orders</string>
@@ -73,6 +75,9 @@
     <string name="chooseExpiryDate">Choose expiry date</string>
     <string name="enterValidQuantity">Enter a valid quantity</string>
     <string name="discountLimit100">Discount can not be more than 100%</string>
+    <string name="quantityStockLimit">Your quantity exceeds stock quantity</string>
+    <string name="itemOutOfStock">out of stock , please add it to your inventory first</string>
+    <string name="itemExistInList">is in list and net quanity exceeds stock quantity</string>
 
     <!--Drug category-->
     <string name="injection">Injection</string>
@@ -171,6 +176,7 @@
     <string name="total">Total</string>
     <string name="availableQuantity">Available Quantity</string>
     <string name="semicolon">:</string>
+    <string name="splitterCharacter">\\:</string>
 
     <string name="sharevia">Share via</string>
     <string name="isNotEdiatable">IsNotEdiatable</string>
