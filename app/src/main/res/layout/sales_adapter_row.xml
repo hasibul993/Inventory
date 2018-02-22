@@ -28,7 +28,7 @@
                 android:gravity="center"
                 android:text="@string/slNo"
                 android:textColor="@color/main_color_grey_700"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoRegular" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -39,7 +39,7 @@
                 android:gravity="center"
                 android:text="@string/drugName"
                 android:textColor="@color/main_color_grey_700"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoRegular" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:text="@string/quantity"
                 android:textColor="@color/main_color_grey_700"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoRegular" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -61,7 +61,7 @@
                 android:gravity="center"
                 android:text="@string/drugMRP"
                 android:textColor="@color/main_color_grey_700"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoRegular" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -72,7 +72,7 @@
                 android:gravity="center"
                 android:text="@string/disCount"
                 android:textColor="@color/main_color_grey_700"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoRegular" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -83,7 +83,7 @@
                 android:gravity="center"
                 android:text="@string/total"
                 android:textColor="@color/main_color_grey_700"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoRegular" />
 
 

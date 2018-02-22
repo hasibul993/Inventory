@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <View
         android:id="@+id/divider1"
@@ -35,7 +35,7 @@
                 android:padding="2dp"
                 android:text="@string/subTotal"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoMedium" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -45,9 +45,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:padding="2dp"
-                android:text="OrderNo"
+                android:text=""
                 android:textColor="@color/Black"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoMedium" />
 
 
@@ -88,7 +88,7 @@
                 android:padding="2dp"
                 android:text="@string/orderTotalActual"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoMedium" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -98,9 +98,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:padding="2dp"
-                android:text="OrderNo"
+                android:text=""
                 android:textColor="@color/Black"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoMedium" />
 
 
@@ -122,7 +122,7 @@
                 android:padding="2dp"
                 android:text="@string/orderTotalDiscount"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoMedium" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -132,9 +132,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:padding="2dp"
-                android:text="OrderNo"
+                android:text=""
                 android:textColor="@color/Black"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoMedium" />
 
 
@@ -165,7 +165,7 @@
                 android:padding="2dp"
                 android:text="@string/orderTotal"
                 android:textColor="@color/Black"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoMedium" />
 
             <com.inventory.NewUi.RobotoTextView
@@ -175,9 +175,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:padding="2dp"
-                android:text="OrderNo"
+                android:text=""
                 android:textColor="@color/Black"
-                android:textSize="@dimen/text"
+                android:textSize="@dimen/body"
                 app:typeface="robotoMedium" />
 
 
