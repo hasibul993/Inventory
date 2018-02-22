@@ -480,8 +480,7 @@ public class SalesActivity extends AppCompatActivity {
             }
 
             drugModel.DrugName = stringHolderModel.drugName.toUpperCase();
-            if (!StringUtils.isBlank(stringHolderModel.drugName))
-                drugModel.BatchNumber = stringHolderModel.batchNumber;
+            drugModel.BatchNumber = stringHolderModel.batchNumber;
             drugModel.DrugMRP = Double.parseDouble(stringHolderModel.drugMRP);
             drugModel.DrugMRPString = AppConstants.decimalFormatTwoPlace.format(drugModel.DrugMRP);
             drugModel.PharmacyID = userKeyDetailsModel.UserGuid;
@@ -539,11 +538,15 @@ public class SalesActivity extends AppCompatActivity {
                     int itemIndex = mainActivity.GetItemPosition(drugModelArrayList, drugModel.DrugID, drugModel.BatchNumber);
                     if (itemIndex >= 0) {
                         DrugModel existDrugModel = salesAdapter.getItem(itemIndex);
-                        int netQty = existDrugModel.DrugQuantity + drugModel.DrugQuantity;
+                        int netQty = drugModel.DrugQuantity;
                         if (netQty > stockQty) {
                             MainActivity.ShowToast(SalesActivity.this, stringHolderModel.drugName + " " + getString(R.string.itemExistInList));
                             return false;
                         }
+                        existDrugModel.DrugQuantity = netQty;
+                        existDrugModel.DrugTotalMRP = drugModel.DrugTotalMRP;
+                        existDrugModel.DrugTotalMRPString = AppConstants.decimalFormatTwoPlace.format(existDrugModel.DrugTotalMRP);
+                        existDrugModel.DrugTotalMRPWithoutDisc = drugModel.DrugTotalMRPWithoutDisc;
                     }
                     UpdateItem(itemIndex, drugModel);
                 } else {
@@ -564,6 +567,10 @@ public class SalesActivity extends AppCompatActivity {
                                 MainActivity.ShowToast(SalesActivity.this, stringHolderModel.drugName + " " + getString(R.string.itemExistInList));
                                 return false;
                             }
+                            existDrugModel.DrugQuantity = netQty;
+                            existDrugModel.DrugTotalMRP = existDrugModel.DrugTotalMRP + drugModel.DrugTotalMRP;
+                            existDrugModel.DrugTotalMRPString = AppConstants.decimalFormatTwoPlace.format(existDrugModel.DrugTotalMRP);
+                            existDrugModel.DrugTotalMRPWithoutDisc = existDrugModel.DrugTotalMRPWithoutDisc + drugModel.DrugTotalMRPWithoutDisc;
                         }
                         UpdateItem(itemIndex, drugModel);
                     } else {
@@ -590,14 +597,10 @@ public class SalesActivity extends AppCompatActivity {
             if (itemIndex >= 0) {
                 DrugModel existDrugModel = salesAdapter.getItem(itemIndex);
                 existDrugModel.DrugName = drugModel.DrugName;
-                existDrugModel.DrugMRP = existDrugModel.DrugMRP + drugModel.DrugMRP;
+                existDrugModel.DrugMRP = drugModel.DrugMRP;
                 existDrugModel.DrugMRPString = drugModel.DrugMRPString;
-                int netQty = existDrugModel.DrugQuantity + drugModel.DrugQuantity;
-                existDrugModel.DrugQuantity = netQty;
                 existDrugModel.DrugDiscount = drugModel.DrugDiscount;
                 existDrugModel.DrugDiscountString = drugModel.DrugDiscountString;
-                existDrugModel.DrugTotalMRP = existDrugModel.DrugTotalMRP + drugModel.DrugTotalMRP;
-                existDrugModel.DrugTotalMRPString = drugModel.DrugTotalMRPString;
                 salesAdapter.notifyItemChanged(itemIndex);
                 // procurementAdapter.UpdateItem(drugModel, itemIndex);// when select search drug and then edit it
             } else {
