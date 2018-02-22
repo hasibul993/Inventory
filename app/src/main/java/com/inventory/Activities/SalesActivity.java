@@ -858,8 +858,8 @@ public class SalesActivity extends AppCompatActivity {
             drugModel.OrderTotal = overAllPrice;
             drugModel.OrderTotalString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotal);
 
-            drugModel.OrderTotalDiscount = (float) (((overAllPriceWithoutDisc - overAllPrice) / overAllPriceWithoutDisc) * 100);
-            drugModel.OrderTotalDiscountString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotalDiscount);
+            drugModel.OrderTotalDiscountPerc = (float) (((overAllPriceWithoutDisc - overAllPrice) / overAllPriceWithoutDisc) * 100);
+            drugModel.OrderTotalDiscountString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotalDiscountPerc);
 
             mainActivity.InsertUpdateOrderInOrderDB(SalesActivity.this, drugModel);
             mainActivity.InsertOrderItemsInBatchInOrderItemsDB(SalesActivity.this, drugModelList);

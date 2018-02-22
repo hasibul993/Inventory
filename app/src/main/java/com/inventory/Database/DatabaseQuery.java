@@ -180,6 +180,18 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
+    public static String GetQueryForDecrement(String drugBatchNo, String drugID, int incrementValue) {
+        String query = "";
+        try {
+            query = "UPDATE " + TABLE_INVENTORY_DB + " SET " + COLUMN_DRUG_QUANTITY + "="
+                    + COLUMN_DRUG_QUANTITY + "-" + incrementValue + WHERE + COLUMN_BATCH_NUMBER + "= '"
+                    + drugBatchNo + "' AND " + COLUMN_DRUG_ID + "= '" + drugID + "'";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
 
     /*Below are Orders query*/
 

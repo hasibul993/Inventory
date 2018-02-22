@@ -374,7 +374,7 @@ public class DatabaseAccess extends DatabaseHelper {
 
             values.put(COLUMN_ORDER_TOTAL, drugModel.OrderTotal);
 
-            values.put(COLUMN_DRUG_DISCOUNT, drugModel.OrderTotalDiscount);
+            values.put(COLUMN_DRUG_DISCOUNT, drugModel.OrderTotalDiscountPerc);
 
             long _id = db.insertWithOnConflict(TABLE_ORDERS_DB, null,
                     values, SQLiteDatabase.CONFLICT_IGNORE);
@@ -941,8 +941,8 @@ public class DatabaseAccess extends DatabaseHelper {
             drugModel.OrderTotal = cursor.getDouble(cursor.getColumnIndex(COLUMN_ORDER_TOTAL));
             drugModel.OrderTotalString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotal);
 
-            drugModel.OrderTotalDiscount = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
-            drugModel.OrderTotalDiscountString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotalDiscount);
+            drugModel.OrderTotalDiscountPerc = cursor.getFloat(cursor.getColumnIndex(COLUMN_DRUG_DISCOUNT));
+            drugModel.OrderTotalDiscountString = AppConstants.decimalFormatTwoPlace.format(drugModel.OrderTotalDiscountPerc);
 
             drugModel.DateInMilliSecond = cursor.getLong(cursor.getColumnIndex(COLUMN_DATE_IN_MILLISECOND));
 

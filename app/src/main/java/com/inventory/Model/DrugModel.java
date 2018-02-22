@@ -44,7 +44,7 @@ public class DrugModel implements Serializable {
 
     public String DrugExpiryDate;
 
-    public float OrderTotalDiscount;
+    public float OrderTotalDiscountPerc;
 
     public String OrderTotalDiscountString;
 
