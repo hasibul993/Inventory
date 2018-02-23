@@ -22,7 +22,7 @@ public class DatabaseQuery extends DatabaseHelper {
     public static String GetQueryForUserKeyDetails() {
         String query = "";
         try {
-            query = SELECT_ALL + TABLE_USER_KEY_DETAILS_DB + LIMIT_8;
+            query = SELECT_ALL + TABLE_USER_KEY_DETAILS_DB + LIMIT_1;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -223,7 +223,7 @@ public class DatabaseQuery extends DatabaseHelper {
             if (!StringUtils.isBlank(searchText))
                 query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_ORDER_NO + " like '" + searchText + "%' ";
             else
-                query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_DATE_IN_MILLISECOND + ALPHABETICAL_OREDER;
+                query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_DATE_IN_MILLISECOND + DESCENDING_OREDER;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

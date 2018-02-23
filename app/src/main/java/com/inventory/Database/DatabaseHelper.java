@@ -29,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String WHERE = " WHERE ";
     public static final String ORDER_BY = " ORDER BY ";
     public static final String ALPHABETICAL_OREDER = " COLLATE NOCASE ";
+    public static final String DESCENDING_OREDER = " DESC ";
+    public static final String ASCENDING_OREDER = " ASC ";
     public static final String LIMIT_8 = " LIMIT 8 ";
     public static final String LIMIT_1 = " LIMIT 1 ";
 
