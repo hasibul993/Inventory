@@ -63,7 +63,7 @@ public class SliderMenuAdapter extends RecyclerView.Adapter<SliderMenuAdapter.Vi
             holder.titleTV.setText(sliderMenuModel.Title);
 
             if (StringUtils.equalsIgnoreCase(sliderMenuModel.Title, context.getString(R.string.masterDB))
-                    || StringUtils.equalsIgnoreCase(sliderMenuModel.Title, context.getString(R.string.pharmacyDB)))
+                    || StringUtils.equalsIgnoreCase(sliderMenuModel.Title, context.getString(R.string.inventoryDB)))
                 holder.syncImageV.setVisibility(View.VISIBLE);
             else
                 holder.syncImageV.setVisibility(View.GONE);

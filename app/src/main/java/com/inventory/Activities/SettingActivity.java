@@ -294,7 +294,7 @@ public class SettingActivity extends AppCompatActivity implements AppConstants {
 
     public void onBackPressed() {
         try {
-            InventoryActivity.GotoInventoryActivity(SettingActivity.this);
+            HomeActivity.GotoHomeActivity(SettingActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

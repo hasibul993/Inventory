@@ -260,7 +260,7 @@ public class Utility {
             sliderMenuModels.add(sliderMenuModel);
 
             sliderMenuModel = new SliderMenuModel();
-            sliderMenuModel.Title = context.getString(R.string.pharmacyDB);
+            sliderMenuModel.Title = context.getString(R.string.inventoryDB);
             sliderMenuModel.drawableInt = R.drawable.database_icon;
             sliderMenuModels.add(sliderMenuModel);
 
