@@ -92,7 +92,7 @@
             android:name=".Activities.SalesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.HomeNoActionBar"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <activity
             android:name=".Database.AndroidDatabaseViewer"

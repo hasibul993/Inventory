@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -271,7 +272,10 @@ public class SalesActivity extends AppCompatActivity {
                 drugModelArrayList = mainActivity.GetOrderItemListFromOrderItemDB(SalesActivity.this, orderNo);
 
                 SetSearchedCustomerDetails(drugModel, true);
+
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             }
+
 
 
         } catch (Exception ex) {

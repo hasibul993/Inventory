@@ -59,7 +59,7 @@ public class DatabaseQuery extends DatabaseHelper {
         try {
             if (!StringUtils.isBlank(searchText)) {
                 if (isLimit)
-                    query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + LIMIT_8;
+                    query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' " + ORDER_BY + COLUMN_DATE_IN_MILLISECOND + ASCENDING_OREDER + LIMIT_8;
                 else
                     query = SELECT_ALL + TABLE_INVENTORY_DB + WHERE + COLUMN_DRUG_NAME + " like '" + searchText + "%' ";
             } else
