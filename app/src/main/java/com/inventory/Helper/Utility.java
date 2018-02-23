@@ -533,6 +533,23 @@ public class Utility {
         return true;
     }
 
+    public static boolean isInteger(String text) {
+        try {
+            Integer.parseInt(text);
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+            return false;
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+            return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
+    }
+
     public void SetImageTint(ImageView imageView) {
         try {
             if (Build.VERSION.SDK_INT <= 22) {

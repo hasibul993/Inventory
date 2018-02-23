@@ -177,6 +177,8 @@
     <string name="availableQuantity">Available Quantity</string>
     <string name="semicolon">:</string>
     <string name="splitterCharacter">\\:</string>
+    <string name="searchOrderByMobile">Search by customer name/mobile</string>
+    <string name="searchDrugByName">Search by drug name</string>
 
     <string name="sharevia">Share via</string>
     <string name="isNotEdiatable">IsNotEdiatable</string>

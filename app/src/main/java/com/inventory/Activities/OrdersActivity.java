@@ -1,17 +1,24 @@
 package com.inventory.Activities;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.inventory.Adapter.OrdersAdapter;
+import com.inventory.Adapter.ViewPagerAdapter;
+import com.inventory.Fragments.InventoryFragment;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.Utility;
 import com.inventory.Model.DrugModel;
@@ -120,9 +127,44 @@ public class OrdersActivity extends AppCompatActivity implements AppConstants {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         try {
-            getMenuInflater().inflate(R.menu.menu_setting_activity, menu);
-            MenuItem moreIcon = menu.findItem(R.id.menu_more);
-            moreIcon.setVisible(false);
+            getMenuInflater().inflate(R.menu.menu_inventory_activity, menu);
+
+            SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+            searchView.setQueryHint(getString(R.string.searchOrderByMobile));
+            SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    try {
+                        GetOrdersLocally(newText);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    return true;
+                }
+
+            });
+
+            MenuItem item = menu.findItem(R.id.action_search);
+            MenuItemCompat.setOnActionExpandListener(item, new MenuItemCompat.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                    return false;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                    return false;
+                }
+            });
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

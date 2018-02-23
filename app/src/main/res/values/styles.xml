@@ -18,10 +18,9 @@
 
     </style>
 
-    <style name="AppTheme.HomeNoActionBar">
+    <style name="AppTheme.HomeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:editTextColor">@color/White</item>
         <item name="android:textSize">@dimen/body</item>
@@ -143,8 +142,13 @@
         <item name="android:dividerHeight">0dp</item>
     </style>
 
+    <!--ToolbarColoredBackArrow is for SearchView style search text color change to white-->
     <style name="ToolbarColoredBackArrow" parent="AppTheme">
-        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/White</item>
+        <item name="android:textColorHint">@color/White_50</item>
+        <item name="android:textSize">@dimen/body</item>
+        <item name="android:editTextColor">@color/White</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_color_white</item>
     </style>
 
     <style name="ProfileTitleStyle">

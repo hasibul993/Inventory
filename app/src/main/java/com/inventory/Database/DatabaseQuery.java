@@ -3,6 +3,7 @@ package com.inventory.Database;
 import android.content.Context;
 
 import com.inventory.Activities.MainActivity;
+import com.inventory.Helper.Utility;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -116,22 +117,6 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
-    public static String GetQueryForSearchDrugManufacturerInPharmacyDB(String searchText) {
-        String query = "";
-        try {
-            if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_DRUG_MANUFACTURER + " like '"
-                        + searchText + "%' " + LIMIT_8;
-            else
-                query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_DRUG_MANUFACTURER + ALPHABETICAL_OREDER;
-
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return query;
-    }
-
     public static String GetQueryForDrugBetweenDatesInInventoryDB(String searchText, long startInMilliSecond, long endInMilliSecond) {
         String query = "";
         try {
@@ -220,9 +205,12 @@ public class DatabaseQuery extends DatabaseHelper {
         String query = "";
         /*Like %text% will search string in whole name but like text% will start search from first letter*/
         try {
-            if (!StringUtils.isBlank(searchText))
-                query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_ORDER_NO + " like '" + searchText + "%' ";
-            else
+            if (!StringUtils.isBlank(searchText)) {
+                if (Utility.isInteger(searchText)) {
+                    query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_CUSTOMER_MOBILE + " like '" + searchText + "%' ";
+                } else
+                    query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_CUSTOMER_NAME + " like '" + searchText + "%' ";
+            } else
                 query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_DATE_IN_MILLISECOND + DESCENDING_OREDER;
         } catch (Exception ex) {
             ex.printStackTrace();

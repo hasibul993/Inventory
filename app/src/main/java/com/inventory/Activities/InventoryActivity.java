@@ -183,6 +183,7 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
             getMenuInflater().inflate(R.menu.menu_inventory_activity, menu);
 
             SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+            searchView.setQueryHint(getString(R.string.searchDrugByName));
             SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -203,6 +204,12 @@ public class InventoryActivity extends AppCompatActivity implements AppConstants
                         if (currentFragment instanceof InventoryFragment) {
                             InventoryFragment inventoryFragment = (InventoryFragment) currentFragment;
                             inventoryFragment.GetDrugsLocally(newText);
+                        } else if (currentFragment instanceof ExpiredDurationFragment) {
+                            ExpiredDurationFragment expiredDurationFragment = (ExpiredDurationFragment) currentFragment;
+                            expiredDurationFragment.GetDrugsLocally(newText);
+                        } else if (currentFragment instanceof ExpiredFragment) {
+                            ExpiredFragment expiredFragment = (ExpiredFragment) currentFragment;
+                            expiredFragment.GetDrugsLocally(newText);
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
