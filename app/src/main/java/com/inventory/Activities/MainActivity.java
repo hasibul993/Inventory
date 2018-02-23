@@ -128,9 +128,7 @@ public class MainActivity implements AppConstants {
 
     }
 
-
     /*Below are drug insertion and fetching*/
-
 
     public void InsertUpdateDrugsInInventoryDB(Context context, DrugModel drugModel, boolean isModify) {
         databaseAccess = new DatabaseAccess(context);
@@ -274,7 +272,7 @@ public class MainActivity implements AppConstants {
         return drugModelArrayList;
     }
 
-    /*Bwlow are Order and Details insertion*/
+    /*Bwlow are Order and Details insertion/Fetching*/
 
     public void InsertUpdateOrderInOrderDB(Context context, DrugModel drugModel) {
         databaseAccess = new DatabaseAccess(context);
@@ -338,6 +336,19 @@ public class MainActivity implements AppConstants {
             ex.printStackTrace();
         }
         return drugModelArrayList;
+    }
+
+    /*Below is for getting customer details based on mobile no*/
+
+    public ArrayList<DrugModel> GetCustomerMobileListFromOrderDB(Context context, String searchText, boolean isLimit) {
+        databaseAccess = new DatabaseAccess(context);
+        ArrayList<DrugModel> customerArrayList = new ArrayList<>();
+        try {
+            customerArrayList = databaseAccess.GetCustomerMobileListFromOrderDB(searchText, isLimit);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return customerArrayList;
     }
 
 

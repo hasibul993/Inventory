@@ -1025,6 +1025,31 @@ public class DatabaseAccess extends DatabaseHelper {
         return drugModel;
     }
 
+    /*Fetch customer details from order db*/
+
+    public ArrayList<DrugModel> GetCustomerMobileListFromOrderDB(String searchText, boolean isLimit) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+
+        try {
+
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchCustomerMobileInOrderDB(searchText, isLimit), null);
+
+            if (cursor.getCount() > 0)
+                drugModelArrayList = GetOrderList(cursor);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " GetCustomerMobileListFromOrderDB() : " + ex.getMessage());
+        }
+
+        if (cursor != null)
+            cursor.close();
+        db.close();
+        return drugModelArrayList;
+    }
+
     public boolean IsAnyMedicineExist() {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;

@@ -241,4 +241,23 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
+    /*Below query for customer mobile*/
+
+    public static String GetQueryForSearchCustomerMobileInOrderDB(String searchText, boolean isLimit) {
+        String query = "";
+        /*Like %text% will search string in whole name but like text% will start search from first letter*/
+        try {
+            if (!StringUtils.isBlank(searchText)) {
+                if (isLimit)
+                    query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_CUSTOMER_MOBILE + " like '" + searchText + "%' " + LIMIT_8;
+                else
+                    query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_CUSTOMER_MOBILE + " like '" + searchText + "%' ";
+            } else
+                query = SELECT_ALL + TABLE_ORDERS_DB + ORDER_BY + COLUMN_CUSTOMER_MOBILE + ALPHABETICAL_OREDER;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
 }

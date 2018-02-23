@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.inventory.Adapter.SalesAdapter;
+import com.inventory.Adapter.SearchCustomerMobileAdapter;
 import com.inventory.Adapter.SearchDrugAdapter;
 import com.inventory.Helper.AppConstants;
 import com.inventory.Helper.RecyclerItemClickListener;
@@ -60,9 +61,11 @@ public class SalesActivity extends AppCompatActivity {
 
     RobotoTextView slNoTV, drugNameTV, drugQuantityTV, drugMRPTV, drugDiscountTV, drugTotalTV, orderTotalTV,
             orderTotalValueTV, orderTotalActualTV, orderTotalActualValueTV, orderTotalDiscTV, orderTotalDiscValueTV,
-            orderTotalFinalTV, orderTotalFinalValueTV;
+            orderTotalFinalTV, orderTotalFinalValueTV, resultOfTextViewCustomerMobileRecyclerView;
 
     EditText cutomerNameET, cutomerMobileET, patientNameET, ageET;
+
+    ImageView deleteIconCustomerMobileRecyclerView;
 
     RadioGroup radioGroup;
 
@@ -71,9 +74,11 @@ public class SalesActivity extends AppCompatActivity {
     RadioButton maleRadioButton, femaleRadioButton;
 
     SalesAdapter salesAdapter;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, customerMobileRecyclerView;
 
-    boolean isModify = false, isSearchMedClicked = false;
+    LinearLayout customerMobileSearchRecyclerViewLayout;
+
+    boolean isModify = false, isSearchMedClicked = false, isSearchCustomerMobileClicked;
 
     FloatingActionButton floatActionButton;
 
@@ -82,6 +87,8 @@ public class SalesActivity extends AppCompatActivity {
     MainActivity mainActivity = MainActivity.getInstance();
 
     SearchDrugAdapter searchDrugAdapter;
+
+    SearchCustomerMobileAdapter searchCustomerMobileAdapter;
 
     DrugModel searchDrugModel = null;
     private Timer timer;
@@ -139,6 +146,49 @@ public class SalesActivity extends AppCompatActivity {
 
             }
         });
+
+        deleteIconCustomerMobileRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    SetCustomerMobileRecyclerViewVisibility();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+
+        cutomerMobileET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    String searchText = cutomerMobileET.getText().toString().trim();
+
+                    if (!isSearchCustomerMobileClicked && (searchText.length() >= 2)) {
+                        resultOfTextViewCustomerMobileRecyclerView.setText(getString(R.string.resultOf) + " '" + searchText + "'");
+                        CustomerEditTypeStop(searchText, 400);
+                    } else {
+                        SetCustomerMobileRecyclerViewVisibility();
+                    }
+                    isSearchCustomerMobileClicked = false;
+                    Log.i(TAG, "onTextChanged : " + searchText);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
     }
 
 
@@ -156,6 +206,12 @@ public class SalesActivity extends AppCompatActivity {
             radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
             maleRadioButton = (RadioButton) findViewById(R.id.maleRadioButton);
             femaleRadioButton = (RadioButton) findViewById(R.id.femaleRadioButton);
+
+            /*customer mobile search ids*/
+            customerMobileSearchRecyclerViewLayout = (LinearLayout) findViewById(R.id.customerMobileSearchRecyclerViewLayout);
+            resultOfTextViewCustomerMobileRecyclerView = (RobotoTextView) findViewById(R.id.resultOfTextViewCustomerMobileRecyclerView);
+            deleteIconCustomerMobileRecyclerView = (ImageView) findViewById(R.id.deleteIconCustomerMobileRecyclerView);
+            customerMobileRecyclerView = (RecyclerView) findViewById(R.id.customerMobileRecyclerView);
 
             /*listview header ids*/
             recyclerViewHeaderID = (View) findViewById(R.id.recyclerViewHeaderID);
@@ -214,15 +270,7 @@ public class SalesActivity extends AppCompatActivity {
                 drugModel = mainActivity.GetOrderDetailsFromOrderDB(SalesActivity.this, orderNo);
                 drugModelArrayList = mainActivity.GetOrderItemListFromOrderItemDB(SalesActivity.this, orderNo);
 
-                cutomerNameET.setText(drugModel.CustomerName);
-                cutomerNameET.setSelection(cutomerNameET.length());
-                cutomerMobileET.setText(drugModel.CustomerMobile);
-                patientNameET.setText(drugModel.PatientName);
-                ageET.setText(drugModel.Age);
-                if (StringUtils.equalsIgnoreCase(drugModel.Gender, getString(R.string.male)))
-                    maleRadioButton.setChecked(true);
-                else if (StringUtils.equalsIgnoreCase(drugModel.Gender, getString(R.string.male)))
-                    femaleRadioButton.setChecked(true);
+                SetSearchedCustomerDetails(drugModel, true);
             }
 
 
@@ -366,7 +414,7 @@ public class SalesActivity extends AppCompatActivity {
                         if (!isSearchMedClicked && (searchText.length() >= 2)) {
                             viewIDModel.ResultOfTextViewDrugNameRecyclerView.setText(getString(R.string.resultOf) + " '" + searchText + "'");
                             viewIDModel.QtyAvailableTV.setText("");
-                            EditTypeStop(viewIDModel, searchText, 400);
+                            DrugEditTypeStop(viewIDModel, searchText, 400);
                         } else {
                             SetRecyclerViewVisibility(viewIDModel);
                         }
@@ -612,7 +660,7 @@ public class SalesActivity extends AppCompatActivity {
         }
     }
 
-    public void EditTypeStop(final ViewIDModel viewIDModel, final String searchText, long timeMilliSecond) {
+    public void DrugEditTypeStop(final ViewIDModel viewIDModel, final String searchText, long timeMilliSecond) {
         try {
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -625,6 +673,29 @@ public class SalesActivity extends AppCompatActivity {
                         public void run() {
                             // This code will always run on the UI thread, therefore is safe to modify UI elements.
                             SetSearchDrugAdapter(searchText, viewIDModel);
+                        }
+                    });
+                }
+            }, timeMilliSecond); //  600ms delay before the timer executes the „run“ method from TimerTask
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void CustomerEditTypeStop(final String searchText, long timeMilliSecond) {
+        try {
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    // When you need to modify a UI element, do so on the UI thread.
+                    // 'getActivity()' is required as this is being ran from a Fragment.
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // This code will always run on the UI thread, therefore is safe to modify UI elements.
+                            SetSearchCustomerMobileAdapter(searchText);
                         }
                     });
                 }
@@ -693,11 +764,85 @@ public class SalesActivity extends AppCompatActivity {
         }
     }
 
+    private void SetSearchedCustomerDetails(DrugModel drugModel, boolean isreadble) {
+        try {
+
+            cutomerMobileET.setText(drugModel.CustomerMobile);
+            cutomerMobileET.setSelection(cutomerMobileET.length());
+            cutomerNameET.setText(drugModel.CustomerName);
+
+            if (isreadble) {
+                patientNameET.setText(drugModel.PatientName);
+                ageET.setText(drugModel.Age);
+                if (StringUtils.equalsIgnoreCase(drugModel.Gender, getString(R.string.male)))
+                    maleRadioButton.setChecked(true);
+                else if (StringUtils.equalsIgnoreCase(drugModel.Gender, getString(R.string.male)))
+                    femaleRadioButton.setChecked(true);
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void SetRecyclerViewVisibility(ViewIDModel viewIDModel) {
         try {
 
             viewIDModel.DrugNameRecyclerView.setAdapter(null);
             viewIDModel.DrugNameRecyclerViewLayout.setVisibility(View.GONE);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void SetSearchCustomerMobileAdapter(final String searchText) {
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        try {
+
+            drugModelArrayList = mainActivity.GetCustomerMobileListFromOrderDB(SalesActivity.this, searchText, true);
+
+            if (drugModelArrayList.size() > 0) {
+                customerMobileSearchRecyclerViewLayout.setVisibility(View.VISIBLE);
+                searchCustomerMobileAdapter = new SearchCustomerMobileAdapter(SalesActivity.this, drugModelArrayList);
+                customerMobileRecyclerView.setLayoutManager(new LinearLayoutManager(SalesActivity.this));
+                customerMobileRecyclerView.addItemDecoration(new DividerItemDecoration(SalesActivity.this));
+                customerMobileRecyclerView.setAdapter(searchCustomerMobileAdapter);
+            } else {
+                SetCustomerMobileRecyclerViewVisibility();
+            }
+            // Setup item Clicks
+            customerMobileRecyclerView.addOnItemTouchListener(
+                    new RecyclerItemClickListener(SalesActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            try {
+                                if (timer != null) {
+                                    timer.cancel();
+                                    timer.purge();
+                                    isSearchCustomerMobileClicked = true;
+                                }
+                                DrugModel searchCustomerModel = searchCustomerMobileAdapter.getItem(position);
+                                SetSearchedCustomerDetails(searchCustomerModel, false);
+                                Log.i(TAG, "SetSearchCustomerMobileAdapter item click : " + searchCustomerModel);
+                                SetCustomerMobileRecyclerViewVisibility();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    })
+            );
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void SetCustomerMobileRecyclerViewVisibility() {
+        try {
+            customerMobileRecyclerView.setAdapter(null);
+            customerMobileSearchRecyclerViewLayout.setVisibility(View.GONE);
 
         } catch (Exception ex) {
             ex.printStackTrace();
