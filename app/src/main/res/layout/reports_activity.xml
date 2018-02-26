@@ -51,7 +51,7 @@
                         android:text="@string/sales"
                         android:textColor="@color/White"
                         android:textSize="@dimen/body"
-                        app:typeface="robotoMedium" />
+                        app:typeface="robotoRegular" />
 
                     <com.inventory.NewUi.RobotoTextView
                         android:id="@+id/todaysSaleValueTV"
@@ -87,7 +87,7 @@
                         android:text="@string/order"
                         android:textColor="@color/White"
                         android:textSize="@dimen/body"
-                        app:typeface="robotoMedium" />
+                        app:typeface="robotoRegular" />
 
                     <com.inventory.NewUi.RobotoTextView
                         android:id="@+id/todaysOrderValueTV"

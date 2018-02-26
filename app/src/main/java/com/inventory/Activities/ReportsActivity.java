@@ -104,7 +104,11 @@ public class ReportsActivity extends AppCompatActivity implements AppConstants {
             orderArrayList = mainActivity.GetOrderListByDateFromOrderDB(ReportsActivity.this, today);
 
             todaysOrderTV.setText(getString(R.string.today) + "'s " + getString(R.string.order));
-            todaysOrderValueTV.setText(orderArrayList.size() + "");
+
+            if (orderArrayList.size() > 0 && orderArrayList.size() < 10)
+                todaysOrderValueTV.setText("0" + orderArrayList.size() + "");
+            else
+                todaysOrderValueTV.setText(orderArrayList.size() + "");
 
             todaysSaleTV.setText(getString(R.string.today) + "'s " + getString(R.string.sales));
             todaysSaleValueTV.setText(getString(R.string.rs) + " " + GetTodaysSales(orderArrayList));
