@@ -3,7 +3,7 @@
     android:id="@+id/splashLayout"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/splash"
+    android:background="@color/White"
     android:orientation="vertical">
 
     <ImageView
@@ -11,6 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/app_icon"/>
+        android:src="@drawable/app_icon" />
 
 </RelativeLayout>
