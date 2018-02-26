@@ -187,6 +187,12 @@
     <string name="searchOrderByMobile">Search by customer name/mobile</string>
     <string name="searchDrugByName">Search by drug name</string>
 
+
+    <!--Reports-->
+    <string name="today">Today</string>
+    <string name="sales">Sales</string>
+
+
     <string name="sharevia">Share via</string>
     <string name="isNotEdiatable">IsNotEdiatable</string>
 

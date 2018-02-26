@@ -218,6 +218,20 @@ public class DatabaseQuery extends DatabaseHelper {
         return query;
     }
 
+    public static String GetQueryForSearchOrderByDateInOrderDB(String today) {
+        String query = "";
+        /*Like %text% will search string in whole name but like text% will start search from first letter*/
+        try {
+            if (!StringUtils.isBlank(today)) {
+
+                query = SELECT_ALL + TABLE_ORDERS_DB + WHERE + COLUMN_ORDER_CREATED_ON + " like '" + today + "%' ";
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return query;
+    }
+
     public static String GetQueryForOrderItemInOrderItemDB(String orderNo) {
         String query = "";
         /*Like %text% will search string in whole name but like text% will start search from first letter*/

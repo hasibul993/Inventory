@@ -316,6 +316,17 @@ public class MainActivity implements AppConstants {
         return drugModelArrayList;
     }
 
+    public ArrayList<DrugModel> GetOrderListByDateFromOrderDB(Context context, String today) {
+        databaseAccess = new DatabaseAccess(context);
+        ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
+        try {
+            drugModelArrayList = databaseAccess.GetOrderListByDateFromOrderDB(today);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return drugModelArrayList;
+    }
+
     public DrugModel GetOrderItemDetailsFromOrderItemDB(Context context, String orderNo, String drugID) {
         databaseAccess = new DatabaseAccess(context);
         DrugModel drugModel = new DrugModel();

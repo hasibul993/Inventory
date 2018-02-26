@@ -851,6 +851,30 @@ public class DatabaseAccess extends DatabaseHelper {
         return orderList;
     }
 
+    public ArrayList<DrugModel> GetOrderListByDateFromOrderDB(String today) {
+        SQLiteDatabase db = super.getWritableDatabase();
+        Cursor cursor = null;
+        ArrayList<DrugModel> orderList = new ArrayList<>();
+
+        try {
+
+            cursor = db.rawQuery(DatabaseQuery.GetQueryForSearchOrderByDateInOrderDB(today), null);
+
+            if (cursor.getCount() > 0)
+                orderList = GetOrderList(cursor);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Log.i(TAG, " GetOrderListByDateFromOrderDB() : " + ex.getMessage());
+        }
+
+        if (cursor != null)
+            cursor.close();
+        db.close();
+        return orderList;
+    }
+
+
     public DrugModel GetOrderItemDetailsFromOrderItemDB(String orderNo, String drugID) {
         SQLiteDatabase db = super.getWritableDatabase();
         Cursor cursor = null;

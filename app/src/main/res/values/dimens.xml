@@ -17,7 +17,7 @@
     <dimen name="text_10sp">10sp</dimen>
 
 
-    <dimen name="toolbar_title_10sp">10sp</dimen>
+    <dimen name="toolbar_title_10sp">9sp</dimen>
 
     <dimen name="toolbar_60dp">60dp</dimen>
 
