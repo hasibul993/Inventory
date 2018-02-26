@@ -85,6 +85,9 @@
     <string name="capsules">Capsules</string>
     <string name="cream">Cream</string>
     <string name="syrup">Syrup</string>
+    <string name="drops">Drops</string>
+    <string name="liquid">Liquid</string>
+    <string name="ointment">Ointment</string>
     <string name="miscellaneous">Miscellaneous</string>
 
     <!--Theme color changes optional-->
@@ -168,6 +171,7 @@
     <string name="orderTotal">Order Total</string>
     <string name="orderTotalActual">Order Total Actual</string>
     <string name="orderTotalDiscount">Order Total Discount</string>
+    <string name="tax">Tax</string>
 
     <string name="slNo">SN</string>
     <string name="quantity">Qty</string>
@@ -176,6 +180,8 @@
     <string name="total">Total</string>
     <string name="availableQuantity">Available Quantity</string>
     <string name="semicolon">:</string>
+    <string name="dash">-</string>
+    <string name="plus">+</string>
     <string name="splitterCharacter">\\:</string>
     <string name="searchOrderByMobile">Search by customer name/mobile</string>
     <string name="searchDrugByName">Search by drug name</string>

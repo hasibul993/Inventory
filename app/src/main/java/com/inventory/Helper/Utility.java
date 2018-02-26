@@ -334,9 +334,24 @@ public class Utility {
             hashMap.put(4, drugModel);
 
             drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.drops_icon;
+            drugModel.DrugCategory = context.getString(R.string.drops);
+            hashMap.put(5, drugModel);
+
+            drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.liquid_icon;
+            drugModel.DrugCategory = context.getString(R.string.liquid);
+            hashMap.put(6, drugModel);
+
+            drugModel = new DrugModel();
+            drugModel.DrugIcon = R.drawable.ointment_icon;
+            drugModel.DrugCategory = context.getString(R.string.ointment);
+            hashMap.put(7, drugModel);
+
+            drugModel = new DrugModel();
             drugModel.DrugIcon = R.drawable.stocking;
             drugModel.DrugCategory = context.getString(R.string.miscellaneous);
-            hashMap.put(5, drugModel);
+            hashMap.put(8, drugModel);
 
             hashMapList.add(hashMap);
 

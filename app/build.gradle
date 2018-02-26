@@ -80,6 +80,9 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.1'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.7'
 
+    /*chart lib*/
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
     /*firebase registration*/
     compile 'com.google.android.gms:play-services-auth:11.0.4'
     compile "com.google.firebase:firebase-auth:11.0.4"

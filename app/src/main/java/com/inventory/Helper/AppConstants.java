@@ -26,8 +26,11 @@ public interface AppConstants {
     public static String TABLETS_THEMECOLOR = "#009688";
     public static String INJECTION_THEMECOLOR = "#ffa000";
     public static String CREAM_THEMECOLOR = "#c51162";
-    public static String SYRUP_THEMECOLOR = "#2196f3";
+    public static String SYRUP_THEMECOLOR = "#ff5722";
     public static String CAPSULES_THEMECOLOR = "#4caf50";
+    public static String DROPS_THEMECOLOR = "#d50000";
+    public static String LIQUID_THEMECOLOR = "#ad1457";
+    public static String OINTMENT_THEMECOLOR = "#673ab7";
     public static String MISCELLANEOUS_THEMECOLOR = "#896f08";
 
     public static String SIMPLE_DATE_FORMAT = "dd-MM-yyyy";

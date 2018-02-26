@@ -44,7 +44,7 @@ public class FragmentForIcons extends Fragment {
         selectedDrugIcon = getArguments().getString("iconfont");
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         //define columns
-        int numberOfColumns = 6;
+        int numberOfColumns = 5;
 
 
         iconsAdapter = new IconsAdapter(getActivity(), hashMapArrayList, selectedDrugIcon);

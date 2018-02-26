@@ -62,9 +62,11 @@ public class SalesActivity extends AppCompatActivity {
 
     RobotoTextView slNoTV, drugNameTV, drugQuantityTV, drugMRPTV, drugDiscountTV, drugTotalTV, orderTotalTV,
             orderTotalValueTV, orderTotalActualTV, orderTotalActualValueTV, orderTotalDiscTV, orderTotalDiscValueTV,
-            orderTotalFinalTV, orderTotalFinalValueTV, resultOfTextViewCustomerMobileRecyclerView;
+            orderTotalFinalTV, orderTotalFinalValueTV, resultOfTextViewCustomerMobileRecyclerView, orderTotalTaxTV, orderTotalTaxValueTV;
 
     EditText cutomerNameET, cutomerMobileET, patientNameET, ageET;
+
+    RelativeLayout orderTotalDiscLayout, orderTotalTaxLayout;
 
     ImageView deleteIconCustomerMobileRecyclerView;
 
@@ -231,8 +233,14 @@ public class SalesActivity extends AppCompatActivity {
             orderTotalActualValueTV = (RobotoTextView) findViewById(R.id.orderTotalActualValueTV);
             orderTotalDiscTV = (RobotoTextView) findViewById(R.id.orderTotalDiscTV);
             orderTotalDiscValueTV = (RobotoTextView) findViewById(R.id.orderTotalDiscValueTV);
+            orderTotalTaxTV = (RobotoTextView) findViewById(R.id.orderTotalTaxTV);
+            orderTotalTaxValueTV = (RobotoTextView) findViewById(R.id.orderTotalTaxValueTV);
             orderTotalFinalTV = (RobotoTextView) findViewById(R.id.orderTotalFinalTV);
             orderTotalFinalValueTV = (RobotoTextView) findViewById(R.id.orderTotalFinalValueTV);
+
+            orderTotalDiscLayout = (RelativeLayout) findViewById(R.id.orderTotalDiscLayout);
+            orderTotalTaxLayout = (RelativeLayout) findViewById(R.id.orderTotalTaxLayout);
+
 
             recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -277,7 +285,6 @@ public class SalesActivity extends AppCompatActivity {
             }
 
 
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -311,18 +318,6 @@ public class SalesActivity extends AppCompatActivity {
             drugMRPTV.setTypeface(tMedium);
             drugDiscountTV.setTypeface(tMedium);
             drugTotalTV.setTypeface(tMedium);
-
-           /* orderTotalTV.setTypeface(tMedium);
-            orderTotalValueTV.setTypeface(tMedium);
-
-            orderTotalActualTV.setTypeface(tMedium);
-            orderTotalActualValueTV.setTypeface(tMedium);
-
-            orderTotalDiscTV.setTypeface(tMedium);
-            orderTotalDiscValueTV.setTypeface(tMedium);
-
-            orderTotalFinalTV.setTypeface(tMedium);
-            orderTotalFinalValueTV.setTypeface(tMedium);*/
 
             slNoTV.setTextColor(getResources().getColor(R.color.Black));
             drugNameTV.setTextColor(getResources().getColor(R.color.Black));
@@ -869,8 +864,8 @@ public class SalesActivity extends AppCompatActivity {
 
     private void CalculateTotalCost() {
         ArrayList<DrugModel> drugModelList = new ArrayList<>();
-        double overAllPrice = 0, overAllPriceWithoutDisc = 0, overAllDiscount;
-        String orderTotalString, overAllPriceWithoutDiscString, overAllDiscountString;
+        double overAllPrice = 0,overAllPriceWithTax = 0, overAllPriceWithoutDisc = 0, overAllDiscount, tax = 0;
+        String orderTotalString, overAllPriceWithoutDiscString, overAllDiscountString, taxString;
         try {
             drugModelList = salesAdapter.getDrugList();
             for (DrugModel drug : drugModelList) {
@@ -883,17 +878,24 @@ public class SalesActivity extends AppCompatActivity {
             }
 
             overAllDiscount = overAllPriceWithoutDisc - overAllPrice;
+            overAllPriceWithTax=overAllPrice+tax;
 
             overAllPriceWithoutDiscString = AppConstants.decimalFormatTwoPlace.format(overAllPriceWithoutDisc);
-            orderTotalString = AppConstants.decimalFormatTwoPlace.format(overAllPrice);
+            orderTotalString = AppConstants.decimalFormatTwoPlace.format(overAllPriceWithTax);
             overAllDiscountString = AppConstants.decimalFormatTwoPlace.format(overAllDiscount);
+            taxString = AppConstants.decimalFormatTwoPlace.format(tax);
 
             orderTotalValueTV.setText(orderTotalString);
 
-            if (overAllDiscount > 0)
-                orderTotalDiscValueTV.setText(overAllDiscountString);
+            if (tax > 0)
+                orderTotalTaxValueTV.setText(taxString);
             else
-                orderTotalDiscValueTV.setText("-");
+                orderTotalTaxValueTV.setText(getString(R.string.dash));
+
+            if (overAllDiscount > 0)
+                orderTotalDiscValueTV.setText(getString(R.string.dash) + " " + overAllDiscountString);
+            else
+                orderTotalDiscValueTV.setText(getString(R.string.dash));
 
             orderTotalActualValueTV.setText(overAllPriceWithoutDiscString);
             orderTotalFinalValueTV.setText(orderTotalString);

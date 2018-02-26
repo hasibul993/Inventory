@@ -8,6 +8,7 @@
     <include
         layout="@layout/circle_color_grid_item"
         android:layout_width="@dimen/cicle_width_50dp"
-        android:layout_height="@dimen/cicle_width_50dp" />
+        android:layout_height="@dimen/cicle_width_50dp"
+        android:layout_marginBottom="10dp" />
 
 </RelativeLayout>

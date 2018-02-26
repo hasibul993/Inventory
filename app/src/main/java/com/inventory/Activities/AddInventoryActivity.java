@@ -103,7 +103,7 @@ public class AddInventoryActivity extends AppCompatActivity {
         isModify = (boolean) bundle.getSerializable(getString(R.string.isModify));
 
         if (editModel == null)
-            fromDrugIcon = getString(R.string.tablet);
+            fromDrugIcon = getString(R.string.miscellaneous);
         else
             fromDrugIcon = editModel.DrugCategory;
 

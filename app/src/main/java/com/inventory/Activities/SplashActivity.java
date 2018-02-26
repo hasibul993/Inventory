@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.inventory.Helper.Utility;
 
 import com.inventory.Login.AppSettings;
+import com.inventory.Login.RegistrationActivity;
 import com.inventory.Model.SettingsModel;
 import com.inventory.Model.UserKeyDetailsModel;
 import com.inventory.R;
@@ -44,6 +45,8 @@ public class SplashActivity extends AppCompatActivity {
 
         if (!settingsModel.IsDefaultTheme && !StringUtils.isBlank(settingsModel.ThemeColorCode))
             MainActivity.SetThemeColor(settingsModel.ThemeColorCode);
+
+       // mainActivity.InsertDrugsFromRawDirectory(SplashActivity.this);
 
         SupportActionBar(this);
 

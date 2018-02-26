@@ -107,10 +107,44 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/orderTotalDiscLayout"
+            android:id="@+id/orderTotalTaxLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/orderActualTotalLayout"
+            android:layout_marginTop="5dp">
+
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalTaxTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="2dp"
+                android:text="@string/tax"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/body"
+                app:typeface="robotoMedium" />
+
+            <com.inventory.NewUi.RobotoTextView
+                android:id="@+id/orderTotalTaxValueTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:padding="2dp"
+                android:text=""
+                android:textColor="@color/Black"
+                android:textSize="@dimen/body"
+                app:typeface="robotoMedium" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/orderTotalDiscLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orderTotalTaxLayout"
             android:layout_marginTop="5dp">
 
 

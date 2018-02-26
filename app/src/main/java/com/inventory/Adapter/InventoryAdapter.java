@@ -128,6 +128,24 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 holder.drugBatchNumberBackg.setColor(Color.parseColor(CREAM_THEMECOLOR));
                 holder.drugExpiryDateBackg.setColor(Color.parseColor(CREAM_THEMECOLOR));
                 holder.iconImageV.setImageResource(R.drawable.cream_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.drops))) {
+                holder.iconLayoutBackg.setColor(Color.parseColor(DROPS_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(DROPS_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(DROPS_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(DROPS_THEMECOLOR));
+                holder.iconImageV.setImageResource(R.drawable.drops_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.liquid))) {
+                holder.iconLayoutBackg.setColor(Color.parseColor(LIQUID_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(LIQUID_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(LIQUID_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(LIQUID_THEMECOLOR));
+                holder.iconImageV.setImageResource(R.drawable.liquid_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.ointment))) {
+                holder.iconLayoutBackg.setColor(Color.parseColor(OINTMENT_THEMECOLOR));
+                holder.drugQuantityBackg.setColor(Color.parseColor(OINTMENT_THEMECOLOR));
+                holder.drugBatchNumberBackg.setColor(Color.parseColor(OINTMENT_THEMECOLOR));
+                holder.drugExpiryDateBackg.setColor(Color.parseColor(OINTMENT_THEMECOLOR));
+                holder.iconImageV.setImageResource(R.drawable.ointment_icon);
             } else {
                 holder.iconLayoutBackg.setColor(Color.parseColor(MISCELLANEOUS_THEMECOLOR));
                 holder.drugQuantityBackg.setColor(Color.parseColor(MISCELLANEOUS_THEMECOLOR));
