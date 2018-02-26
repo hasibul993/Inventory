@@ -68,7 +68,6 @@ public class AppSettings extends AppCompatActivity implements AppConstants {
 
             toolbar = (Toolbar) findViewById(R.id.toolbarID);
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-            toolbar_title.setTextSize(getResources().getDimension(R.dimen.toolbar_title_8sp));
 
 
         } catch (Exception ex) {

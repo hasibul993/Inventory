@@ -15,7 +15,9 @@
     <dimen name="header_28sp">28sp</dimen>
     <dimen name="text">12sp</dimen>
     <dimen name="text_10sp">10sp</dimen>
-    <dimen name="toolbar_title_8sp">8sp</dimen>
+
+
+    <dimen name="toolbar_title_10sp">10sp</dimen>
 
     <dimen name="toolbar_60dp">60dp</dimen>
 
@@ -24,6 +26,8 @@
     <dimen name="item_image_height">46dp</dimen>
 
     <dimen name="divider_height">0.4dp</dimen>
+
+    <dimen name="home_grid_item_h_w">105dp</dimen>
 
     <!--login-->
     <dimen name="underline_stroke_width">2.0dip</dimen>
@@ -35,6 +39,7 @@
     <dimen name="text_margin_bottom">15dp</dimen>
     <dimen name="hint_margin_bottom">25dp</dimen>
     <dimen name="view_height">40dp</dimen>
+
 
 
 

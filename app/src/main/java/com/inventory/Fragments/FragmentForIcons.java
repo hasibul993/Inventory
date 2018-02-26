@@ -1,5 +1,6 @@
 package com.inventory.Fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,6 +25,7 @@ public class FragmentForIcons extends Fragment {
     RecyclerView recyclerView;
     IconsAdapter iconsAdapter;
     String selectedDrugIcon;
+    int numberOfColumns = 0;
 
     // newInstance constructor for creating fragment with arguments
     public static FragmentForIcons newInstance(HashMap hashMapArrayList, String selectedIconFont) {
@@ -44,8 +46,8 @@ public class FragmentForIcons extends Fragment {
         selectedDrugIcon = getArguments().getString("iconfont");
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         //define columns
-        int numberOfColumns = 5;
 
+        numberOfColumns = 5;
 
         iconsAdapter = new IconsAdapter(getActivity(), hashMapArrayList, selectedDrugIcon);
         //recyclerView.setAdapter(null);

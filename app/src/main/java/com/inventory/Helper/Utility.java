@@ -296,6 +296,10 @@ public class Utility {
             homeModel.Title = context.getString(R.string.orders);
             homeModelArrayList.add(homeModel);
 
+            /*homeModel = new HomeModel();
+            homeModel.Title = context.getString(R.string.report);
+            homeModelArrayList.add(homeModel);*/
+
 
         } catch (Exception ex) {
             ex.printStackTrace();

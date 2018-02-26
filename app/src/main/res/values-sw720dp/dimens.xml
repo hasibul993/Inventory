@@ -2,9 +2,9 @@
 
     <!--increases size by 8dp from normal size-->
 
-    <dimen name="fab_margin">24dp</dimen>
+    <dimen name="fab_margin">28dp</dimen>
 
-    <dimen name="fab_size">64dp</dimen>
+    <dimen name="fab_size">66dp</dimen>
 
 
     <dimen name="header_24sp">32sp</dimen>
@@ -16,15 +16,19 @@
     <dimen name="header_28sp">36sp</dimen>
     <dimen name="text">20sp</dimen>
     <dimen name="text_10sp">18sp</dimen>
-    <dimen name="toolbar_title_8sp">16sp</dimen>
 
-    <dimen name="toolbar_60dp">68dp</dimen>
+
+    <dimen name="toolbar_title_10sp">30sp</dimen>
+
+    <dimen name="toolbar_60dp">74dp</dimen><!--increase by 14-->
 
     <dimen name="cicle_width_50dp">58dp</dimen>
 
     <dimen name="item_image_height">53dp</dimen>
 
     <dimen name="divider_height">0.8dp</dimen>
+
+    <dimen name="home_grid_item_h_w">125dp</dimen>
 
 
     <!--login No change in dimension-->

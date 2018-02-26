@@ -2,6 +2,7 @@ package com.inventory.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -226,12 +227,20 @@ public class HomeActivity extends AppCompatActivity implements AppConstants {
 
     private void SetAdapter() {
         ArrayList<HomeModel> homeModels = new ArrayList<>();
-
+        int numberOfColumns = 0;
         try {
 
             homeModels = utility.GetHomeMenuList(HomeActivity.this);
 
-            StaggeredGridLayoutManager mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            Configuration config = getResources().getConfiguration();
+            int size = config.smallestScreenWidthDp;
+
+            if (size >= 600)
+                numberOfColumns = 4;
+            else
+                numberOfColumns = 3;
+
+            StaggeredGridLayoutManager mLayoutManager = new StaggeredGridLayoutManager(numberOfColumns, StaggeredGridLayoutManager.VERTICAL);
             GridSpacingItemDecoration decoration = new GridSpacingItemDecoration(1, dpToPx(0), true);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.addItemDecoration(decoration);

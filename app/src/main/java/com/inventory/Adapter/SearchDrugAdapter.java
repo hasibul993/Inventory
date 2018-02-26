@@ -84,6 +84,26 @@ public class SearchDrugAdapter extends RecyclerView.Adapter<SearchDrugAdapter.Vi
             else
                 holder.iconImageV.setImageResource(R.drawable.stocking);
 
+            if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.tablet))) {
+                holder.iconImageV.setImageResource(R.drawable.tablets_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.capsules))) {
+                holder.iconImageV.setImageResource(R.drawable.capsules_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.injection))) {
+                holder.iconImageV.setImageResource(R.drawable.injection_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.syrup))) {
+                holder.iconImageV.setImageResource(R.drawable.syrup_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.cream))) {
+                holder.iconImageV.setImageResource(R.drawable.cream_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.drops))) {
+                holder.iconImageV.setImageResource(R.drawable.drops_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.liquid))) {
+                holder.iconImageV.setImageResource(R.drawable.liquid_icon);
+            } else if (StringUtils.equalsIgnoreCase(drugModel.DrugCategory, context.getString(R.string.ointment))) {
+                holder.iconImageV.setImageResource(R.drawable.ointment_icon);
+            } else {
+                holder.iconImageV.setImageResource(R.drawable.stocking);
+            }
+
             holder.mainLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
