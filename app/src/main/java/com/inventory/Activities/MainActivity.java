@@ -605,7 +605,7 @@ public class MainActivity implements AppConstants {
             entityArrayList = GetDrugModelList(rawData);
             InsertDrugsInBatchInMasterDB(context, entityArrayList);
             InsertManufacturerInBatchInManufacturerDB(context, entityArrayList);
-            InsertUpdateDrugsInBatchInInventoryDB(context, entityArrayList, false);
+            //InsertUpdateDrugsInBatchInInventoryDB(context, entityArrayList, false);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
