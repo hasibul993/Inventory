@@ -174,17 +174,17 @@ public class MainActivity implements AppConstants {
         try {
             ArrayList<DrugModel> drugModelArrayList = new ArrayList<>();
             drugModelArrayList.add(drugModel);
-            InsertManufacturerInBatchInManufacturerDB(context, drugModelArrayList);
+            InsertManufacturerInBatchInManufacturerDB(context, drugModelArrayList,drugModel.DrugManufacturer);
         } catch (Exception ex) {
             ex.printStackTrace();
             Log.i(TAG, " InsertManufacturerInManufacturerDB : " + ex.getMessage());
         }
     }
 
-    public void InsertManufacturerInBatchInManufacturerDB(Context context, ArrayList<DrugModel> drugModelArrayList) {
+    public void InsertManufacturerInBatchInManufacturerDB(Context context, ArrayList<DrugModel> drugModelArrayList,String userGuid) {
         databaseAccess = new DatabaseAccess(context);
         try {
-            databaseAccess.InsertManufacturerInBatchInManufacturerDB(drugModelArrayList);
+            databaseAccess.InsertManufacturerInBatchInManufacturerDB(drugModelArrayList,userGuid);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -597,14 +597,14 @@ public class MainActivity implements AppConstants {
         return entityArrayList;
     }
 
-    public void InsertDrugsFromRawDirectory(Context context) {
+    public void InsertDrugsFromRawDirectory(Context context,String userGuid) {
         ArrayList<DrugModel> entityArrayList = new ArrayList<DrugModel>();
         String rawData = "";
         try {
             rawData = ReadFileFromRawDirectory(context);
             entityArrayList = GetDrugModelList(rawData);
             InsertDrugsInBatchInMasterDB(context, entityArrayList);
-            InsertManufacturerInBatchInManufacturerDB(context, entityArrayList);
+            InsertManufacturerInBatchInManufacturerDB(context, entityArrayList,userGuid);
             //InsertUpdateDrugsInBatchInInventoryDB(context, entityArrayList, false);
         } catch (Exception ex) {
             ex.printStackTrace();

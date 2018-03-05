@@ -80,7 +80,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 mainActivity.InsertUpdateSettings(this, settingsModel);
 
                 if (!mainActivity.IsAnyMedicineExist(RegistrationActivity.this)) {
-                    mainActivity.InsertDrugsFromRawDirectory(RegistrationActivity.this);
+                    mainActivity.InsertDrugsFromRawDirectory(RegistrationActivity.this,userKeyDetailsModel.UserGuid);
                 }
 
                 HomeActivity.GotoHomeActivity(RegistrationActivity.this);

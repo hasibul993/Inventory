@@ -296,7 +296,7 @@ public class DatabaseAccess extends DatabaseHelper {
         }
     }
 
-    public void InsertManufacturerInBatchInManufacturerDB(ArrayList<DrugModel> drugModelArrayList) {
+    public void InsertManufacturerInBatchInManufacturerDB(ArrayList<DrugModel> drugModelArrayList, String userGuid) {
         SQLiteDatabase db = super.getWritableDatabase();
         db.beginTransaction();
         ContentValues values = new ContentValues();
@@ -307,8 +307,8 @@ public class DatabaseAccess extends DatabaseHelper {
                     if (drugModel.DrugManufacturer != null)
                         values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer);
 
-                    if (drugModel.PharmacyID != null)
-                        values.put(COLUMN_PHARMACY_ID, drugModel.PharmacyID);
+                    if (userGuid != null)
+                        values.put(COLUMN_PHARMACY_ID, userGuid);
 
                     long _id = db.insertWithOnConflict(TABLE_MANUFACTURER_DB, null,
                             values, SQLiteDatabase.CONFLICT_IGNORE);
