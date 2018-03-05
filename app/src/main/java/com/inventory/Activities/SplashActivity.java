@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
         if (!settingsModel.IsDefaultTheme && !StringUtils.isBlank(settingsModel.ThemeColorCode))
             MainActivity.SetThemeColor(settingsModel.ThemeColorCode);
 
-       // mainActivity.InsertDrugsFromRawDirectory(SplashActivity.this);
+        mainActivity.InsertDrugsFromRawDirectory(SplashActivity.this,userKeyDetailsModel.UserGuid);
 
         SupportActionBar(this);
 

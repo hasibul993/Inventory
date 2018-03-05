@@ -305,7 +305,7 @@ public class DatabaseAccess extends DatabaseHelper {
             for (DrugModel drugModel : drugModelArrayList) {
                 try {
                     if (drugModel.DrugManufacturer != null)
-                        values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer);
+                        values.put(COLUMN_DRUG_MANUFACTURER, drugModel.DrugManufacturer.toUpperCase());
 
                     if (userGuid != null)
                         values.put(COLUMN_PHARMACY_ID, userGuid);
@@ -316,7 +316,7 @@ public class DatabaseAccess extends DatabaseHelper {
                     if (_id == -1) {
 
                         db.update(TABLE_MANUFACTURER_DB, values, COLUMN_DRUG_MANUFACTURER + "= '"
-                                + drugModel.DrugManufacturer + "'", null);
+                                + drugModel.DrugManufacturer.toUpperCase() + "'", null);
                     }
 
                 } catch (Exception ex) {
